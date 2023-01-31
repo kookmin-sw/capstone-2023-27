@@ -82,6 +82,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         })
 
+        themeRankListAdapter.setItemClickListener(object :HomeAdapter.OnItemClickListener{
+            override fun onClick(v:View, position: Int){
+                val bundle = Bundle()
+                bundle.apply{
+                    bundle.putString("theme_name", themeRankList[position].name)
+                    bundle.putString("theme_percent", themeRankList[position].percent)
+                }
+                replaceFragment(ThemeDetailFragment(),bundle)
+
+            }
+        })
+
         view.seeMore1.setOnClickListener(this)
         view.seeMore2.setOnClickListener(this)
         view.rightArrow1.setOnClickListener(this)
@@ -104,10 +116,21 @@ class HomeFragment : Fragment(), View.OnClickListener {
         when(p0?.id){
             R.id.see_more1 -> {
                 val bundle =Bundle()
+                Log.d("argument", "goodgood")
                 bundle.putString("focus","good")
                 replaceFragment(ListFragment(), bundle)
             }
             R.id.see_more2 ->{
+                val bundle = Bundle()
+                bundle.putString("foccus", "hue")
+                replaceFragment(ListFragment(), bundle)
+            }
+            R.id.right_arrow1 ->{
+                val bundle = Bundle()
+                bundle.putString("foccus", "hue")
+                replaceFragment(ListFragment(), bundle)
+            }
+            R.id.right_arrow2 ->{
                 val bundle = Bundle()
                 bundle.putString("foccus", "hue")
                 replaceFragment(ListFragment(), bundle)

@@ -31,7 +31,7 @@ class ThemeListAdapter(private val itemSet: ArrayList<ThemelistModel>) :
     ): ThemeListAdapter.ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.themelist_view, parent, false)
-        return ViewHolder(view)
+        return ThemeListAdapter.ViewHolder(view)
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     ////생성된 뷰홀더에 데이터를 바인딩 해주는 함수.. 데이터바인딩이 필요할때마다 호출된다.

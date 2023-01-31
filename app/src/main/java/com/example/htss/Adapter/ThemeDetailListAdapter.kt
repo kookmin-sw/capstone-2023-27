@@ -20,14 +20,14 @@ class ThemeDetailListAdapter(private val dataSet: ArrayList<ThemeDetailListModel
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val themeDetailName : TextView = view.findViewById(R.id.theme_detail_name)
         val themeCurrentPrice : TextView = view.findViewById(R.id.theme_current_value)
-        val themePlusPercent : TextView = view.findViewById(R.id.theme_pluspercent)
-        val themeMinusPercent : TextView = view.findViewById(R.id.theme_minuspercent)
+        val themePlusPercent : TextView = view.findViewById(R.id.theme_detail_pluspercent)
+        val themeMinusPercent : TextView = view.findViewById(R.id.theme_detail_minuspercent)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.theme_detail_list_view, parent, false)
-        return ThemeDetailListAdapter.ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

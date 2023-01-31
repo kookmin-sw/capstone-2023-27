@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.CategoryListAdapter
+import com.example.htss.Adapter.HomeAdapter
 import com.example.htss.Adapter.ThemeListAdapter
 import com.example.htss.Model.CategorylistModel
 import com.example.htss.Model.ThemelistModel
@@ -90,6 +91,18 @@ class ListFragment : Fragment() {
                     putString("category_percent", categoryList[position].percent)
                 }
                 replaceFragment(CategoryDetailFragment(), bundle)
+            }
+        })
+
+        themeListAdapter.setItemClickListener(object : ThemeListAdapter.OnItemClickListener{
+            override fun onClick(v:View, position: Int){
+                val bundle = Bundle()
+                bundle.apply{
+                    bundle.putString("theme_name", themeList[position].themeName)
+                    bundle.putString("theme_percent", themeList[position].percent)
+                }
+                replaceFragment(ThemeDetailFragment(),bundle)
+
             }
         })
 
