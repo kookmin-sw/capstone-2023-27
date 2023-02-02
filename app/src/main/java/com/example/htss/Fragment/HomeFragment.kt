@@ -13,6 +13,7 @@ import com.example.htss.Model.MainModel
 import com.example.htss.Model.NewsModel
 import com.example.htss.R
 import com.example.htss.databinding.FragmentHomeBinding
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
@@ -135,11 +136,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 bundle.putString("foccus", "hue")
                 replaceFragment(ListFragment(), bundle)
             }
-//            R.id.search_btn -> {
-//                val bundle = Bundle()
-//                bundle.putString("g","G")
-//                replaceFragment()
-//            }
+            R.id.search_btn -> {
+                val bundle = Bundle()
+                bundle.putString("keyword", view.editText.toString())
+                Log.d("search",view.editText.toString())
+                view.editText.text = null
+                replaceFragment(KeyWordFragment(),bundle)
+            }
         }
 
     }
