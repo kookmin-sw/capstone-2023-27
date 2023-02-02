@@ -8,8 +8,9 @@
         android:id="@+id/news1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:text= "금리인상 중단 기대감…환율, 1230원 하향이탈 주목..."
-        android:textSize="16dp"
+        android:textSize="13sp"
         />
 
 </LinearLayout>
