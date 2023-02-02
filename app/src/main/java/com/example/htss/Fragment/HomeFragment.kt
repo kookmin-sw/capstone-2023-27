@@ -99,6 +99,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.seeMore2.setOnClickListener(this)
         view.rightArrow1.setOnClickListener(this)
         view.rightArrow2.setOnClickListener(this)
+        view.searchBtn.setOnClickListener(this)
 
         return view.root
     }
@@ -138,8 +139,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
             R.id.search_btn -> {
                 val bundle = Bundle()
-                bundle.putString("keyword", view.editText.toString())
-                Log.d("search",view.editText.toString())
+                bundle.putString("keyword", view.editText.getText().toString())
                 view.editText.text = null
                 replaceFragment(KeyWordFragment(),bundle)
             }
