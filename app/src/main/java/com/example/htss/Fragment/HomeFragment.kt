@@ -129,7 +129,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
             R.id.right_arrow1 ->{
                 val bundle = Bundle()
-                bundle.putString("foccus", "hue")
+                bundle.putString("focus", "thue")
                 replaceFragment(ListFragment(), bundle)
             }
             R.id.right_arrow2 ->{
@@ -141,6 +141,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 val bundle = Bundle()
                 bundle.putString("keyword", view.editText.getText().toString())
                 view.editText.text = null
+
                 replaceFragment(KeyWordFragment(),bundle)
             }
         }

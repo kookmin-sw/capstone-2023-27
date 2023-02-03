@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Fragment.HomeFragment"
-
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -39,6 +38,8 @@
                 android:layout_marginHorizontal="5dp"
                 android:padding="10dp"
                 android:paddingVertical="5dp"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:background="@drawable/rounded_corner"
                 android:textSize="8pt"
                 />

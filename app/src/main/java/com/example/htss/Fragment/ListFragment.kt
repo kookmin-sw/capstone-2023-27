@@ -59,6 +59,9 @@ class ListFragment : Fragment() {
         ThemelistModel("테마명16", "-90%"),
     )
 
+    private var ThemaFocus =""
+
+
     private val categoryListAdapter = CategoryListAdapter(categoryList)
     private val themeListAdapter = ThemeListAdapter(themeList)
 
@@ -77,6 +80,12 @@ class ListFragment : Fragment() {
         view.recycle5.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = themeListAdapter
+        }
+
+        ThemaFocus = arguments?.getString("foccus").toString()
+        if(ThemaFocus == "hue"){
+            view.themaList.isFocusableInTouchMode = true;
+            view.themaList.requestFocus()
         }
 
         view.back.setOnClickListener {
