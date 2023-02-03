@@ -174,8 +174,8 @@
                 android:id="@+id/recycle_category_detail2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                />
+                android:nestedScrollingEnabled="false" />
+
             <TextView
                 android:id="@+id/category_include_news_open_btn"
                 android:layout_width="match_parent"

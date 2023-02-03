@@ -113,9 +113,9 @@ class KeyWordFragment : Fragment() {
             override fun onClick(v: View, position: Int) {
                 val bundle = Bundle()
                 bundle.apply {
-                    bundle.putString("related_stock_name", RelatedStockList[position].Stockname)
-                    bundle.putString("related_stock_price", RelatedStockList[position].Stockprice)
-                    bundle.putString("related_stock_percent", RelatedStockList[position].Stockpercent)
+                    bundle.putString("stock_name", RelatedStockList[position].Stockname)
+                    bundle.putString("stock_price", RelatedStockList[position].Stockprice)
+                    bundle.putString("stock_percent", RelatedStockList[position].Stockpercent)
                 }
                 replaceFragment(StockFragment(),bundle)
             }

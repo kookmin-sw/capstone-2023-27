@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.CategoryDetailListAdapter
+import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Model.CategoryDetailListModel
+import com.example.htss.Model.NewsModel
 import com.example.htss.R
 import com.example.htss.databinding.FragmentCategoryDetailBinding
 
@@ -18,12 +20,19 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
     private lateinit var view: FragmentCategoryDetailBinding
 
     private val CategoryDetailList = arrayListOf<CategoryDetailListModel>(
-        CategoryDetailListModel("오브젠", "+30%", 9200),
-        CategoryDetailListModel("코난테크놀로지","+25%", 13000),
-        CategoryDetailListModel("이노룰스", "-13%", 104450)
+        CategoryDetailListModel("오브젠", "+30%", "9200"),
+        CategoryDetailListModel("코난테크놀로지","+25%", "13000"),
+        CategoryDetailListModel("이노룰스", "-13%", "104450")
+    )
+
+    private var CategoryDetailNewsList = arrayListOf<NewsModel>(
+        NewsModel("뉴스뉴스뉴스"),
+        NewsModel("add add add"),
+        NewsModel("추추가가추추가가")
     )
 
     private val categorydetailAdapter = CategoryDetailListAdapter(CategoryDetailList)
+    private val categorydetailNewsAdapter = MainNewsAdapter(CategoryDetailNewsList)
 
     private var categoryName = ""
     private var categoryPercent = ""
@@ -56,16 +65,19 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = categorydetailAdapter
         }
+        view.recycleCategoryDetail2.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = categorydetailNewsAdapter
+        }
 
 
        categorydetailAdapter.setItemClickListener(object : CategoryDetailListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
-                Log.d("주식", CategoryDetailList[position].CatagoryName)
                 val bundle = Bundle()
                 bundle.apply {
-                    putString("category_detail_name", CategoryDetailList[position].CatagoryName)
-                    putString("category_detail_percent",CategoryDetailList[position].CatagoryPercent)
-                    putInt("category_detail_price", CategoryDetailList[position].CatagoryPrice)
+                    putString("stock_name", CategoryDetailList[position].CatagoryName)
+                    putString("stock_percent",CategoryDetailList[position].CatagoryPercent)
+                    putString("stock_price", CategoryDetailList[position].CatagoryPrice)
                 }
                 replaceFragment(StockFragment(), bundle)
             }

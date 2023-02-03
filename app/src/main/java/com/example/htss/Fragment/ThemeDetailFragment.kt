@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Adapter.ThemeDetailListAdapter
 import com.example.htss.Model.CategoryDetailListModel
+import com.example.htss.Model.NewsModel
 import com.example.htss.Model.ThemeDetailListModel
 import com.example.htss.R
 import com.example.htss.databinding.FragmentThemeDetailBinding
@@ -22,8 +24,15 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
         ThemeDetailListModel("시공테크","+25%", "13000"),
         ThemeDetailListModel("이월드", "-100%", "104450")
     )
+    private var ThemeNewsList = arrayListOf<NewsModel>(
+        NewsModel("뉴스뉴스뉴스"),
+        NewsModel("add add add"),
+        NewsModel("추추가가추추가가")
+    )
+
 
     private var themeDetailListAdapter = ThemeDetailListAdapter(ThemeDetailList)
+    private  var themeNewslListAdapter = MainNewsAdapter(ThemeNewsList)
 
     private var themename = ""
     private var themepercent = ""
@@ -57,6 +66,10 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = themeDetailListAdapter
         }
+        view.themeDetail2.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = themeNewslListAdapter
+        }
 
         view.back2.setOnClickListener {
             parentFragmentManager.popBackStack()
@@ -67,9 +80,9 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
                 Log.d("주식", ThemeDetailList[position].ThemeName)
                 val bundle = Bundle()
                 bundle.apply {
-                    putString("theme_detail_name", ThemeDetailList[position].ThemeName)
-                    putString("theme_detail_percent", ThemeDetailList[position].Themepercent)
-                    putString("theme_detail_price", ThemeDetailList[position].ThemePrice)
+                    putString("stock_name", ThemeDetailList[position].ThemeName)
+                    putString("stock_percent", ThemeDetailList[position].Themepercent)
+                    putString("stock_price", ThemeDetailList[position].ThemePrice)
                 }
                 replaceFragment(StockFragment(), bundle)
             }
