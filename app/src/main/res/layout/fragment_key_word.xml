@@ -60,7 +60,8 @@
                 android:id="@+id/category_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="3dp"/>
 
             <TextView
                 android:id="@+id/category_open_btn"
@@ -69,6 +70,7 @@
                 android:background="@drawable/stroke_background"
                 android:gravity="center"
                 android:padding="3dp"
+                android:textStyle="bold"
                 android:text="펼치기"
                 android:textSize="7pt" />
 
@@ -80,6 +82,7 @@
                 android:gravity="center"
                 android:padding="2dp"
                 android:text="접기"
+                android:textStyle="bold"
                 android:textSize="7pt"
                 android:visibility="gone" />
 
@@ -107,7 +110,8 @@
                 android:id="@+id/theme_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="3dp"/>
 
             <TextView
                 android:id="@+id/theme_open_btn"
@@ -127,6 +131,7 @@
                 android:gravity="center"
                 android:padding="2dp"
                 android:text="접기"
+                android:textStyle="bold"
                 android:textSize="7pt"
                 android:visibility="gone" />
 
@@ -144,7 +149,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
                 <TextView
                     android:id="@+id/keyword_name2"
                     android:layout_width="wrap_content"
@@ -159,9 +165,50 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="와 같이 언급된 주식"
+
+                    android:text="와(과) 같이 언급된 주식"
                     android:textSize="8pt"
+                    android:textColor="@color/gray"
                     android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="종목명"
+                    android:textSize="6pt"
+                    android:gravity="center"
+                    android:background="@drawable/stroke_background"
+                    android:layout_weight="4" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="현재가"
+                    android:gravity="center"
+                    android:textSize="6pt"
+                    android:background="@drawable/stroke_background"
+                    android:layout_weight="2"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="전일대비"
+                    android:background="@drawable/stroke_background"
+                    android:gravity="center"
+                    android:textSize="6pt"
+                    android:layout_weight="1.5"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="언급횟수"
+                    android:background="@drawable/stroke_background"
+                    android:gravity="center"
+                    android:textSize="6pt"
+                    android:layout_weight="1.5"/>
             </LinearLayout>
 
 
@@ -169,7 +216,8 @@
                 android:id="@+id/stock_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="3dp"/>
 
             <TextView
                 android:id="@+id/stock_open_btn"
@@ -178,6 +226,7 @@
                 android:background="@drawable/stroke_background"
                 android:gravity="center"
                 android:padding="3dp"
+
                 android:text="펼치기"
                 android:textSize="7pt" />
 
@@ -230,7 +279,8 @@
                 android:id="@+id/news_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false" />
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="3dp"/>
 
             <TextView
                 android:id="@+id/news_open_btn"

@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:text="업종별 시세"
             android:textSize="22sp"
+            android:textStyle="bold"
             android:layout_margin="3dp"
             />
         <LinearLayout
@@ -40,6 +41,7 @@
                 android:layout_weight="6"
                 android:background="@drawable/stroke_background"
                 android:text="업종명"
+                android:textStyle="bold"
                 android:padding="8dp"
                 android:textAlignment="center"/>
 
@@ -49,6 +51,7 @@
                 android:layout_weight="4"
                 android:text="전일대비"
                 android:padding="8dp"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:background="@drawable/stroke_background"/>
         </LinearLayout>
@@ -72,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="테마별 시세"
-
+            android:textStyle="bold"
             android:layout_marginLeft="3dp"
             android:textSize="22sp"
             />
@@ -91,6 +94,7 @@
                 android:layout_weight="6"
                 android:background="@drawable/stroke_background"
                 android:text="테마명"
+                android:textStyle="bold"
                 android:padding="8dp"
                 android:textAlignment="center"/>
 
@@ -100,6 +104,7 @@
                 android:layout_weight="4"
                 android:text="전일대비"
                 android:padding="8dp"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:background="@drawable/stroke_background"/>
         </LinearLayout>

@@ -50,7 +50,7 @@
         android:layout_height="match_parent"
         android:text="-0.5%"
         android:textColor="@color/red"
-        android:gravity="center"
+        android:gravity="right|center"
         android:textSize="13sp" />
 
     <TextView
@@ -61,7 +61,7 @@
         android:layout_marginStart="3dp"
         android:text="+0.5%"
         android:textColor="@color/blue"
-        android:gravity="center"
+        android:gravity="right|center"
         android:textSize="13sp"
         android:visibility="gone" />
 
@@ -70,10 +70,9 @@
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="match_parent"
-        android:text="20회"
+        android:gravity="right|center"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:gravity="center"
         android:textSize="13sp" />
 
 
