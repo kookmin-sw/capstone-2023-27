@@ -31,6 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:text="키워드"
                 android:textSize="8pt"
@@ -53,6 +54,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:text="업종"
+                android:textColor="@color/black"
                 android:textSize="10pt"
                 android:textStyle="bold" />
 
@@ -71,6 +73,7 @@
                 android:gravity="center"
                 android:padding="3dp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:text="펼치기"
                 android:textSize="7pt" />
 
@@ -83,6 +86,7 @@
                 android:padding="2dp"
                 android:text="접기"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:textSize="7pt"
                 android:visibility="gone" />
 
@@ -103,6 +107,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:text="테마"
+                android:textColor="@color/black"
                 android:textSize="10pt"
                 android:textStyle="bold" />
 
@@ -120,6 +125,7 @@
                 android:background="@drawable/stroke_background"
                 android:gravity="center"
                 android:padding="3dp"
+                android:textColor="@color/black"
                 android:text="펼치기"
                 android:textSize="7pt" />
 
@@ -132,6 +138,7 @@
                 android:padding="2dp"
                 android:text="접기"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:textSize="7pt"
                 android:visibility="gone" />
 
@@ -159,6 +166,7 @@
                     android:gravity="center"
                     android:text="키워드"
                     android:textSize="8pt"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
                 <TextView
 
@@ -169,6 +177,7 @@
                     android:text="와(과) 같이 언급된 주식"
                     android:textSize="8pt"
                     android:textColor="@color/gray"
+
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -181,6 +190,7 @@
                     android:layout_height="wrap_content"
                     android:text="종목명"
                     android:textSize="6pt"
+                    android:textColor="@color/black"
                     android:gravity="center"
                     android:background="@drawable/stroke_background"
                     android:layout_weight="4" />
@@ -189,6 +199,7 @@
                     android:layout_height="wrap_content"
                     android:text="현재가"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:textSize="6pt"
                     android:background="@drawable/stroke_background"
                     android:layout_weight="2"/>
@@ -200,6 +211,7 @@
                     android:background="@drawable/stroke_background"
                     android:gravity="center"
                     android:textSize="6pt"
+                    android:textColor="@color/black"
                     android:layout_weight="1.5"/>
                 <TextView
                     android:layout_width="0dp"
@@ -207,6 +219,7 @@
                     android:text="언급횟수"
                     android:background="@drawable/stroke_background"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:textSize="6pt"
                     android:layout_weight="1.5"/>
             </LinearLayout>
@@ -226,7 +239,7 @@
                 android:background="@drawable/stroke_background"
                 android:gravity="center"
                 android:padding="3dp"
-
+                android:textColor="@color/black"
                 android:text="펼치기"
                 android:textSize="7pt" />
 
@@ -238,6 +251,7 @@
                 android:gravity="center"
                 android:padding="2dp"
                 android:text="접기"
+                android:textColor="@color/black"
                 android:textSize="7pt"
                 android:visibility="gone" />
 
@@ -261,6 +275,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:text="키워드"
                     android:textSize="8pt"
                     android:textStyle="bold" />
@@ -271,6 +286,7 @@
                     android:gravity="center"
                     android:text="가 포함된 뉴스"
                     android:textSize="8pt"
+                    android:textColor="@color/black"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -289,6 +305,7 @@
                 android:background="@drawable/stroke_background"
                 android:gravity="center"
                 android:padding="3dp"
+                android:textColor="@color/black"
                 android:text="펼치기"
                 android:textSize="7pt" />
 
@@ -299,6 +316,7 @@
                 android:background="@drawable/stroke_background"
                 android:gravity="center"
                 android:padding="2dp"
+                android:textColor="@color/black"
                 android:text="접기"
                 android:textSize="7pt"
                 android:visibility="gone" />

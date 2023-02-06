@@ -11,6 +11,7 @@
         android:gravity="left"
         android:textStyle="bold"
         android:padding="10dp"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:id="@+id/theme_detail_name"
         android:text="코난 테크놀로지"
@@ -25,6 +26,7 @@
         android:padding="10dp"
         android:id="@+id/theme_current_value"
         android:textSize="15sp"
+        android:textColor="@color/black"
         android:text="20,300"
        />
 

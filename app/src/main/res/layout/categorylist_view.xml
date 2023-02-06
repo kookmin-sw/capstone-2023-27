@@ -9,6 +9,7 @@
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
         android:text="업종업종"
+        android:textColor="@color/black"
         android:layout_margin="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

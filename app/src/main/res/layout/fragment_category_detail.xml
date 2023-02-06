@@ -43,6 +43,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="출판"
+                    android:textColor="@color/black"
                     android:textSize="8pt"
                     android:textStyle="bold" />
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,6 +87,7 @@
                     android:text="종목명"
                     android:gravity="center"
                     android:padding="10dp"
+                    android:textColor="@color/black"
                     android:textSize="7pt"
                     android:background="@drawable/stroke_background"
                     android:layout_weight="5" />
@@ -97,12 +99,14 @@
                     android:gravity="center"
                     android:textSize="7pt"
                     android:padding="10dp"
+                    android:textColor="@color/black"
                     android:layout_weight="2"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="전일대비"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:padding="10dp"
                     android:textSize="7pt"
                     android:background="@drawable/stroke_background"
@@ -122,6 +126,7 @@
                 android:background="@drawable/stroke_background"
                 android:gravity="center"
                 android:padding="3dp"
+                android:textColor="@color/black"
                 android:text="펼치기"
                 android:textSize="7pt"/>
             <TextView
@@ -132,6 +137,7 @@
                 android:gravity="center"
                 android:padding="2dp"
                 android:text="접기"
+                android:textColor="@color/black"
                 android:textSize="7pt"
                 android:visibility="gone" />
 
@@ -157,6 +163,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="출판"
+                    android:textColor="@color/black"
                     android:textSize="8pt"
                     android:textStyle="bold" />
 

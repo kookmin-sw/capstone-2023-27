@@ -10,6 +10,7 @@
         android:textStyle="bold"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:textColor="@color/black"
         android:text= "금리인상 중단 기대감…환율, 1230원 하향이탈 주목..."
         android:textSize="13sp"
         />
