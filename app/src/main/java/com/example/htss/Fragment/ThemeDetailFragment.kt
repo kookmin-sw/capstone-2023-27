@@ -24,11 +24,7 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
         ThemeDetailListModel("시공테크","+25%", "13000"),
         ThemeDetailListModel("이월드", "-100%", "104450")
     )
-    private var ThemeNewsList = arrayListOf<NewsModel>(
-        NewsModel("뉴스뉴스뉴스"),
-        NewsModel("add add add"),
-        NewsModel("추추가가추추가가")
-    )
+    private var ThemeNewsList = arrayListOf<NewsModel>()
 
 
     private var themeDetailListAdapter = ThemeDetailListAdapter(ThemeDetailList)

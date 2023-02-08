@@ -25,11 +25,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
         CategoryDetailListModel("이노룰스", "-13%", "104450")
     )
 
-    private var CategoryDetailNewsList = arrayListOf<NewsModel>(
-        NewsModel("뉴스뉴스뉴스"),
-        NewsModel("add add add"),
-        NewsModel("추추가가추추가가")
-    )
+    private var CategoryDetailNewsList = arrayListOf<NewsModel>()
 
     private val categorydetailAdapter = CategoryDetailListAdapter(CategoryDetailList)
     private val categorydetailNewsAdapter = MainNewsAdapter(CategoryDetailNewsList)

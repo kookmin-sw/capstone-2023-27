@@ -40,11 +40,7 @@ class KeyWordFragment : Fragment() {
         KeywordRelatedStockModel( "현대자동차","2000","-50%","10회"),
     )
 
-    private var RelatedNewsList = arrayListOf<NewsModel>(
-        NewsModel("뉴스뉴스"),
-        NewsModel("추가추가"),
-        NewsModel("하자하자"),
-    )
+    private var RelatedNewsList = arrayListOf<NewsModel>()
 
     private var KeywordCategoryListAdapter = HomeAdapter(KeywordCategoryList)
     private var KeywordThemeListAdapter = HomeAdapter(KeywordThemeList)

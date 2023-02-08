@@ -14,11 +14,7 @@ class StockFragment : Fragment() {
 
     private lateinit var view: FragmentStockBinding
 
-    private var StockNewsList = arrayListOf<NewsModel>(
-        NewsModel("뉴스뉴스뉴스"),
-        NewsModel("add add add"),
-        NewsModel("추추가가추추가가")
-    )
+    private var StockNewsList = arrayListOf<NewsModel>()
 
     private var StockNewsListAdapter = MainNewsAdapter(StockNewsList)
 

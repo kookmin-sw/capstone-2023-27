@@ -8,5 +8,4 @@ data class NewsListItem (
     val date: String,
     val rink: String,
     val title: String
-
     )

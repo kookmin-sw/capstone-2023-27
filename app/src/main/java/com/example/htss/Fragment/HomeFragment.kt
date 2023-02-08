@@ -13,6 +13,7 @@ import com.example.htss.Adapter.HomeAdapter
 import com.example.htss.Model.MainModel
 import com.example.htss.Model.NewsModel
 import com.example.htss.R
+import com.example.htss.Retrofit.Model.NewsList
 import com.example.htss.Retrofit.Model.SectorThemeList
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentHomeBinding
@@ -89,8 +90,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
             }
         })
-        getHighSectorList(3)
-        getHighThemeList(3)
+        getHighSectorList(5)
+        getHighThemeList(5)
+        getMainNewsList(5)
 
         view.seeMore1.setOnClickListener(this)
         view.seeMore2.setOnClickListener(this)
@@ -141,6 +143,25 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         })
     }
+    fun getMainNewsList(num: Int){
+        retrofit.getMainNewsList(num).enqueue(object : Callback<NewsList>{
+            override fun onResponse(
+                call: Call<NewsList>,
+                response: Response<NewsList>
+            ) {
+                if(response.code()==200) {
+                    addNewsList(response.body())
+                    Log.d("API호출", response.raw().toString())
+                } else {
+                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<NewsList>, t: Throwable) {
+                Log.d("API호출2", t.message.toString())
+            }
+        })
+    }
     private fun addResultSectorThemeHighList(name:String, body: SectorThemeList?) {
         when(name){
             "sector" -> {
@@ -176,8 +197,19 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
         }
     }
+    private fun addNewsList(body: NewsList?){
+        newsRankList.clear()
+        if(body.isNullOrEmpty()){
 
-
+        }
+        else{
+            for(item in body){
+                Log.d("API뉴스결과",item.toString())
+                newsRankList.add(NewsModel("종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+            }
+            newsRankListAdapter.notifyDataSetChanged()
+        }
+    }
     private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle
         Log.d("argument", bundle.toString())
@@ -215,10 +247,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 val bundle = Bundle()
                 bundle.putString("keyword", view.editText.getText().toString())
                 view.editText.text = null
-
                 replaceFragment(KeyWordFragment(),bundle)
             }
         }
-
     }
 }

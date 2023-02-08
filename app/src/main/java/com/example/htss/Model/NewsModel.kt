@@ -1,6 +1,9 @@
 package com.example.htss.Model
 
 class NewsModel (
-    val news : String,
-    val isExpandable: Boolean = false
+    val ticker:String,
+    val provider:String,
+    val date: String,
+    val rink:String,
+    val title:String,
 )
