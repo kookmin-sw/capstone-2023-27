@@ -9,7 +9,7 @@ import com.example.htss.Model.MainModel
 import com.example.htss.R
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-class HomeAdapter(private val dataSet: ArrayList<MainModel>) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeAdapter(private val dataSet: MutableList<MainModel>) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -9,7 +9,7 @@ import com.example.htss.Model.NewsModel
 import com.example.htss.R
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-class MainNewsAdapter(private val itemSet: ArrayList<NewsModel>) :
+class MainNewsAdapter(private val itemSet: MutableList<NewsModel>) :
     RecyclerView.Adapter<MainNewsAdapter.ViewHolder>() {
 
     private lateinit var itemClickListener: OnItemClickListener

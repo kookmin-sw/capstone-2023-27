@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.MainNewsAdapter
@@ -12,30 +13,24 @@ import com.example.htss.Adapter.HomeAdapter
 import com.example.htss.Model.MainModel
 import com.example.htss.Model.NewsModel
 import com.example.htss.R
+import com.example.htss.Retrofit.Model.SectorThemeList
+import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentHomeBinding
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
     private lateinit var view: FragmentHomeBinding
+    private val retrofit = RetrofitClient.create()
 /////////////배열선언
-    private val categoryRankList = arrayListOf<MainModel>(
-        MainModel("1","업종1", "+10%" ),
-        MainModel("2","업종2","-5.8%"),
-        MainModel("3","업종3","-10%")
-    )
+    private val categoryRankList = mutableListOf<MainModel>()
 
-    private val themeRankList = arrayListOf<MainModel>(
-        MainModel("1","테마1", "-2%" ),
-        MainModel("2","테마2","-5.8%"),
-        MainModel("3","테마3","-10%")
-    )
+    private val themeRankList = mutableListOf<MainModel>()
 
-    private val newsRankList = arrayListOf<NewsModel>(
-        NewsModel("금리인상 중단 기대감…환율, 1230원 하향이탈 주목"),
-        NewsModel("기술주 실적에 실망, 급락하다 보합권 혼조…나스"),
-        NewsModel("뉴욕증시, 기업 실적 우려에 혼조…출근길 눈 '펑")
-    )
+    private val newsRankList = mutableListOf<NewsModel>()
 //////////////////////////어댑터에 배열선언
     private val categoryRankListAdapter = HomeAdapter(categoryRankList)
     private val themeRankListAdapter = HomeAdapter(themeRankList)
@@ -94,6 +89,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
             }
         })
+        getHighSectorList(3)
+        getHighThemeList(3)
 
         view.seeMore1.setOnClickListener(this)
         view.seeMore2.setOnClickListener(this)
@@ -103,6 +100,83 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         return view.root
     }
+    fun getHighSectorList(num: Int){
+        retrofit.getHighSectorList(num).enqueue(object: Callback<SectorThemeList> {
+            override fun onResponse(
+                call: Call<SectorThemeList>,
+                response: Response<SectorThemeList>
+            ) {
+                if(response.code()==200) {
+                    addResultSectorThemeHighList("sector",response.body())
+                    Log.d("API호출", response.raw().toString())
+                } else {
+                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<SectorThemeList>, t: Throwable) {
+                Log.d("API호출2", t.message.toString())
+            }
+
+        })
+    }
+
+    fun getHighThemeList(num: Int){
+        retrofit.getHighThemeList(num).enqueue(object: Callback<SectorThemeList> {
+            override fun onResponse(
+                call: Call<SectorThemeList>,
+                response: Response<SectorThemeList>
+            ) {
+                if(response.code()==200) {
+                    addResultSectorThemeHighList("theme",response.body())
+                    Log.d("API호출", response.raw().toString())
+                } else {
+                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<SectorThemeList>, t: Throwable) {
+                Log.d("API호출2", t.message.toString())
+            }
+
+        })
+    }
+    private fun addResultSectorThemeHighList(name:String, body: SectorThemeList?) {
+        when(name){
+            "sector" -> {
+                categoryRankList.clear()
+                if(body != null) {
+                    for(item in body) {
+                        Log.d("API결과",item.toString())
+                        if(item.rate >= 0.0){
+                            categoryRankList.add(MainModel(item.keyword, "+"+item.rate.toString()+"%"))
+                        } else {
+                            categoryRankList.add(MainModel(item.keyword, item.rate.toString()+"%"))
+                        }
+                    }
+                }
+                Log.d("API결과리스트", categoryRankList.toString())
+                categoryRankListAdapter.notifyDataSetChanged()
+            }
+            "theme" -> {
+                themeRankList.clear()
+                if(body != null) {
+                    for(item in body) {
+                        Log.d("API결과",item.toString())
+                        if(item.rate >= 0.0){
+                            themeRankList.add(MainModel(item.keyword, "+"+item.rate.toString()+"%"))
+                        } else {
+                            themeRankList.add(MainModel(item.keyword, item.rate.toString()+"%"))
+                        }
+                    }
+                }
+                Log.d("API결과리스트", themeRankList.toString())
+                themeRankListAdapter.notifyDataSetChanged()
+
+            }
+        }
+    }
+
 
     private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle

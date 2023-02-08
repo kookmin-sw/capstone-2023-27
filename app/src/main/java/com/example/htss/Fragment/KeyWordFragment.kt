@@ -23,21 +23,21 @@ class KeyWordFragment : Fragment() {
     private lateinit var view: FragmentKeyWordBinding
 
     private var KeywordCategoryList = arrayListOf<MainModel>(
-        MainModel("1","업종1", "+10%" ),
-        MainModel("2","업종2","-5.8%"),
-        MainModel("3","업종3","-10%")
+        MainModel("업종1", "+10%" ),
+        MainModel("업종2","-5.8%"),
+        MainModel("업종3","-10%")
     )
 
     private var KeywordThemeList = arrayListOf<MainModel>(
-        MainModel("1","테마1", "-2%" ),
-        MainModel("2","테마2","-5.8%"),
-        MainModel("3","테마3","-10%")
+        MainModel("테마1", "-2%" ),
+        MainModel("테마2","-5.8%"),
+        MainModel("테마3","-10%")
     )
 
     private var RelatedStockList = arrayListOf<KeywordRelatedStockModel>(
-        KeywordRelatedStockModel("1", "삼성전자","9200","+85%","100회"),
-        KeywordRelatedStockModel("2", "SK하이닉스","8000","+10%","30회"),
-        KeywordRelatedStockModel("3", "현대자동차","2000","-50%","10회"),
+        KeywordRelatedStockModel( "삼성전자","9200","+85%","100회"),
+        KeywordRelatedStockModel( "SK하이닉스","8000","+10%","30회"),
+        KeywordRelatedStockModel( "현대자동차","2000","-50%","10회"),
     )
 
     private var RelatedNewsList = arrayListOf<NewsModel>(
