@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="업종별 시세"
+            android:text="업종별 시세 "
             android:textSize="7pt"
             android:padding="5dp"
             android:gravity="center"
