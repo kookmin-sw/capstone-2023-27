@@ -5,6 +5,7 @@
 	symlinks = false
 	ignorecase = true
 [remote "origin"]
-	url = https://github.com/hkh0912/HTSS.git
+	url = https://github.com/hkh0912/HTSS
 	fetch = +refs/*:refs/*
 	mirror = true
+	pushurl = https://github.com/kookmin-sw/capstone-2023-27
