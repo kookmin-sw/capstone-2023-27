@@ -294,7 +294,7 @@ class Update():
         self.engine.execute("update time_table set day_week = '{now}' limit 1".format(now=datetime.now()))
         print("end sector")
 
-    def update_company_info2(self):
+    def update_company_info(self):
         tmp_df = pd.read_sql("select distinct(ticker),company_name from stock_price;", self.engine)
         tickers = tmp_df["ticker"].tolist()
         info_list=[]
@@ -384,7 +384,7 @@ class Update():
         tmp_df["dvr"] = dvr_list
         tmp_df.to_sql(name='company_info_table', con=self.engine, if_exists='replace', index=False, index_label="ticker")
 
-    def update_company_info(self):
+    def update_company_info2(self):
         tic = self.engine.execute("select distinct(ticker) from stock_price;")
         tickers = [ticker[0] for ticker in tic]
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/100.0.48496.75"}
@@ -425,7 +425,7 @@ class Update():
 
 
 
-a = Update()
+# a = Update()
 # a.update_now_price()
 # 1일 주기
 # a.update_price()
@@ -435,4 +435,4 @@ a = Update()
 # a.update_sectors()
 # a.update_thema()
 # a.update_company_info()
-a.update_company_info2()
+# a.update_company_info2()

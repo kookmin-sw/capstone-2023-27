@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hany.capstone.mapper.ApiMapper">
+
+    <select id="nounMatching" resultType="NounDto">
+        select s.ticker,noun,count,company_name,end_price,rate from search_noun s  left join now_stock_price p on s.ticker = p.ticker where noun = #{noun} order by count desc limit #{num};
+    </select>
+
+    <select id = "multNounMatching" resultType="NounDto">
+        select sn.ticker, #{noun} as noun, min(count) as count ,company_name,end_price,rate
+        from search_noun as sn left join now_stock_price as p on sn.ticker = p.ticker where sn.ticker in
+                               (select ticker from search_noun s where noun in <foreach collection="nounLi" item="item" index="index" separator="," open="(" close=")">#{item}</foreach>
+                                                                 group by ticker having count(ticker) = #{len})
+                                and noun in <foreach collection="nounLi" item="item" index="index" separator="," open="(" close=")">#{item}</foreach> group by ticker order by count desc limit #{num};
+    </select>
+    <select id="sectorHigh" resultType="KeywordRateDto">
+        select keyword, round(avg(rate),2) as rate from sector s left join now_stock_price p on s.ticker = p.ticker group by keyword order by rate desc limit #{num};
+    </select>
+
+    <select id="sectorInclude" resultType="PriceDto">
+        select s.company_name, s.keyword,s.ticker,p.end_price,p.rate from sector s left join now_stock_price p on s.ticker = p.ticker  where keyword = #{sector} order by rate desc limit #{num};
+    </select>
+
+    <select id="sectorLike" resultType="KeywordRateDto">
+        select keyword, round(avg(rate),2) as rate from (select * from sector where keyword like CONCAT('%',#{keyword},'%')) s left join now_stock_price p on s.ticker = p.ticker group by keyword order by rate desc limit #{num};
+    </select>
+
+    <select id="themaHigh" resultType="KeywordRateDto">
+        select keyword, round(avg(rate),2) as rate from thema s left join now_stock_price p on s.ticker = p.ticker group by keyword order by rate desc limit #{num};
+    </select>
+
+    <select id="themaInclude" resultType="PriceDto">
+        select s.company_name, s.keyword,s.ticker,p.end_price,p.rate from thema s left join now_stock_price p on s.ticker = p.ticker  where keyword = #{thema} order by rate desc limit #{num};
+    </select>
+
+    <select id="themaLike" resultType="KeywordRateDto">
+        select keyword, round(avg(rate),2) as rate from (select * from thema where keyword like CONCAT('%',#{keyword},'%')) s left join now_stock_price p on s.ticker = p.ticker group by keyword order by rate desc limit #{num};
+    </select>
+
+    <select id="newsRecent" resultType="NewsDto">
+        select ticker,provider,date,rink,title from news order by date desc limit #{num};
+    </select>
+
+    <select id="newsLike" resultType="NewsDto">
+        select ticker,provider,date,rink,title from news where description like CONCAT('% ',#{keyword},'%')order by date desc limit #{num};
+    </select>
+
+    <select id="stockInfo" resultType="CompanyInfoDto">
+        select * from company_info_table where ticker = #{ticker};
+    </select>
+
+    <select id="stockName" resultType="string">
+        select company_name from company_info_table where ticker = #{ticker};
+    </select>
+    <select id="stockTicker" resultType="string">
+        select ticker from company_info_table where company_name = #{company_name};
+    </select>
+
+    <select id="stockPrice" resultType="DatePriceDto">
+        select * from stock_price where ticker = #{ticker} order by date limit #{num};
+    </select>
+
+    <select id="stockNowPrice" resultType="NowPriceDto">
+        select * from now_stock_price where ticker = #{ticker};
+    </select>
+
+    <select id="stockLike" resultType="string">
+        select company_name from company_info_table where company_name like CONCAT('%',#{keyword},'%');
+    </select>
+
+    <select id = "stockDate" resultType="DateDto">
+        select * from time_table;
+    </select>
+</mapper>
