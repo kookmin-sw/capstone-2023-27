@@ -13,12 +13,13 @@ import com.example.htss.Model.CategoryDetailListModel
 import com.example.htss.Model.NewsModel
 import com.example.htss.Model.ThemeDetailListModel
 import com.example.htss.R
+import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentThemeDetailBinding
 
 
 class ThemeDetailFragment : Fragment(),View.OnClickListener {
     private lateinit var view: FragmentThemeDetailBinding
-
+    private val retrofit = RetrofitClient.create()
     private var ThemeDetailList = arrayListOf<ThemeDetailListModel>(
         ThemeDetailListModel("신세계건설", "+30%","9200"),
         ThemeDetailListModel("시공테크","+25%", "13000"),

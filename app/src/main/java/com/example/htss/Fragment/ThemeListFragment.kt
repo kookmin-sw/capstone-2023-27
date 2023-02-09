@@ -1,0 +1,125 @@
+package com.example.htss.Fragment
+
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.htss.Adapter.ThemeListAdapter
+import com.example.htss.Model.CategorylistModel
+import com.example.htss.Model.ThemelistModel
+import com.example.htss.R
+import com.example.htss.Retrofit.Model.SectorThemeList
+import com.example.htss.Retrofit.RetrofitClient
+import com.example.htss.databinding.FragmentListBinding
+import com.example.htss.databinding.FragmentThemeListBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
+class ThemeListFragment : Fragment() {
+
+
+    private lateinit var view: FragmentThemeListBinding
+
+    private val retrofit = RetrofitClient.create()
+
+    private val themeList = arrayListOf<ThemelistModel>()
+
+    private var ThemaFocus =""
+
+    private val themeListAdapter = ThemeListAdapter(themeList)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        view = FragmentThemeListBinding.inflate(inflater, container, false)
+
+        view.recycle5.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = themeListAdapter
+        }
+
+        ThemaFocus = arguments?.getString("foccus").toString()
+
+        if(ThemaFocus == "hue"){
+            view.recycle5.isFocusableInTouchMode = true;
+            view.recycle5.requestFocus()
+        }
+
+//        view.back.setOnClickListener {
+//            parentFragmentManager.popBackStack()
+//        }
+
+        themeListAdapter.setItemClickListener(object : ThemeListAdapter.OnItemClickListener{
+            override fun onClick(v:View, position: Int){
+                val bundle = Bundle()
+                bundle.apply{
+                    bundle.putString("theme_name", themeList[position].themeName)
+                    bundle.putString("theme_percent", themeList[position].percent)
+                }
+                replaceFragment(ThemeDetailFragment(),bundle)
+
+            }
+        })
+
+        getHighThemeList(100)
+
+        return view.root
+    }
+
+    fun getHighThemeList(num: Int){
+        retrofit.getHighThemeList(num).enqueue(object: Callback<SectorThemeList> {
+            override fun onResponse(
+                call: Call<SectorThemeList>,
+                response: Response<SectorThemeList>
+            ) {
+                if(response.code()==200) {
+                    addResultSectorThemeHighList("theme",response.body())
+                    Log.d("API호출", response.raw().toString())
+                } else {
+                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<SectorThemeList>, t: Throwable) {
+                Log.d("API호출2", t.message.toString())
+            }
+        })
+    }
+
+    private fun addResultSectorThemeHighList(name:String, body: SectorThemeList?) {
+        when(name){
+            "theme" -> {
+                themeList.clear()
+                if(body != null) {
+                    for(item in body) {
+                        Log.d("API결과",item.toString())
+                        if(item.rate >= 0.0){
+                            themeList.add(ThemelistModel(item.keyword, "+"+item.rate.toString()+"%"))
+                        } else {
+                            themeList.add(ThemelistModel(item.keyword, item.rate.toString()+"%"))
+                        }
+                    }
+                }
+                themeListAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
+        fragment.arguments = bundle
+        Log.d("argument", bundle.toString())
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.mainFrameLayout, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+}

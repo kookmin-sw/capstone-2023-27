@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Model.NewsModel
+import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentStockBinding
 
 class StockFragment : Fragment() {
 
     private lateinit var view: FragmentStockBinding
-
+    private val retrofit = RetrofitClient.create()
     private var StockNewsList = arrayListOf<NewsModel>()
 
     private var StockNewsListAdapter = MainNewsAdapter(StockNewsList)

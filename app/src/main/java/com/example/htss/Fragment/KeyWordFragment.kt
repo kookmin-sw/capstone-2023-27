@@ -16,12 +16,13 @@ import com.example.htss.Model.KeywordRelatedStockModel
 import com.example.htss.Model.MainModel
 import com.example.htss.Model.NewsModel
 import com.example.htss.R
+import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentKeyWordBinding
 
 
 class KeyWordFragment : Fragment() {
     private lateinit var view: FragmentKeyWordBinding
-
+    private val retrofit = RetrofitClient.create()
     private var KeywordCategoryList = arrayListOf<MainModel>(
         MainModel("업종1", "+10%" ),
         MainModel("업종2","-5.8%"),

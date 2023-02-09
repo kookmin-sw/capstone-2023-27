@@ -9,9 +9,8 @@
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
         android:text="테마테마"
-        android:textStyle="bold"
-        android:layout_margin="15dp"
         android:textColor="@color/black"
+        android:layout_margin="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

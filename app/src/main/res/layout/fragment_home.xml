@@ -103,6 +103,7 @@
                         android:textSize="15dp"
                         android:layout_marginRight="20dp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycle1"
                     android:layout_width="match_parent"
@@ -111,10 +112,9 @@
                     android:nestedScrollingEnabled="false"
                     android:background="@color/white"
                     android:padding="5dp"/>
-            </LinearLayout>
 
-<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--            tools:listitem="@layout/item_view" -->
+
+            </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -223,6 +223,7 @@
                 android:nestedScrollingEnabled="false"
                 android:padding="5dp"/>
             <TextView
+                android:id="@+id/open"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="펼치기"
@@ -233,6 +234,7 @@
                 android:background="@drawable/stroke_background"/>
 
             <TextView
+                android:id="@+id/close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="접기"

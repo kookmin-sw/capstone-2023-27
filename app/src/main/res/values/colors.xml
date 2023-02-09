@@ -12,5 +12,8 @@
     <color name="gray">#D8D2D2</color>
     <color name="red">#F44336</color>
     <color name = "transparent">#00ff0000</color>
+    <color name = "hwangto">#FFD8D2D2</color>
+    <color name = "hmm">#000066</color>
+    <color name ="hmmm">#999999</color>
 
 </resources>

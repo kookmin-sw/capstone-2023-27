@@ -1,6 +1,7 @@
 package com.example.htss.Retrofit
 
 import com.example.htss.Retrofit.Model.NewsList
+import com.example.htss.Retrofit.Model.SectorThemeIncludeList
 import com.example.htss.Retrofit.Model.SectorThemeList
 import retrofit2.Call
 import retrofit2.http.GET
@@ -25,9 +26,19 @@ interface IRetrofit {
         @Query("num") num: Int) :
             Call<NewsList>
 
-    fun getSectorInclude()
+    //검색한 업종에 포함된 종목들
+    @GET("/sector/include")
+    fun getSectorInclude(
+        @Query("sector") sector: String,
+        @Query("num") num: Int) :
+            Call<SectorThemeIncludeList>
 
-    fun getThemeInclude()
+    //검색한 테마에 포함된 종목들
+    @GET("thema/include")
+    fun getThemeInclude(
+        @Query("thema") thema: String,
+        @Query("num") num: Int) :
+            Call<SectorThemeIncludeList>
 
     fun getSectorLikeKeyword()
 

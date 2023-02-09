@@ -25,7 +25,7 @@ class MainNewsAdapter(private val itemSet: MutableList<NewsModel>) :
         val ticker: TextView = view.findViewById(R.id.ticker)
         val provider: TextView = view.findViewById(R.id.provider)
         val date: TextView = view.findViewById(R.id.date)
-        val link: TextView = view.findViewById(R.id.link)
+//        val link: TextView = view.findViewById(R.id.link)
         }
     //반복되는 데이터 넣어두는 곳인 ViewHolder를 생성하는 함수... 13~15번 정도 호출되고 끝
     override fun onCreateViewHolder(
@@ -43,7 +43,7 @@ class MainNewsAdapter(private val itemSet: MutableList<NewsModel>) :
         viewHolder.ticker.text = itemSet[position].ticker
         viewHolder.provider.text = itemSet[position].provider
         viewHolder.date.text = itemSet[position].date
-        viewHolder.link.text = itemSet[position].rink
+//        viewHolder.link.text = itemSet[position].rink
         ///////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -53,9 +53,9 @@ class MainNewsAdapter(private val itemSet: MutableList<NewsModel>) :
 //        viewHolder.itemView.requestLayout()
 ///////////////////////////////////////////////////////////////////////////////
 
-//        viewHolder.itemView.setOnClickListener{
-//            itemClickListener.onClick(it,position)
-//        }
+        viewHolder.itemView.setOnClickListener{
+            itemClickListener.onClick(it,position)
+        }
     }
     interface OnItemClickListener {
         fun onClick(v: View, position: Int)

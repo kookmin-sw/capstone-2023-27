@@ -9,7 +9,7 @@ import com.example.htss.Model.CategoryDetailListModel
 import com.example.htss.R
 
 
-class CategoryDetailListAdapter(private val dataSet: ArrayList<CategoryDetailListModel>):
+class CategoryDetailListAdapter(private val dataSet: MutableList<CategoryDetailListModel>):
 
     RecyclerView.Adapter<CategoryDetailListAdapter.ViewHolder>() {
 

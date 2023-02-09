@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
+import com.example.htss.Fragment.AllListFragment
 import com.example.htss.Fragment.HomeFragment
 import com.example.htss.Fragment.ListFragment
 import com.example.htss.Fragment.SettingFragment
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 Log.d("framgent","home")
             }
             R.id.listFragment -> {
-                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, ListFragment::class.java.name)
+                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, AllListFragment::class.java.name)
                 replaceFragment(fragment)
                 Log.d("framgent","category")
             }

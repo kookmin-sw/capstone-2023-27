@@ -1,11 +1,16 @@
 package com.example.htss.Fragment
+import android.content.Intent
+import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.RenderProcessGoneDetail
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.MainNewsAdapter
@@ -90,18 +95,29 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
             }
         })
-        getHighSectorList(5)
-        getHighThemeList(5)
-        getMainNewsList(5)
+
+        newsRankListAdapter.setItemClickListener(object : MainNewsAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(newsRankList[position].rink)))
+            }
+
+        })
+
+        getHighSectorList(3)
+        getHighThemeList(3)
+        getMainNewsList(3)
 
         view.seeMore1.setOnClickListener(this)
         view.seeMore2.setOnClickListener(this)
         view.rightArrow1.setOnClickListener(this)
         view.rightArrow2.setOnClickListener(this)
         view.searchBtn.setOnClickListener(this)
+        view.open.setOnClickListener(this)
+        view.close.setOnClickListener(this)
 
         return view.root
     }
+
     fun getHighSectorList(num: Int){
         retrofit.getHighSectorList(num).enqueue(object: Callback<SectorThemeList> {
             override fun onResponse(
@@ -205,7 +221,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         else{
             for(item in body){
                 Log.d("API뉴스결과",item.toString())
-                newsRankList.add(NewsModel("종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+                newsRankList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
             }
             newsRankListAdapter.notifyDataSetChanged()
         }
@@ -226,22 +242,22 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 val bundle =Bundle()
                 Log.d("argument", "goodgood")
                 bundle.putString("focus","good")
-                replaceFragment(ListFragment(), bundle)
+                replaceFragment(AllListFragment(), bundle)
             }
             R.id.see_more2 ->{
                 val bundle = Bundle()
                 bundle.putString("foccus", "hue")
-                replaceFragment(ListFragment(), bundle)
+                replaceFragment(AllListFragment(), bundle)
             }
             R.id.right_arrow1 ->{
                 val bundle = Bundle()
                 bundle.putString("focus", "thue")
-                replaceFragment(ListFragment(), bundle)
+                replaceFragment(AllListFragment(), bundle)
             }
             R.id.right_arrow2 ->{
                 val bundle = Bundle()
                 bundle.putString("foccus", "hue")
-                replaceFragment(ListFragment(), bundle)
+                replaceFragment(AllListFragment(), bundle)
             }
             R.id.search_btn -> {
                 val bundle = Bundle()
@@ -249,6 +265,17 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 view.editText.text = null
                 replaceFragment(KeyWordFragment(),bundle)
             }
+            R.id.open -> {
+                getMainNewsList(10)
+                view.close.visibility = View.VISIBLE
+                view.open.visibility = View.GONE
+            }
+            R.id.close -> {
+                getMainNewsList(3)
+                view.close.visibility = View.GONE
+                view.open.visibility = View.VISIBLE
+            }
         }
     }
+
 }
