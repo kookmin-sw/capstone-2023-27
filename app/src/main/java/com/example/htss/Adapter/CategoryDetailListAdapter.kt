@@ -32,7 +32,7 @@ class CategoryDetailListAdapter(private val dataSet: MutableList<CategoryDetailL
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.categoryDetailName.text = dataSet[position].CatagoryName
-        holder.categoryCurrentPrice.text = dataSet[position].CatagoryPrice.toString()
+        holder.categoryCurrentPrice.text = dataSet[position].CatagoryPrice
         if (dataSet[position].CatagoryPercent.substring(0,1) == "+") {
             holder.categoryPlusPercent.text = dataSet[position].CatagoryPercent
             holder.categoryPlusPercent.visibility = View.VISIBLE

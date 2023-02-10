@@ -1,5 +1,7 @@
 package com.example.htss.Fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +15,7 @@ import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Model.CategoryDetailListModel
 import com.example.htss.Model.NewsModel
 import com.example.htss.R
+import com.example.htss.Retrofit.Model.KeywordIncludeNewsList
 import com.example.htss.Retrofit.Model.SectorThemeIncludeList
 import com.example.htss.Retrofit.Model.SectorThemeList
 import com.example.htss.Retrofit.RetrofitClient
@@ -81,13 +84,24 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
                 }
                 replaceFragment(StockFragment(), bundle)
             }
-
+        })
+        categorydetailNewsAdapter.setItemClickListener(object : MainNewsAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(CategoryDetailNewsList[position].rink)))
+            }
         })
 
         view.back.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
-        getSectorInclude(3)
+
+        view.categoryDetailOpenBtn.setOnClickListener(this)
+        view.categoryDetailCloseBtn.setOnClickListener(this)
+        view.categoryIncludeNewsCloseBtn.setOnClickListener(this)
+        view.categoryIncludeNewsOpenBtn.setOnClickListener(this)
+
+        getSectorInclude(categoryName,3)
+        getSectorIncludeNews(categoryName,3)
 
         return view.root
     }
@@ -113,10 +127,41 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
         CategoryDetailList.clear()
         if(body != null){
             for(item in body)
-                CategoryDetailList.add(CategoryDetailListModel(item.company_name,item.rate.toString(),item.end_price.toString()))
+                CategoryDetailList.add(CategoryDetailListModel(item.company_name,item.end_price.toString(),"+"+item.rate.toString()+"%"))
+
         }
         categorydetailAdapter.notifyDataSetChanged()
     }
+
+    fun getSectorIncludeNews(keyword: String, num: Int){
+        retrofit.getSectorIncludeNews(keyword, num).enqueue(object: Callback<KeywordIncludeNewsList> {
+            override fun onResponse(
+                call: Call<KeywordIncludeNewsList>,
+                response: Response<KeywordIncludeNewsList>
+            ) {
+                if(response.code()==200) {
+                    addSectorthemeIncludeNewsList(response.body())
+                    Log.d("API호출", response.raw().toString())
+                } else {
+                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<KeywordIncludeNewsList>, t: Throwable) {
+                Log.d("API호출2", t.message.toString())
+            }
+        })
+    }
+
+    private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
+        CategoryDetailNewsList.clear()
+        if (body != null) {
+            for(item in body){
+                CategoryDetailNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+            }
+            categorydetailNewsAdapter.notifyDataSetChanged()
+        }
+    }
+
 
     private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle
@@ -129,6 +174,27 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(p0: View?) {
-        TODO("Not yet implemented")
+        when(p0?.id){
+            R.id.category_detail_open_btn -> {
+                getSectorInclude(categoryName, 10)
+                view.categoryDetailOpenBtn.visibility = View.GONE
+                view.categoryDetailCloseBtn.visibility=View.VISIBLE
+            }
+            R.id.category_detail_close_btn->{
+                getSectorInclude(categoryName,3)
+                view.categoryDetailOpenBtn.visibility = View.VISIBLE
+                view.categoryDetailCloseBtn.visibility=View.GONE
+            }
+            R.id.category_include_news_open_btn->{
+                getSectorIncludeNews(categoryName,10)
+                view.categoryIncludeNewsOpenBtn.visibility = View.GONE
+                view.categoryIncludeNewsCloseBtn.visibility = View.VISIBLE
+            }
+            R.id.category_include_news_close_btn -> {
+                getSectorIncludeNews(categoryName,3)
+                view.categoryIncludeNewsOpenBtn.visibility = View.VISIBLE
+                view.categoryIncludeNewsCloseBtn.visibility = View.GONE
+            }
+        }
     }
 }

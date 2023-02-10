@@ -47,7 +47,7 @@
         android:id="@+id/category_detail_minuspercent"
         android:padding="10dp"
         android:visibility="gone"
-        android:text="+2.73%"
+        android:text="-2.73%"
         android:textColor="@color/red" />
 
 </LinearLayout>

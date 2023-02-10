@@ -1,5 +1,6 @@
 package com.example.htss.Retrofit
 
+import com.example.htss.Retrofit.Model.KeywordIncludeNewsList
 import com.example.htss.Retrofit.Model.NewsList
 import com.example.htss.Retrofit.Model.SectorThemeIncludeList
 import com.example.htss.Retrofit.Model.SectorThemeList
@@ -40,9 +41,14 @@ interface IRetrofit {
         @Query("num") num: Int) :
             Call<SectorThemeIncludeList>
 
-    fun getSectorLikeKeyword()
+    //검색한 업종이 포함된 뉴스
+    @GET("/news/like")
+    fun getSectorIncludeNews(
+        @Query("keyword") keyword: String,
+        @Query("num") num: Int) :
+            Call<KeywordIncludeNewsList>
 
-    fun getThemeLikeKeyword()
+    fun getThemeIncludeNews()
 
 
 }
