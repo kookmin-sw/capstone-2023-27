@@ -147,7 +147,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="포함된 뉴스"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/hmmm"
                     android:textSize="8pt"
                     android:textStyle="bold" />
             </LinearLayout>

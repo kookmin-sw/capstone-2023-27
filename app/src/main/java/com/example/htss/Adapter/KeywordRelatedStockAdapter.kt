@@ -10,7 +10,7 @@ import com.example.htss.Model.KeywordRelatedStockModel
 import com.example.htss.R
 import org.w3c.dom.Text
 
-class KeywordRelatedStockAdapter(private val itemSet: ArrayList<KeywordRelatedStockModel>) :
+class KeywordRelatedStockAdapter(private val itemSet: MutableList<KeywordRelatedStockModel>) :
     RecyclerView.Adapter<KeywordRelatedStockAdapter.ViewHolder>() {
 
     private lateinit var itemClickListener: OnItemClickListener

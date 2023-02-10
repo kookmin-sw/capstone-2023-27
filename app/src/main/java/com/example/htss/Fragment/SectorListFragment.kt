@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.htss.Adapter.CategoryListAdapter
 import com.example.htss.Model.CategorylistModel
 import com.example.htss.Model.MainModel
@@ -24,11 +25,9 @@ import retrofit2.Response
 class SectorListFragment : Fragment() {
     private lateinit var view: FragmentSectorListBinding
     private val retrofit = RetrofitClient.create()
-
     private val categoryList = arrayListOf<CategorylistModel>()
-
     private val categoryListAdapter = CategoryListAdapter(categoryList)
-
+    private var num = 20
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,9 +35,27 @@ class SectorListFragment : Fragment() {
 
         view = FragmentSectorListBinding.inflate(inflater, container, false)
 
+        getHighSectorList(num)
+
         view.recycle4.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = categoryListAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val lastVisibleItemPosition =
+                        (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
+                    val itemTotalCount =
+                        recyclerView.adapter!!.itemCount - 1 // 어댑터에 등록된 아이템의 총 개수 -1
+
+                    //최하단에 도달 1
+                    if (!view.recycle4.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && itemTotalCount + 1 >= num) {
+                        num += 20
+                        getHighSectorList(num)
+                    }
+                }
+            })
         }
 
 //        view.back.setOnClickListener {
@@ -55,8 +72,6 @@ class SectorListFragment : Fragment() {
                 replaceFragment(CategoryDetailFragment(), bundle)
             }
         })
-
-        getHighSectorList(100)
 
         return view.root
     }

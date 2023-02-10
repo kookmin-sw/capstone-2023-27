@@ -44,7 +44,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
 
-        android:textSize="15sp" />
+        android:textSize="11sp" />
 
     <TextView
         android:id="@+id/stock_minuspercent"
@@ -52,6 +52,7 @@
         android:layout_weight="2"
         android:layout_height="match_parent"
         android:text="-0.5%"
+        android:textStyle="bold"
         android:textColor="@color/red"
         android:gravity="right|center"
         android:textSize="13sp" />
@@ -66,6 +67,7 @@
         android:textColor="@color/blue"
         android:gravity="right|center"
         android:textSize="13sp"
+        android:textStyle="bold"
         android:visibility="gone" />
 
     <TextView

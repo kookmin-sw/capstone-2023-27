@@ -101,7 +101,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
         view.categoryIncludeNewsOpenBtn.setOnClickListener(this)
 
         getSectorInclude(categoryName,3)
-        getSectorIncludeNews(categoryName,3)
+        getSectorThemeKeywordIncludeNews(categoryName,3)
 
         return view.root
     }
@@ -126,15 +126,32 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
     private fun addSectorthemeIncludeList(body: SectorThemeIncludeList?){
         CategoryDetailList.clear()
         if(body != null){
-            for(item in body)
-                CategoryDetailList.add(CategoryDetailListModel(item.company_name,item.end_price.toString(),"+"+item.rate.toString()+"%"))
-
+            for(item in body) {
+                if (item.rate >= 0.0) {
+                    CategoryDetailList.add(
+                        CategoryDetailListModel(
+                            item.company_name,
+                            item.end_price.toString(),
+                            "+" + item.rate.toString() + "%"
+                        )
+                    )
+                }
+                else{
+                    CategoryDetailList.add(
+                        CategoryDetailListModel(
+                            item.company_name,
+                            item.end_price.toString(),
+                            item.rate.toString() + "%"
+                        )
+                    )
+                }
+            }
         }
         categorydetailAdapter.notifyDataSetChanged()
     }
 
-    fun getSectorIncludeNews(keyword: String, num: Int){
-        retrofit.getSectorIncludeNews(keyword, num).enqueue(object: Callback<KeywordIncludeNewsList> {
+    fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int){
+        retrofit.getSectorThemeKeywordIncludeNews(keyword, num).enqueue(object: Callback<KeywordIncludeNewsList> {
             override fun onResponse(
                 call: Call<KeywordIncludeNewsList>,
                 response: Response<KeywordIncludeNewsList>
@@ -154,7 +171,10 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
 
     private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
         CategoryDetailNewsList.clear()
-        if (body != null) {
+        if(body.isNullOrEmpty()){
+
+        }
+        else{
             for(item in body){
                 CategoryDetailNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
             }
@@ -186,12 +206,12 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
                 view.categoryDetailCloseBtn.visibility=View.GONE
             }
             R.id.category_include_news_open_btn->{
-                getSectorIncludeNews(categoryName,10)
+                getSectorThemeKeywordIncludeNews(categoryName,10)
                 view.categoryIncludeNewsOpenBtn.visibility = View.GONE
                 view.categoryIncludeNewsCloseBtn.visibility = View.VISIBLE
             }
             R.id.category_include_news_close_btn -> {
-                getSectorIncludeNews(categoryName,3)
+                getSectorThemeKeywordIncludeNews(categoryName,3)
                 view.categoryIncludeNewsOpenBtn.visibility = View.VISIBLE
                 view.categoryIncludeNewsCloseBtn.visibility = View.GONE
             }

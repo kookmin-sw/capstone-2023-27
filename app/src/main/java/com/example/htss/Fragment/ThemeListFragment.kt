@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.htss.Adapter.ThemeListAdapter
 import com.example.htss.Model.CategorylistModel
 import com.example.htss.Model.ThemelistModel
@@ -26,12 +27,11 @@ class ThemeListFragment : Fragment() {
     private lateinit var view: FragmentThemeListBinding
 
     private val retrofit = RetrofitClient.create()
-
     private val themeList = arrayListOf<ThemelistModel>()
-
     private var ThemaFocus =""
-
     private val themeListAdapter = ThemeListAdapter(themeList)
+
+    private var num = 20
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,10 +39,26 @@ class ThemeListFragment : Fragment() {
     ): View? {
 
         view = FragmentThemeListBinding.inflate(inflater, container, false)
-
+        getHighThemeList(num)
         view.recycle5.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = themeListAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val lastVisibleItemPosition =
+                        (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition() // 화면에 보이는 마지막 아이템의 position
+                    val itemTotalCount =
+                        recyclerView.adapter!!.itemCount - 1 // 어댑터에 등록된 아이템의 총 개수 -1
+
+                    //최하단에 도달 1
+                    if (!view.recycle5.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && itemTotalCount + 1 >= num) {
+                        num += 20
+                        getHighThemeList(num)
+                    }
+                }
+            })
         }
 
         ThemaFocus = arguments?.getString("foccus").toString()
@@ -67,8 +83,6 @@ class ThemeListFragment : Fragment() {
 
             }
         })
-
-        getHighThemeList(100)
 
         return view.root
     }

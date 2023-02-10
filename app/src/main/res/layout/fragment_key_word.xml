@@ -176,7 +176,7 @@
 
                     android:text="와(과) 같이 언급된 주식"
                     android:textSize="8pt"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/hmmm"
 
                     android:textStyle="bold" />
             </LinearLayout>
@@ -284,9 +284,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="가 포함된 뉴스"
+                    android:text="이(가) 포함된 뉴스"
                     android:textSize="8pt"
-                    android:textColor="@color/black"
+                    android:textColor="@color/hmmm"
                     android:textStyle="bold" />
             </LinearLayout>
 

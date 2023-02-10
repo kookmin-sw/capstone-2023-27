@@ -9,7 +9,7 @@ import com.example.htss.Model.ThemeDetailListModel
 import com.example.htss.R
 
 
-class ThemeDetailListAdapter(private val dataSet: ArrayList<ThemeDetailListModel>):
+class ThemeDetailListAdapter(private val dataSet: MutableList<ThemeDetailListModel>):
 
     RecyclerView.Adapter<ThemeDetailListAdapter.ViewHolder>() {
 

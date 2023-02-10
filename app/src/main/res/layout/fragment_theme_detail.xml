@@ -120,7 +120,7 @@
                 />
 
             <TextView
-                android:id="@+id/category_detail_open_btn"
+                android:id="@+id/theme_detail_open_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_background"
@@ -130,7 +130,7 @@
                 android:textColor="@color/black"
                 android:textSize="7pt"/>
             <TextView
-                android:id="@+id/category_detail_close_btn"
+                android:id="@+id/theme_detail_close_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_background"
@@ -184,7 +184,7 @@
                 android:nestedScrollingEnabled="false"
                 />
             <TextView
-                android:id="@+id/category_include_news_open_btn"
+                android:id="@+id/theme_include_news_open_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_background"
@@ -194,7 +194,7 @@
                 android:text="펼치기"
                 android:textSize="7pt" />
             <TextView
-                android:id="@+id/category_include_news_close_btn"
+                android:id="@+id/theme_include_news_close_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_background"
