@@ -272,7 +272,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
         }
         KeywordThemeListAdapter.notifyDataSetChanged()
     }
-
+//수정..
     fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int){
         retrofit. getSectorThemeKeywordIncludeNews(keyword,num).enqueue(object : Callback<KeywordIncludeNewsList> {
             override fun onResponse(
