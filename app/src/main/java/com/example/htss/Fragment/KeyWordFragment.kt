@@ -286,7 +286,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
                     Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
                 }
             }
-            //wpqkfgfgfgwpqkfehlfkxptmxmrtrtrtrtrtrtrt
+            //wpqkfgfgfgwpqkfehlfkxptmxmrtrtrtrtrtrtrtdff
 
             override fun onFailure(call: Call<KeywordIncludeNewsList>, t: Throwable) {
                 Log.d("API호출2", t.message.toString())
