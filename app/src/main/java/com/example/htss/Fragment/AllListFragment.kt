@@ -30,7 +30,7 @@ class AllListFragment : Fragment(), View.OnClickListener {
         when(first) {
            "sector" -> replaceFragment(SectorListFragment())
         }
-        view.sector.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmm))
+        view.sector.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         view.theme.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
 
 
@@ -38,7 +38,7 @@ class AllListFragment : Fragment(), View.OnClickListener {
 
         if(ThemaFocus == "hue"){
             replaceFragment(ThemeListFragment())
-            view.theme.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmm))
+            view.theme.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             view.sector.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
         }
 

@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Adapter.HomeAdapter
 import com.example.htss.Model.MainModel
@@ -28,7 +29,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeFragment : Fragment(), View.OnClickListener {
-
+    private var num = 3
     private lateinit var view: FragmentHomeBinding
     private val retrofit = RetrofitClient.create()
 /////////////배열선언
@@ -47,6 +48,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
 
+        getMainNewsList(num)
+
         view = FragmentHomeBinding.inflate(inflater, container, false)
 /////////리사이클러뷰에 어댑터 붙이기
         view.recycle1.apply {
@@ -63,6 +66,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.recycle3.apply {
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false)
             adapter = newsRankListAdapter
+
+
             addItemDecoration(
                 DividerItemDecoration(
                     view.recycle3.context,
@@ -105,7 +110,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         getHighSectorList(3)
         getHighThemeList(3)
-        getMainNewsList(3)
+
 
         view.seeMore1.setOnClickListener(this)
         view.seeMore2.setOnClickListener(this)
@@ -266,7 +271,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 replaceFragment(KeyWordFragment(),bundle)
             }
             R.id.open -> {
-                getMainNewsList(10)
+//                getMainNewsList(10)
+
                 view.close.visibility = View.VISIBLE
                 view.open.visibility = View.GONE
             }
