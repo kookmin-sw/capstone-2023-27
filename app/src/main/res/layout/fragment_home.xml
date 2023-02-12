@@ -231,7 +231,7 @@
                 android:textColor="@color/black"
                 android:textAlignment="center"
                 android:clickable="true"
-                android:background="@drawable/stroke_background"/>
+                android:background="@drawable/rounded_corner2"/>
 
             <TextView
                 android:id="@+id/close"
@@ -243,7 +243,7 @@
                 android:visibility="gone"
                 android:clickable="true"
                 android:textColor="@color/black"
-                android:background="@drawable/stroke_background"/>
+                android:background="@drawable/rounded_corner2"/>
         </LinearLayout>
 
       </LinearLayout>
