@@ -79,9 +79,10 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
 
         KeyWordName = arguments?.getString("keyword").toString()
 
-        view.keywordName.text = KeyWordName
+        view.keywordName1.text = KeyWordName
         view.keywordName2.text = KeyWordName
         view.keywordName3.text = KeyWordName
+        view.keywordName4.text = KeyWordName
 
        KeywordCategoryListAdapter.setItemClickListener(object: HomeAdapter.OnItemClickListener{
            override fun onClick(v: View, position: Int) {
@@ -142,6 +143,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
         view.stockOpenBtn.setOnClickListener(this)
         view.newsCloseBtn.setOnClickListener(this)
         view.newsOpenBtn.setOnClickListener(this)
+        view.searchBtn2.setOnClickListener(this)
 
 
         return view.root
@@ -319,6 +321,13 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(p0: View?) {
         when(p0?.id){
+            R.id.search_btn2 -> {
+                val bundle = Bundle()
+                Log.d("되라","ghdhgh")
+                bundle.putString("keyword", view.keywordEdit.getText().trim().toString())
+                view.keywordEdit.text = null
+                replaceFragment(KeyWordFragment(),bundle)
+            }
             R.id.category_close_btn->{
                 getSectorLikeKeyword(KeyWordName,3)
                 view.categoryOpenBtn.visibility = View.VISIBLE

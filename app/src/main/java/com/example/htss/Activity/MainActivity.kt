@@ -36,11 +36,11 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 replaceFragment(fragment)
                 Log.d("framgent","home")
             }
-            R.id.listFragment -> {
-                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, AllListFragment::class.java.name)
-                replaceFragment(fragment)
-                Log.d("framgent","category")
-            }
+//            R.id.listFragment -> {
+//                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, AllListFragment::class.java.name)
+//                replaceFragment(fragment)
+//                Log.d("framgent","category")
+//            }
             R.id.settingFragment -> {
                 val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, SettingFragment::class.java.name)
                 replaceFragment(fragment)

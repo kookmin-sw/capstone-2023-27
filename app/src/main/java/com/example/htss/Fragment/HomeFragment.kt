@@ -266,7 +266,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
             R.id.search_btn -> {
                 val bundle = Bundle()
-                bundle.putString("keyword", view.editText.getText().toString())
+                bundle.putString("keyword", view.editText.getText().trim().toString())
                 view.editText.text = null
                 replaceFragment(KeyWordFragment(),bundle)
             }

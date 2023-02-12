@@ -16,4 +16,8 @@
     <color name = "hmm">#000066</color>
     <color name ="hmmm">#999999</color>
 
+    <color name="brown">#FFAD8E70</color>
+    <color name="dark_brown">#615142</color>
+    <color name = "good">#FFD8D2D2</color>
+
 </resources>

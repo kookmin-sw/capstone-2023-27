@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.KeyWordFragment">
 
     <LinearLayout
@@ -22,20 +23,66 @@
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_margin="10dp"
                 android:background="@color/transparent"
                 android:src="@drawable/ic_baseline_arrow_circle_left_24" />
 
-            <TextView
-                android:id="@+id/keyword_name"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:text="키워드"
-                android:textSize="8pt"
-                android:textStyle="bold" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <EditText
+                    android:id="@+id/keyword_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/rounded_corner"
+                    android:imeOptions="actionDone"
+                    android:padding="6dp"
+                    android:paddingVertical="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="8pt"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.428" />
+
+                <ImageButton
+                    android:id="@+id/search_btn2"
+                    android:background="@color/transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_baseline_search_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/keyword_name"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:gravity="center|left"-->
+<!--                android:paddingLeft="8dp"-->
+<!--                android:text="키워드"-->
+<!--                android:background="@drawable/rounded_corner"-->
+<!--                android:textSize="8pt"-->
+<!--                android:textStyle="bold" />-->
         </LinearLayout>
 
 
@@ -47,16 +94,32 @@
             android:elevation="20dp"
             android:orientation="vertical"
             android:padding="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:text="업종"
-                android:textColor="@color/black"
-                android:textSize="10pt"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/keyword_name1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:text="키워드"
+                    android:textColor="@color/black"
+                    android:textSize="8pt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+                    android:text="와(과) 관련된 업종"
+                    android:textColor="@color/hmmm"
+                    android:textSize="8pt"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/category_recyclerview"
@@ -101,15 +164,32 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:gravity="center"
-                android:text="테마"
-                android:textColor="@color/black"
-                android:textSize="10pt"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/keyword_name2"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:text="키워드"
+                    android:textColor="@color/black"
+                    android:textSize="8pt"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+                    android:text="와(과) 관련된 테마"
+                    android:textColor="@color/hmmm"
+                    android:textSize="8pt"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/theme_recyclerview"
@@ -159,7 +239,7 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp">
                 <TextView
-                    android:id="@+id/keyword_name2"
+                    android:id="@+id/keyword_name3"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
@@ -270,7 +350,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/keyword_name3"
+                    android:id="@+id/keyword_name4"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"

@@ -6,14 +6,13 @@
         android:title="홈"
         android:icon="@drawable/ic_home"/>
 
-    <item
-        android:id="@+id/listFragment"
-        android:title="목록"
-        android:icon="@drawable/ic_list"/>
+
+
+
 
     <item
         android:id="@+id/settingFragment"
-        android:title="설정"
-        android:icon="@drawable/ic_settings"/>
+        android:title="챗봇"
+        android:icon="@drawable/ic_baseline_chat_24"/>
 
 </menu>
