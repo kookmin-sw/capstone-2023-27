@@ -14,6 +14,7 @@ import com.example.htss.Adapter.CategoryDetailListAdapter
 import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Model.CategoryDetailListModel
 import com.example.htss.Model.NewsModel
+import com.example.htss.Model.StockListModel
 import com.example.htss.R
 import com.example.htss.Retrofit.Model.KeywordIncludeNewsList
 import com.example.htss.Retrofit.Model.SectorThemeIncludeList
@@ -30,7 +31,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
     private lateinit var view: FragmentCategoryDetailBinding
     private val retrofit = RetrofitClient.create()
 
-    private val CategoryDetailList = mutableListOf<CategoryDetailListModel>()
+    private val CategoryDetailList = mutableListOf<StockListModel>()
 
     private var CategoryDetailNewsList = mutableListOf<NewsModel>()
 
@@ -78,9 +79,10 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
             override fun onClick(v: View, position: Int) {
                 val bundle = Bundle()
                 bundle.apply {
-                    putString("stock_name", CategoryDetailList[position].CatagoryName)
-                    putString("stock_percent",CategoryDetailList[position].CatagoryPercent)
-                    putString("stock_price", CategoryDetailList[position].CatagoryPrice)
+                    putString("stock_ticker", CategoryDetailList[position].ticker)
+                    putString("stock_name", CategoryDetailList[position].StockName)
+                    putString("stock_percent",CategoryDetailList[position].StockPercent)
+                    putString("stock_price", CategoryDetailList[position].StockPrice)
                 }
                 replaceFragment(StockFragment(), bundle)
             }
@@ -129,7 +131,8 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
             for(item in body) {
                 if (item.rate >= 0.0) {
                     CategoryDetailList.add(
-                        CategoryDetailListModel(
+                       StockListModel(
+                            item.ticker,
                             item.company_name,
                             item.end_price.toString(),
                             "+" + item.rate.toString() + "%"
@@ -138,7 +141,8 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
                 }
                 else{
                     CategoryDetailList.add(
-                        CategoryDetailListModel(
+                        StockListModel(
+                            item.ticker,
                             item.company_name,
                             item.end_price.toString(),
                             item.rate.toString() + "%"

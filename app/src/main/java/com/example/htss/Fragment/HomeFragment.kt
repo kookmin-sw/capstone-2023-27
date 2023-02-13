@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.RenderProcessGoneDetail
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -29,7 +31,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeFragment : Fragment(), View.OnClickListener {
-    private var num = 3
+
+
+    val spinnerList = arrayOf("키워드","종목번호","종목명")
+    var selectedPosition = 0
+
     private lateinit var view: FragmentHomeBinding
     private val retrofit = RetrofitClient.create()
 /////////////배열선언
@@ -48,9 +54,25 @@ class HomeFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
 
-        getMainNewsList(num)
 
         view = FragmentHomeBinding.inflate(inflater, container, false)
+
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, spinnerList)
+        view.searchSpinner.apply{
+            setSelection(0)
+            adapter = spinnerAdapter
+            onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, v: View?, position: Int, id: Long) {
+                    selectedPosition = position
+                    Log.d("selectedPosition", selectedPosition.toString())
+                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+
+            }
+        }
+
+
 /////////리사이클러뷰에 어댑터 붙이기
         view.recycle1.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -110,6 +132,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         getHighSectorList(3)
         getHighThemeList(3)
+        getMainNewsList(3)
 
 
         view.seeMore1.setOnClickListener(this)
@@ -119,8 +142,51 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.searchBtn.setOnClickListener(this)
         view.open.setOnClickListener(this)
         view.close.setOnClickListener(this)
+        view.searchSpinner.setOnClickListener(this)
 
         return view.root
+    }
+
+    fun getTickerByStockName(name: String){
+        retrofit.getTickerByStockName(name).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    if(!response.body().isNullOrBlank()){
+                        val bundle = Bundle()
+                        bundle.putString("stock_ticker", response.body())
+                        replaceFragment(StockFragment(), bundle)
+                    } else {
+                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    fun getStockNameByTicker(ticker: String){
+        retrofit.getStockNameByTicker(ticker).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    if(!response.body().isNullOrBlank()){
+                        val bundle = Bundle()
+                        bundle.putString("stock_ticker", ticker)
+                        replaceFragment(StockFragment(), bundle)
+                    } else {
+                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     fun getHighSectorList(num: Int){
@@ -265,14 +331,24 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 replaceFragment(AllListFragment(), bundle)
             }
             R.id.search_btn -> {
-                val bundle = Bundle()
-                bundle.putString("keyword", view.editText.getText().trim().toString())
+                when(selectedPosition){
+                    1 -> { // 종목번호
+                        getStockNameByTicker(view.editText.text.toString().trim())
+                    }
+                    2 -> { // 종목명
+                        getTickerByStockName(view.editText.text.toString().trim())
+                    }
+                    else -> { // 키워드, 업종, 테마
+                        val bundle = Bundle()
+                        bundle.putString("keyword", view.editText.text.toString().trim())
+//                        bundle.putInt("type", selectedPosition)
+                        replaceFragment(KeyWordFragment(), bundle)
+                    }
+                }
                 view.editText.text = null
-                replaceFragment(KeyWordFragment(),bundle)
             }
             R.id.open -> {
-//                getMainNewsList(10)
-
+                getMainNewsList(10)
                 view.close.visibility = View.VISIBLE
                 view.open.visibility = View.GONE
             }

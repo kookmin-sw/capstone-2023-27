@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.htss.Model.CategoryDetailListModel
+import com.example.htss.Model.StockListModel
 import com.example.htss.R
 
 
-class CategoryDetailListAdapter(private val dataSet: MutableList<CategoryDetailListModel>):
+class CategoryDetailListAdapter(private val dataSet: MutableList<StockListModel>):
 
     RecyclerView.Adapter<CategoryDetailListAdapter.ViewHolder>() {
 
@@ -31,15 +32,15 @@ class CategoryDetailListAdapter(private val dataSet: MutableList<CategoryDetailL
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.categoryDetailName.text = dataSet[position].CatagoryName
-        holder.categoryCurrentPrice.text = dataSet[position].CatagoryPrice
-        if (dataSet[position].CatagoryPercent.substring(0,1) == "+") {
-            holder.categoryPlusPercent.text = dataSet[position].CatagoryPercent
+        holder.categoryDetailName.text = dataSet[position].StockName
+        holder.categoryCurrentPrice.text = dataSet[position].StockPrice
+        if (dataSet[position].StockPercent.substring(0,1) == "+") {
+            holder.categoryPlusPercent.text = dataSet[position].StockPercent
             holder.categoryPlusPercent.visibility = View.VISIBLE
             holder.categoryMinusPercent.visibility = View.GONE
         }
-        if (dataSet[position].CatagoryPercent.substring(0,1) == "-") {
-            holder.categoryMinusPercent.text = dataSet[position].CatagoryPercent
+        if (dataSet[position].StockPercent.substring(0,1) == "-") {
+            holder.categoryMinusPercent.text = dataSet[position].StockPercent
             holder.categoryMinusPercent.visibility = View.VISIBLE
             holder.categoryPlusPercent.visibility = View.GONE
         }

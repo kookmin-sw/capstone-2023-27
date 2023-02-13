@@ -14,6 +14,7 @@ import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Adapter.ThemeDetailListAdapter
 import com.example.htss.Model.CategoryDetailListModel
 import com.example.htss.Model.NewsModel
+import com.example.htss.Model.StockListModel
 import com.example.htss.Model.ThemeDetailListModel
 import com.example.htss.R
 import com.example.htss.Retrofit.Model.KeywordIncludeNewsList
@@ -29,7 +30,7 @@ import retrofit2.Response
 class ThemeDetailFragment : Fragment(),View.OnClickListener {
     private lateinit var view: FragmentThemeDetailBinding
     private val retrofit = RetrofitClient.create()
-    private var ThemeDetailList = mutableListOf<ThemeDetailListModel>()
+    private var ThemeDetailList = mutableListOf<StockListModel>()
     private var ThemeNewsList = mutableListOf<NewsModel>()
 
 
@@ -78,12 +79,13 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
         }
         themeDetailListAdapter.setItemClickListener(object : ThemeDetailListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
-                Log.d("주식", ThemeDetailList[position].ThemeName)
+                Log.d("주식", ThemeDetailList[position].StockName)
                 val bundle = Bundle()
                 bundle.apply {
-                    putString("stock_name", ThemeDetailList[position].ThemeName)
-                    putString("stock_percent", ThemeDetailList[position].Themepercent)
-                    putString("stock_price", ThemeDetailList[position].ThemePrice)
+                    putString("stock_ticker", ThemeDetailList[position].ticker)
+                    putString("stock_name", ThemeDetailList[position].StockName)
+                    putString("stock_percent", ThemeDetailList[position].StockPercent)
+                    putString("stock_price", ThemeDetailList[position].StockPrice)
                 }
                 replaceFragment(StockFragment(), bundle)
             }
@@ -131,20 +133,23 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
             for(item in body) {
                 if (item.rate >= 0.0) {
                     ThemeDetailList.add(
-                        ThemeDetailListModel(
+                        StockListModel(
+                            item.ticker,
                             item.company_name,
-                            "+" + item.rate.toString() + "%",
-                            item.end_price.toString()
+                            item.end_price.toString(),
+                            "+" + item.rate.toString() + "%"
                         )
                     )
                 }
                 else{
                     ThemeDetailList.add(
-                        ThemeDetailListModel(
+                        StockListModel(
+                            item.ticker,
                             item.company_name,
-                            item.rate.toString()+"%",
-                            item.end_price.toString())
+                            item.end_price.toString(),
+                            item.rate.toString()+"%"
                         )
+                    )
                 }
             }
         }

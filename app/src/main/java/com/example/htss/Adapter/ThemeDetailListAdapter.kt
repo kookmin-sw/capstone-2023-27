@@ -5,11 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.htss.Model.StockListModel
 import com.example.htss.Model.ThemeDetailListModel
 import com.example.htss.R
 
 
-class ThemeDetailListAdapter(private val dataSet: MutableList<ThemeDetailListModel>):
+class ThemeDetailListAdapter(private val dataSet: MutableList<StockListModel>):
 
     RecyclerView.Adapter<ThemeDetailListAdapter.ViewHolder>() {
 
@@ -31,15 +32,15 @@ class ThemeDetailListAdapter(private val dataSet: MutableList<ThemeDetailListMod
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.themeDetailName.text = dataSet[position].ThemeName
-        holder.themeCurrentPrice.text = dataSet[position].ThemePrice
-        if (dataSet[position].Themepercent.substring(0,1) == "+") {
-            holder.themePlusPercent.text = dataSet[position].Themepercent
+        holder.themeDetailName.text = dataSet[position].StockName
+        holder.themeCurrentPrice.text = dataSet[position].StockPrice
+        if (dataSet[position].StockPercent.substring(0,1) == "+") {
+            holder.themePlusPercent.text = dataSet[position].StockPercent
             holder.themePlusPercent.visibility = View.VISIBLE
             holder.themeMinusPercent.visibility = View.GONE
         }
-        if (dataSet[position].Themepercent.substring(0,1) == "-") {
-            holder.themeMinusPercent.text = dataSet[position].Themepercent
+        if (dataSet[position].StockPercent.substring(0,1) == "-") {
+            holder.themeMinusPercent.text = dataSet[position].StockPercent
             holder.themeMinusPercent.visibility = View.VISIBLE
             holder.themePlusPercent.visibility = View.GONE
         }

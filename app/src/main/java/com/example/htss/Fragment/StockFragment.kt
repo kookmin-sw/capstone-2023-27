@@ -15,10 +15,13 @@ class StockFragment : Fragment() {
 
     private lateinit var view: FragmentStockBinding
     private val retrofit = RetrofitClient.create()
+
+
     private var StockNewsList = arrayListOf<NewsModel>()
 
     private var StockNewsListAdapter = MainNewsAdapter(StockNewsList)
 
+    private var StockTicker = ""
     private var Stockname = ""
     private var StockPrice = ""
     private var StockPercent = ""
@@ -31,10 +34,12 @@ class StockFragment : Fragment() {
 
         view = FragmentStockBinding.inflate(inflater, container, false)
 
+        StockTicker = arguments?.getString("stock_ticker").toString()
         Stockname = arguments?.getString("stock_name").toString()
         StockPrice= arguments?.getString("stock_price").toString()
         StockPercent = arguments?.getString("stock_percent").toString()
 
+        view.ticker.text = StockTicker
         view.stockName.text = Stockname
         view.stockName2.text = Stockname
         view.stockCurrent.text = StockPrice
