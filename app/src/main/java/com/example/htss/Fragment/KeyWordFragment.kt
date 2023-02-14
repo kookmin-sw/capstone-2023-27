@@ -267,7 +267,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
         RelatedStockList.clear()
 
         if(body.isNullOrEmpty()){
-            view.stockOpenBtn.visibility = View.GONE
+
         }
         else{
             for(item in body) {
@@ -295,7 +295,10 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
                     )
                 }
             }
-            RelatedStockListAdapter.notifyDataSetChanged()
+        }
+        RelatedStockListAdapter.notifyDataSetChanged()
+        if(RelatedStockList.size < 3){
+            view.stockOpenBtn.visibility = View.GONE
         }
     }
     fun getSectorLikeKeyword(keyword: String, num: Int){
@@ -320,7 +323,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
     private fun addSectorLikeKeywordList(body: SectorThemeLikeList?){
         KeywordCategoryList.clear()
         if(body.isNullOrEmpty()){
-            view.categoryOpenBtn.visibility = View.GONE
+
         }
         else{
             for(item in body){
@@ -333,6 +336,9 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
             }
         }
         KeywordCategoryListAdapter.notifyDataSetChanged()
+        if(KeywordCategoryList.size < 3){
+            view.categoryOpenBtn.visibility = View.GONE
+        }
 
     }
 
@@ -359,8 +365,6 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
         KeywordThemeList.clear()
 
         if(body.isNullOrEmpty()){
-            view.themeOpenBtn.visibility = View.GONE
-
         }
         else{
             for(item in body){
@@ -373,6 +377,9 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
             }
         }
         KeywordThemeListAdapter.notifyDataSetChanged()
+        if(KeywordThemeList.size < 3){
+            view.themeOpenBtn.visibility = View.GONE
+        }
     }
 //수정..
     fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int){
@@ -396,7 +403,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
     private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
         RelatedNewsList.clear()
         if(body.isNullOrEmpty()){
-            view.newsOpenBtn.visibility = View.GONE
+
         }
         else{
             for(item in body){
@@ -404,6 +411,9 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
             }
         }
         RelatedNewsListAdapter.notifyDataSetChanged()
+        if(RelatedNewsList.size < 3){
+            view.newsOpenBtn.visibility = View.GONE
+        }
     }
 
 

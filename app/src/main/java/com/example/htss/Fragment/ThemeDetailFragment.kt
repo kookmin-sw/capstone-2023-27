@@ -130,7 +130,7 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
     private fun addSectorthemeIncludeList(body: SectorThemeIncludeList?){
         ThemeDetailList.clear()
         if(body.isNullOrEmpty()){
-            view.themeDetailOpenBtn.visibility = View.GONE
+
         }
         else{
             for(item in body) {
@@ -157,6 +157,9 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
             }
         }
         themeDetailListAdapter.notifyDataSetChanged()
+        if(ThemeDetailList.size < 3 ){
+            view.themeDetailOpenBtn.visibility = View.GONE
+        }
     }
     fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int){
         retrofit.getSectorThemeKeywordIncludeNews(keyword, num).enqueue(object: Callback<KeywordIncludeNewsList> {
@@ -180,14 +183,15 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
     private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
         ThemeNewsList.clear()
         if(body.isNullOrEmpty()){
-            view.themeIncludeNewsOpenBtn.visibility = View.GONE
-
         }
         else{
             for(item in body){
                 ThemeNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
             }
-            themeNewslListAdapter.notifyDataSetChanged()
+        }
+        themeNewslListAdapter.notifyDataSetChanged()
+        if(ThemeNewsList.size < 3){
+            view.themeIncludeNewsOpenBtn.visibility = View.GONE
         }
     }
 
@@ -217,14 +221,11 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
                 getSectorThemeKeywordIncludeNews(themename,10)
                 view.themeIncludeNewsCloseBtn.visibility = View.VISIBLE
                 view.themeIncludeNewsOpenBtn.visibility = View.GONE
-                Log.d("g", "흠")
-
             }
             R.id.theme_include_news_close_btn -> {
                 getSectorThemeKeywordIncludeNews(themename,3)
                 view.themeIncludeNewsCloseBtn.visibility = View.GONE
                 view.themeIncludeNewsOpenBtn.visibility = View.VISIBLE
-                Log.d("E","하")
             }
         }
     }

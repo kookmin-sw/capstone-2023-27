@@ -220,7 +220,7 @@ class StockFragment : Fragment(), View.OnClickListener {
     private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
         StockNewsList.clear()
         if(body.isNullOrEmpty()){
-            view.newsOpenBtn.visibility = View.GONE
+
         }
         else{
             for(item in body){
@@ -228,6 +228,9 @@ class StockFragment : Fragment(), View.OnClickListener {
             }
         }
         StockNewsListAdapter.notifyDataSetChanged()
+        if(StockNewsList.size < 3){
+            view.newsOpenBtn.visibility = View.GONE
+        }
     }
     fun softkeyboardHide() {
         val imm = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)

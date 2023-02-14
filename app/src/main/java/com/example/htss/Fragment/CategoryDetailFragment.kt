@@ -129,7 +129,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
     private fun addSectorthemeIncludeList(body: SectorThemeIncludeList?){
         CategoryDetailList.clear()
         if(body .isNullOrEmpty()){
-            view.categoryDetailOpenBtn.visibility=View.GONE
+
         }
         else{
             for(item in body) {
@@ -155,6 +155,9 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
             }
         }
         categorydetailAdapter.notifyDataSetChanged()
+        if(CategoryDetailList.size < 3){
+            view.categoryDetailOpenBtn.visibility=View.GONE
+        }
     }
 
     fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int){
@@ -180,20 +183,16 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
         CategoryDetailNewsList.clear()
 
         if(body.isNullOrEmpty()){
-            view.categoryIncludeNewsOpenBtn.visibility = View.GONE
 
         }
-//        if(body_size <= 3){
-//            for(item in body){
-//                CategoryDetailNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
-//            }
-//            view.categoryIncludeNewsOpenBtn.visibility = View.GONE
-//        }
         else{
             for(item in body){
                 CategoryDetailNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
             }
-            categorydetailNewsAdapter.notifyDataSetChanged()
+        }
+        categorydetailNewsAdapter.notifyDataSetChanged()
+        if(CategoryDetailNewsList.size < 3){
+            view.categoryIncludeNewsOpenBtn.visibility = View.GONE
         }
     }
 
