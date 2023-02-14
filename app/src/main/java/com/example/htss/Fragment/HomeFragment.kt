@@ -150,10 +150,16 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.close.setOnClickListener(this)
         view.searchBtn.setOnClickListener(this)
 
+
         return view.root
     }
+    //서치눌렀을 때 키보드 내려가게
+    fun softkeyboardHide() {
+        val imm = getSystemService(requireContext(), InputMethodManager::class.java)
+        imm!!.hideSoftInputFromWindow(view.editText.windowToken, 0)
+    }
 
-    // 엔터치면 키보드 내리기
+// 엔터눌렀을 때 키보드 내려가게
     private fun setListenerToEditText() {
         view.editText.setOnKeyListener { view, keyCode, event ->
             // Enter Key Action
@@ -169,7 +175,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 showToastMessage(view.edit_text.text.toString())
                 true
             }
-
             false
         }
     }
@@ -362,6 +367,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 replaceFragment(AllListFragment(), bundle)
             }
             R.id.search_btn -> {
+                softkeyboardHide()
                 when(selectedPosition){
                     1 -> { // 종목번호
                         getStockNameByTicker(view.editText.text.toString().trim())

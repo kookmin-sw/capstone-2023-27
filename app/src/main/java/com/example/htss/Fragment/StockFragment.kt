@@ -234,6 +234,10 @@ class StockFragment : Fragment(), View.OnClickListener {
         }
         StockNewsListAdapter.notifyDataSetChanged()
     }
+    fun softkeyboardHide() {
+        val imm = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+        imm!!.hideSoftInputFromWindow(view.stockKeywordEdit.windowToken, 0)
+    }
 
     override fun onClick(p0: View?) {
         when(p0?.id){
@@ -249,6 +253,7 @@ class StockFragment : Fragment(), View.OnClickListener {
                 view.newsOpenBtn.visibility = View.VISIBLE
             }
             R.id.stock_search_btn -> {
+                softkeyboardHide()
                 when(selectedPosition){
                     1 -> { // 종목번호
                         getStockNameByTicker(view.stockKeywordEdit.text.toString().trim())

@@ -416,10 +416,16 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
                 .commit()
         }
 
+    //서치눌렀을 때 키보드 내려가게
+    fun softkeyboardHide() {
+        val imm = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+        imm!!.hideSoftInputFromWindow(view.keywordEdit.windowToken, 0)
+    }
+
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.search_btn2 -> {
-
+                softkeyboardHide()
                 when (selectedPosition) {
                     1 -> { //종목번호
                         getStockNameByTicker(view.keywordEdit.text.toString().trim())
@@ -435,13 +441,6 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
                     }
                 }
                 view.keywordEdit.text = null
-
-
-//                val bundle = Bundle()
-//                Log.d("되라","ghdhgh")
-//                bundle.putString("keyword", view.keywordEdit.getText().trim().toString())
-//                view.keywordEdit.text = null
-//                replaceFragment(KeyWordFragment(),bundle)
             }
             R.id.category_close_btn->{
                 getSectorLikeKeyword(KeyWordName,3)
