@@ -267,7 +267,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
         RelatedStockList.clear()
 
         if(body.isNullOrEmpty()){
-
+            view.stockOpenBtn.visibility = View.GONE
         }
         else{
             for(item in body) {
@@ -319,10 +319,8 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
     }
     private fun addSectorLikeKeywordList(body: SectorThemeLikeList?){
         KeywordCategoryList.clear()
-        Log.d("아아아","되라")
-
         if(body.isNullOrEmpty()){
-
+            view.categoryOpenBtn.visibility = View.GONE
         }
         else{
             for(item in body){
@@ -359,7 +357,12 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
     }
     private fun addgetThemeLikeKeyword(body: SectorThemeLikeList?){
         KeywordThemeList.clear()
-        if(body!=null){
+
+        if(body.isNullOrEmpty()){
+            view.themeOpenBtn.visibility = View.GONE
+
+        }
+        else{
             for(item in body){
                 if(item.rate >= 0.0) {
                     KeywordThemeList.add(MainModel(item.keyword, "+"+item.rate.toString()+"%"))
@@ -385,8 +388,6 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
                     Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
                 }
             }
-            //testffkdd
-
             override fun onFailure(call: Call<KeywordIncludeNewsList>, t: Throwable) {
                 Log.d("API호출2", t.message.toString())
             }
@@ -395,7 +396,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
     private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
         RelatedNewsList.clear()
         if(body.isNullOrEmpty()){
-
+            view.newsOpenBtn.visibility = View.GONE
         }
         else{
             for(item in body){

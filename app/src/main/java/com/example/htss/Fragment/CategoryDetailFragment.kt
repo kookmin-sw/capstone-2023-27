@@ -24,6 +24,7 @@ import com.example.htss.databinding.FragmentCategoryDetailBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.log
 
 
 class CategoryDetailFragment : Fragment(), View.OnClickListener {
@@ -80,7 +81,6 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
                 val bundle = Bundle()
                 bundle.apply {
                     putString("stock_ticker", CategoryDetailList[position].ticker)
-                    Log.d("ticker","receite")
                     putString("stock_name", CategoryDetailList[position].StockName)
                     putString("stock_percent",CategoryDetailList[position].StockPercent)
                     putString("stock_price", CategoryDetailList[position].StockPrice)
@@ -128,19 +128,21 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
     }
     private fun addSectorthemeIncludeList(body: SectorThemeIncludeList?){
         CategoryDetailList.clear()
-        if(body != null){
+        if(body .isNullOrEmpty()){
+            view.categoryDetailOpenBtn.visibility=View.GONE
+        }
+        else{
             for(item in body) {
                 if (item.rate >= 0.0) {
                     CategoryDetailList.add(
-                       StockListModel(
+                        StockListModel(
                             item.ticker,
                             item.company_name,
                             item.end_price.toString(),
                             "+" + item.rate.toString() + "%"
                         )
                     )
-                }
-                else{
+                } else {
                     CategoryDetailList.add(
                         StockListModel(
                             item.ticker,
@@ -176,9 +178,17 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
 
     private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
         CategoryDetailNewsList.clear()
+
         if(body.isNullOrEmpty()){
+            view.categoryIncludeNewsOpenBtn.visibility = View.GONE
 
         }
+//        if(body_size <= 3){
+//            for(item in body){
+//                CategoryDetailNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+//            }
+//            view.categoryIncludeNewsOpenBtn.visibility = View.GONE
+//        }
         else{
             for(item in body){
                 CategoryDetailNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))

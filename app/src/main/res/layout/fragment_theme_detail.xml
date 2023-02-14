@@ -23,6 +23,7 @@
             />
 
         <LinearLayout
+            android:id="@+id/theme_layout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -42,13 +43,15 @@
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:gravity="center"
-                    android:textColor="@color/black"
                     android:text="쿠팡 관련주"
+                    android:textColor="@color/black"
                     android:textSize="8pt"
                     android:textStyle="bold" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:id="@+id/theme_value_plus"
                         android:layout_width="wrap_content"
@@ -57,25 +60,27 @@
                         android:text="+10%"
                         android:textColor="@color/blue"
                         android:textSize="6pt"
+                        android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textStyle="bold" />
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/theme_value_minus"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="+10%"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         android:textColor="@color/red"
                         android:textSize="6pt"
+                        android:textStyle="bold"
                         android:visibility="gone"
-                        android:textStyle="bold" />
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,40 +89,42 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:background="@drawable/stroke_background"
+                    android:gravity="center"
+                    android:padding="10dp"
                     android:text="종목명"
-                    android:gravity="center"
                     android:textColor="@color/black"
-                    android:padding="10dp"
-                    android:textSize="7pt"
-                    android:background="@drawable/stroke_background"
-                    android:layout_weight="5" />
+                    android:textSize="7pt" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="2"
                     android:background="@drawable/stroke_background"
+                    android:gravity="center"
+                    android:padding="10dp"
                     android:text="현재가"
-                    android:gravity="center"
                     android:textColor="@color/black"
-                    android:textSize="7pt"
-                    android:padding="10dp"
-                    android:layout_weight="2"/>
+                    android:textSize="7pt" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="전일대비"
+                    android:layout_weight="3"
+                    android:background="@drawable/stroke_background"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:textSize="7pt"
+                    android:text="전일대비"
                     android:textColor="@color/black"
-                    android:background="@drawable/stroke_background"
-                    android:layout_weight="3"/>
+                    android:textSize="7pt" />
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/theme_detail1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                />
+                android:nestedScrollingEnabled="false" />
 
             <TextView
                 android:id="@+id/theme_detail_open_btn"
@@ -128,7 +135,8 @@
                 android:padding="3dp"
                 android:text="펼치기"
                 android:textColor="@color/black"
-                android:textSize="7pt"/>
+                android:textSize="7pt" />
+
             <TextView
                 android:id="@+id/theme_detail_close_btn"
                 android:layout_width="match_parent"
@@ -144,6 +152,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/themem_layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"

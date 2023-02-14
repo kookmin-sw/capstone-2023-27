@@ -41,10 +41,6 @@ class StockFragment : Fragment(), View.OnClickListener {
     private var StockNewsListAdapter = MainNewsAdapter(StockNewsList)
 
     private var StockTicker = ""
-    private var Stockname = ""
-    private var StockPrice = ""
-    private var StockPercent = ""
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +59,6 @@ class StockFragment : Fragment(), View.OnClickListener {
                 }
                 override fun onNothingSelected(p0: AdapterView<*>?) {
                 }
-
             }
         }
 
@@ -225,7 +220,7 @@ class StockFragment : Fragment(), View.OnClickListener {
     private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
         StockNewsList.clear()
         if(body.isNullOrEmpty()){
-
+            view.newsOpenBtn.visibility = View.GONE
         }
         else{
             for(item in body){

@@ -129,7 +129,10 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
     }
     private fun addSectorthemeIncludeList(body: SectorThemeIncludeList?){
         ThemeDetailList.clear()
-        if(body != null){
+        if(body.isNullOrEmpty()){
+            view.themeDetailOpenBtn.visibility = View.GONE
+        }
+        else{
             for(item in body) {
                 if (item.rate >= 0.0) {
                     ThemeDetailList.add(
@@ -177,6 +180,7 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
     private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
         ThemeNewsList.clear()
         if(body.isNullOrEmpty()){
+            view.themeIncludeNewsOpenBtn.visibility = View.GONE
 
         }
         else{
@@ -186,11 +190,6 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
             themeNewslListAdapter.notifyDataSetChanged()
         }
     }
-
-
-
-
-
 
     private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle
