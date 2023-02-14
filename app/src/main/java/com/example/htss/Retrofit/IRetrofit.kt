@@ -84,4 +84,25 @@ interface IRetrofit {
         @Query("ticler") ticker:String
     ) : Call<CompanyInfo>
 
+
+    @GET("/stock/price")
+    fun getStockNowPrice(
+        @Query("ticker") ticker: String,
+        @Query("num") num : Int
+    ) : Call<StockPriceList>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

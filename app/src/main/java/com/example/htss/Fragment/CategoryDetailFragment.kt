@@ -80,6 +80,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
                 val bundle = Bundle()
                 bundle.apply {
                     putString("stock_ticker", CategoryDetailList[position].ticker)
+                    Log.d("ticker","receite")
                     putString("stock_name", CategoryDetailList[position].StockName)
                     putString("stock_percent",CategoryDetailList[position].StockPercent)
                     putString("stock_price", CategoryDetailList[position].StockPrice)

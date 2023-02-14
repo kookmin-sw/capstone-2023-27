@@ -142,7 +142,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.searchBtn.setOnClickListener(this)
         view.open.setOnClickListener(this)
         view.close.setOnClickListener(this)
-        view.searchSpinner.setOnClickListener(this)
+        view.searchBtn.setOnClickListener(this)
 
         return view.root
     }
