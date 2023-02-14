@@ -4,11 +4,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.CategoryListAdapter
 import com.example.htss.Adapter.HomeAdapter
@@ -25,7 +30,9 @@ import com.example.htss.Retrofit.Model.NounMatchingStockList
 import com.example.htss.Retrofit.Model.SectorThemeLikeList
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentKeyWordBinding
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_key_word.*
+import kotlinx.android.synthetic.main.fragment_key_word.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,6 +41,10 @@ import retrofit2.Response
 class KeyWordFragment : Fragment(), View.OnClickListener {
     private lateinit var view: FragmentKeyWordBinding
     private val retrofit = RetrofitClient.create()
+
+    val spinnerList = arrayOf("키워드","종목번호","종목명")
+    var selectedPosition = 0
+
     private var KeywordCategoryList = mutableListOf<MainModel>()
 
     private var KeywordThemeList = mutableListOf<MainModel>()
@@ -56,6 +67,21 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
     ): View? {
 
         view = FragmentKeyWordBinding.inflate(inflater, container, false)
+
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, spinnerList)
+        view.searchSpinner.apply{
+            setSelection(0)
+            adapter = spinnerAdapter
+            onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, v: View?, position: Int, id: Long) {
+                    selectedPosition = position
+                    Log.d("selectedPosition", selectedPosition.toString())
+                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+
+            }
+        }
 
         view.categoryRecyclerview.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -110,6 +136,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
             override fun onClick(v: View, position: Int) {
                 val bundle = Bundle()
                 bundle.apply {
+                    bundle.putString("stock_ticker", RelatedStockList[position].ticker)
                     bundle.putString("stock_name", RelatedStockList[position].Stockname)
                     bundle.putString("stock_price", RelatedStockList[position].Stockprice)
                     bundle.putString("stock_percent", RelatedStockList[position].Stockpercent)
@@ -129,7 +156,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
         }
 
 
-
+        setListenerToEditText()
         getKeywordMatchingStock(KeyWordName,3) //키워드와 같이 언급된 주식 종목
         getSectorThemeKeywordIncludeNews(KeyWordName,3)// 키워드가 포함된 뉴스
         getSectorLikeKeyword(KeyWordName,3)// 키워드와 관련된 종목
@@ -148,6 +175,74 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
 
         return view.root
     }
+
+    // 엔터치면 키보드 내리기
+    private fun setListenerToEditText() {
+        view.keywordEdit.setOnKeyListener { view, keyCode, event ->
+            // Enter Key Action
+            if (event.action == KeyEvent.ACTION_DOWN
+                && keyCode == KeyEvent.KEYCODE_ENTER
+            ) {
+                // 키패드 내리기
+                val imm =
+                    ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.keyword_edit.windowToken, 0)
+                }
+                // Toast Message
+                showToastMessage(view.keyword_edit.text.toString())
+                true
+            }
+
+            false
+        }
+    }
+    private fun showToastMessage(msg: String?) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
+
+    fun getTickerByStockName(name: String){
+        retrofit.getTickerByStockName(name).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    if(!response.body().isNullOrBlank()){
+                        val bundle = Bundle()
+                        bundle.putString("stock_ticker", response.body())
+                        replaceFragment(StockFragment(), bundle)
+                    } else {
+                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    fun getStockNameByTicker(ticker: String){
+        retrofit.getStockNameByTicker(ticker).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    if(!response.body().isNullOrBlank()){
+                        val bundle = Bundle()
+                        bundle.putString("stock_ticker", ticker)
+                        replaceFragment(StockFragment(), bundle)
+                    } else {
+                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(),"일치하는 종목이 없습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
 
     fun getKeywordMatchingStock(noun: String, num: Int){
         retrofit. getKeywordMatchingStock(noun,num).enqueue(object : Callback<NounMatchingStockList> {
@@ -179,6 +274,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
                 if (item.rate >= 0.0) {
                     RelatedStockList.add(
                         KeywordRelatedStockModel(
+                            item.ticker,
                             item.company_name,
                             item.end_price.toString(),
                             "+"+item.rate.toString()+"%",
@@ -190,6 +286,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
                 else{
                     RelatedStockList.add(
                         KeywordRelatedStockModel(
+                            item.ticker,
                             item.company_name,
                             item.end_price.toString(),
                             item.rate.toString()+"%",
@@ -322,11 +419,29 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.search_btn2 -> {
-                val bundle = Bundle()
-                Log.d("되라","ghdhgh")
-                bundle.putString("keyword", view.keywordEdit.getText().trim().toString())
+
+                when (selectedPosition) {
+                    1 -> { //종목번호
+                        getStockNameByTicker(view.keywordEdit.text.toString().trim())
+                    }
+                    2 -> { //종목명
+                        getTickerByStockName(view.keywordEdit.text.toString().trim())
+                    }
+                    else -> { //키워드, 업종, 테마
+                        val bundle = Bundle()
+                        bundle.putString("keyword", view.keywordEdit.text.toString().trim())
+                        bundle.putInt("type", selectedPosition)
+                        replaceFragment(KeyWordFragment(), bundle)
+                    }
+                }
                 view.keywordEdit.text = null
-                replaceFragment(KeyWordFragment(),bundle)
+
+
+//                val bundle = Bundle()
+//                Log.d("되라","ghdhgh")
+//                bundle.putString("keyword", view.keywordEdit.getText().trim().toString())
+//                view.keywordEdit.text = null
+//                replaceFragment(KeyWordFragment(),bundle)
             }
             R.id.category_close_btn->{
                 getSectorLikeKeyword(KeyWordName,3)

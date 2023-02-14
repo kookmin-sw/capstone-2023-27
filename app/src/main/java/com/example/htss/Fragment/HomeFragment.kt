@@ -1,18 +1,23 @@
 package com.example.htss.Fragment
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.webkit.RenderProcessGoneDetail
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -130,6 +135,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         })
 
+        setListenerToEditText()
         getHighSectorList(3)
         getHighThemeList(3)
         getMainNewsList(3)
@@ -146,6 +152,31 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         return view.root
     }
+
+    // 엔터치면 키보드 내리기
+    private fun setListenerToEditText() {
+        view.editText.setOnKeyListener { view, keyCode, event ->
+            // Enter Key Action
+            if (event.action == KeyEvent.ACTION_DOWN
+                && keyCode == KeyEvent.KEYCODE_ENTER
+            ) {
+                // 키패드 내리기
+                val imm = getSystemService(requireContext(), InputMethodManager::class.java)
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.edit_text.windowToken, 0)
+                }
+                // Toast Message
+                showToastMessage(view.edit_text.text.toString())
+                true
+            }
+
+            false
+        }
+    }
+    private fun showToastMessage(msg: String?) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
+
 
     fun getTickerByStockName(name: String){
         retrofit.getTickerByStockName(name).enqueue(object: Callback<String>{
@@ -183,7 +214,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
             }
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),"일치하는 종목이 없습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -341,7 +372,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     else -> { // 키워드, 업종, 테마
                         val bundle = Bundle()
                         bundle.putString("keyword", view.editText.text.toString().trim())
-//                        bundle.putInt("type", selectedPosition)
+                        bundle.putInt("type", selectedPosition)
                         replaceFragment(KeyWordFragment(), bundle)
                     }
                 }

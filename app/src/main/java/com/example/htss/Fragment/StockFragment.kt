@@ -4,27 +4,33 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Model.NewsModel
-import com.example.htss.Model.StockListModel
 import com.example.htss.R
-import com.example.htss.Retrofit.Model.KeywordIncludeNewsList
-import com.example.htss.Retrofit.Model.NewsList
-import com.example.htss.Retrofit.Model.StockPriceList
+import com.example.htss.Retrofit.Model.*
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentStockBinding
+import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.fragment_stock.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class StockFragment : Fragment(), View.OnClickListener {
+    val spinnerList = arrayOf("키워드","종목번호","종목명")
+    var selectedPosition = 0
     var newsNum = 3
     private lateinit var view: FragmentStockBinding
     private val retrofit = RetrofitClient.create()
@@ -46,29 +52,25 @@ class StockFragment : Fragment(), View.OnClickListener {
     ): View? {
 
         view = FragmentStockBinding.inflate(inflater, container, false)
+        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, spinnerList)
+        view.searchSpinner.apply{
+            setSelection(0)
+            adapter = spinnerAdapter
+            onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(parent: AdapterView<*>?, v: View?, position: Int, id: Long) {
+                    selectedPosition = position
+                    Log.d("selectedPosition", selectedPosition.toString())
+                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+
+            }
+        }
+
+
 
         StockTicker = arguments?.getString("stock_ticker").toString()
-//        Stockname = arguments?.getString("stock_name").toString()
-//        StockPrice= arguments?.getString("stock_price").toString()
-//        StockPercent = arguments?.getString("stock_percent").toString()
-
-//        view.ticker.text = StockTicker
-//        view.stockName.text = Stockname
-//        view.stockName2.text = Stockname
-//        view.stockCurrent.text = StockPrice
 //
-//        if(StockPercent.substring(0,1) == "+"){
-//            view.stockPlusPercent.text = StockPercent
-//            view.stockMinusPercent.visibility = View.GONE
-//            view.stockPlusPercent.visibility = View.VISIBLE
-//        }
-//
-//        if(StockPercent.substring(0,1) == "-"){
-//            view.stockMinusPercent.text = StockPercent
-//            view.stockPlusPercent.visibility = View.GONE
-//            view.stockMinusPercent.visibility = View.VISIBLE
-//        }
-
         view.newsRecyclerview.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = StockNewsListAdapter
@@ -83,80 +85,122 @@ class StockFragment : Fragment(), View.OnClickListener {
             override fun onClick(v: View, position: Int) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(StockNewsList[position].rink)))
             }
-
         })
         view.newsCloseBtn.setOnClickListener(this)
         view.newsOpenBtn.setOnClickListener(this)
         view.stockSearchBtn.setOnClickListener(this)
 
+
+        setListenerToEditText()
         getSectorThemeKeywordIncludeNews(view.stockName.toString(),3)
-        getStockNowPrice(StockTicker,1)
+        getStockNowPrice(StockTicker)
+        getCompanyInfo(StockTicker)
 
 
         return view.root
     }
 
-    private fun init(body: StockPriceList) {
-        view.ticker.text = StockTicker
-        view.stockName.text = body[0].company_name
-        view.stockName2.text = body[0].company_name
-        view.stockCurrent.text = "${body[0].end_price}원"
-
-        if(body[0].rate >= 0.0){
-            view.stockPlusPercent.apply{
-                setTextColor(ContextCompat.getColor(requireContext(),R.color.blue))
-                text = "+${body[0].rate}%"
-            }
-        } else {
-            view.stockPlusPercent.apply{
-                setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
-                text = "${body[0].rate}%"
-            }
-        }
-        getSectorThemeKeywordIncludeNews(body[0].company_name, newsNum)
-    }
-    fun getStockNowPrice(ticker: String,num: Int){
-        retrofit.getStockNowPrice(ticker,1).enqueue(object : Callback<StockPriceList> {
+    fun getCompanyInfo(ticker: String){
+        retrofit.getCompanyInfo(ticker).enqueue(object : Callback<CompanyInfo> {
             override fun onResponse(
-                call: Call<StockPriceList>,
-                response: Response<StockPriceList>
+                call: Call<CompanyInfo>,
+                response: Response<CompanyInfo>
             ) {
                 if(response.code()==200) {
-                    if(!response.body().isNullOrEmpty()) init(response.body()!!)
-                    // addStockNowPriceList(response.body())
-                    Log.d("API호출", response.raw().toString())
+                    if(!response.body().isNullOrEmpty()) addcompanyInfo(response.body()!!)
+                    Log.d("stock/info/API호출!!!!!!", response.raw().toString())
+                } else {
+                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<CompanyInfo>, t: Throwable) {
+                Log.d("API호출2", t.message.toString())
+            }
+        })
+    }
+    private fun addcompanyInfo(body: CompanyInfo) {
+        view.stockName.text = body[0].company_name
+        view.stockName2.text = body[0].company_name
+        view.stockInfo.text = body[0].company_info
+        getSectorThemeKeywordIncludeNews(body[0].company_name, newsNum)
+    }
+
+    fun getStockNowPrice(ticker: String){
+        retrofit.getStockNowPrice(ticker).enqueue(object : Callback<StockNowPriceListItem> {
+            override fun onResponse(
+                call: Call<StockNowPriceListItem>,
+                response: Response<StockNowPriceListItem>
+            ) {
+                if(response.code()==200) {
+                    if(response.body()!=null)
+                        addStockNowPrice(response.body()!!)
+                    Log.d("stock/now-price/API호출", response.raw().toString())
                 } else {
                     Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            override fun onFailure(call: Call<StockPriceList>, t: Throwable) {
-                Log.d("API호출2", t.message.toString())
+            override fun onFailure(call: Call<StockNowPriceListItem>, t: Throwable) {
+                Log.d("API호출2222222", t.message.toString())
+            }
+        })
+    }
+    private fun addStockNowPrice(body: StockNowPriceListItem) {
+        view.ticker.text = StockTicker
+        view.stockCurrent.text = body.end_price.toString()
+        if(body.rate >= 0.0){
+            view.stockPercent.apply{
+                setTextColor(ContextCompat.getColor(requireContext(),R.color.blue))
+                text = "+"+body.rate.toString()+"%"
+            }
+        } else {
+            view.stockPercent.apply{
+                setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
+                text = body.rate.toString()+"%"
+            }
+        }
+    }
+
+
+    fun getTickerByStockName(name: String){
+        retrofit.getTickerByStockName(name).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    if(!response.body().isNullOrBlank()){
+                        val bundle = Bundle()
+                        bundle.putString("stock_ticker", response.body())
+                        replaceFragment(StockFragment(), bundle)
+                    } else {
+                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-    private fun addStockNowPriceList(body: StockPriceList?){
-        if(body != null) {
-            for (item in body) {
-                if(item.rate >= 0.0) {
-                    val item = StockListModel(
-                        item.ticker,
-                        item.company_name,
-                        item.end_price.toString(),
-                        "+"+item.rate.toString()+"%"
-                    )
-                }
-                else{
-                    val item = StockListModel(
-                        item.ticker,
-                        item.company_name,
-                        item.end_price.toString(),
-                        item.rate.toString()+"%"
-                    )
-                }
+    fun getStockNameByTicker(ticker: String){
+        retrofit.getStockNameByTicker(ticker).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    if(!response.body().isNullOrBlank()){
+                        val bundle = Bundle()
+                        bundle.putString("stock_ticker", ticker)
+                        replaceFragment(StockFragment(), bundle)
+                    } else {
+                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
             }
-        }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(),"일치하는 종목이 없습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
 
@@ -168,13 +212,11 @@ class StockFragment : Fragment(), View.OnClickListener {
             ) {
                 if(response.code()==200) {
                     addSectorthemeIncludeNewsList(response.body())
-                    Log.d("API호출", response.raw().toString())
+                    Log.d("stock/news/like/ API호출", response.raw().toString())
                 } else {
                     Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
                 }
             }
-
-
             override fun onFailure(call: Call<KeywordIncludeNewsList>, t: Throwable) {
                 Log.d("API호출2", t.message.toString())
             }
@@ -205,23 +247,59 @@ class StockFragment : Fragment(), View.OnClickListener {
                 getSectorThemeKeywordIncludeNews(view.stockName.toString(),3)
                 view.newsCloseBtn.visibility = View.GONE
                 view.newsOpenBtn.visibility = View.VISIBLE
-
+            }
+            R.id.stock_search_btn -> {
+                when(selectedPosition){
+                    1 -> { // 종목번호
+                        getStockNameByTicker(view.stockKeywordEdit.text.toString().trim())
+                    }
+                    2 -> { // 종목명
+                        getTickerByStockName(view.stockKeywordEdit.text.toString().trim())
+                    }
+                    else -> { // 키워드, 업종, 테마
+                        val bundle = Bundle()
+                        bundle.putString("keyword", view.stockKeywordEdit.text.toString().trim())
+                        bundle.putInt("type", selectedPosition)
+                        replaceFragment(KeyWordFragment(), bundle)
+                    }
+                }
+                view.stockKeywordEdit.text = null
             }
 
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
+        fragment.arguments = bundle
+        Log.d("argument", bundle.toString())
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.mainFrameLayout, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+    // 엔터치면 키보드 내리기
+    private fun setListenerToEditText() {
+        view.stockKeywordEdit.setOnKeyListener { view, keyCode, event ->
+            // Enter Key Action
+            if (event.action == KeyEvent.ACTION_DOWN
+                && keyCode == KeyEvent.KEYCODE_ENTER
+            ) {
+                // 키패드 내리기
+                val imm =
+                    ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.stock_keyword_edit.windowToken, 0)
+                }
+                // Toast Message
+                showToastMessage(view.stock_keyword_edit.text.toString())
+                true
+            }
+            false
+        }
+    }
+    ////////////////////////////
+    private fun showToastMessage(msg: String?) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
 }

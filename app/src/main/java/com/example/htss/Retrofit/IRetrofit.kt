@@ -81,28 +81,13 @@ interface IRetrofit {
     //기업개요
     @GET("/stock/info")
     fun getCompanyInfo(
-        @Query("ticler") ticker:String
+        @Query("ticker") ticker:String
     ) : Call<CompanyInfo>
 
 
-    @GET("/stock/price")
+    @GET("/stock/now-price")
     fun getStockNowPrice(
-        @Query("ticker") ticker: String,
-        @Query("num") num : Int
-    ) : Call<StockPriceList>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        @Query("ticker") ticker: String
+    ) : Call<StockNowPriceListItem>
 
 }
