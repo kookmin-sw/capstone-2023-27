@@ -48,7 +48,13 @@ class StockFragment : Fragment(), View.OnClickListener {
     ): View? {
 
         view = FragmentStockBinding.inflate(inflater, container, false)
-        val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, spinnerList)
+        val spinnerAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.search_array,
+            R.layout.item_spinner
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
         view.searchSpinner.apply{
             setSelection(0)
             adapter = spinnerAdapter

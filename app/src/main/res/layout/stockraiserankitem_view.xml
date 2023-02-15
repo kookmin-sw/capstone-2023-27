@@ -9,7 +9,7 @@
     tools:ignore="MissingDefaultResource">
 
     <TextView
-        android:id="@+id/stock_rank"
+        android:id="@+id/stock_raise_rank"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_margin="5dp"
@@ -22,21 +22,21 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/stock_related_name"
+        android:id="@+id/stock_raise_name"
         android:layout_width="0dp"
         android:layout_weight="4.5"
         android:layout_height="match_parent"
         android:gravity="left|center_vertical"
         android:layout_marginStart="3dp"
-        android:text="출판"
+        android:text="샌즈랩"
         android:textColor="@color/black"
         android:textStyle="bold"
 
         android:textSize="15sp" />
     <TextView
-        android:id="@+id/stock_related_price"
+        android:id="@+id/stock_raise_price"
         android:layout_width="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1.5"
         android:layout_height="match_parent"
         android:gravity="center"
         android:layout_marginStart="3dp"
@@ -44,10 +44,10 @@
         android:textColor="@color/black"
         android:textStyle="bold"
 
-        android:textSize="13sp" />
+        android:textSize="11sp" />
 
     <TextView
-        android:id="@+id/stock_minuspercent"
+        android:id="@+id/stock_raise_minuspercent"
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="match_parent"
@@ -58,7 +58,7 @@
         android:textSize="13sp" />
 
     <TextView
-        android:id="@+id/stock_pluspercent"
+        android:id="@+id/stock_raise_pluspercent"
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="match_parent"

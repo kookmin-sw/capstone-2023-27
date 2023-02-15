@@ -24,9 +24,14 @@
                 android:src="@drawable/ic_baseline_arrow_circle_left_24" />
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_margin="5dp"
+            android:focusable="true"
+            android:background="@drawable/layout_stroke"
+            android:focusableInTouchMode="true">
+
             <Spinner
                 android:textAlignment="center"
                 app:layout_constraintStart_toStartOf="parent"
@@ -36,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/search_spinner"/>
+
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,13 +57,14 @@
                     app:layout_constraintRight_toRightOf="parent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:padding="7dp"
-                    android:paddingVertical="5dp"
+                    android:layout_marginHorizontal="7dp"
+                    android:padding="8dp"
+                    android:layout_marginTop="1dp"
                     android:singleLine="true"
+                    android:background="@null"
+                    android:hint="검색어를 입력하세요."
                     android:imeOptions="actionDone"
-                    android:background="@drawable/rounded_corner"
-                    android:textSize="8pt"
+                    android:textSize="7pt"
                     />
 
                 <ImageButton
