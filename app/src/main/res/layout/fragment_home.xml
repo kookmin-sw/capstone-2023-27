@@ -78,6 +78,7 @@
                     android:layout_marginTop="1dp"
                     android:singleLine="true"
                     android:background="@null"
+                    android:fontFamily="@font/happinesssansregular"
                     android:hint="검색어를 입력하세요."
                     android:imeOptions="actionDone"
                     android:textSize="8pt"
@@ -120,6 +121,7 @@
                         android:layout_height="wrap_content"
                         android:text="코스피"
                         android:gravity="center"
+                        android:fontFamily="@font/happinesssanstitle"
                         android:textColor="@color/black"
                         android:layout_marginLeft="6dp"
                         android:textSize="20sp"/>
@@ -129,9 +131,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="2,426.71"
+                        android:fontFamily="@font/happinesssansbold"
                         android:gravity="center"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
+
                         android:layout_marginLeft="6dp"
                         android:textSize="25sp"/>
                     <TextView
@@ -140,6 +143,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textColor="@color/blue"
+                        android:fontFamily="@font/happinesssansbold"
                         android:textStyle="bold"
                         android:text="+1.58%"/>
                 </LinearLayout>
@@ -165,6 +169,7 @@
                         android:layout_height="wrap_content"
                         android:text="코스닥"
                         android:gravity="center"
+                        android:fontFamily="@font/happinesssanstitle"
                         android:textColor="@color/black"
                         android:layout_marginLeft="6dp"
                         android:textSize="20sp"/>
@@ -175,7 +180,7 @@
                         android:text="764.78"
                         android:gravity="center"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/happinesssansbold"
                         android:layout_marginLeft="6dp"
                         android:textSize="25sp"/>
                     <TextView
@@ -185,6 +190,7 @@
                         android:gravity="center"
                         android:textColor="@color/blue"
                         android:textStyle="bold"
+                        android:fontFamily="@font/happinesssansbold"
                         android:text="+1.90%"/>
 
                 </LinearLayout>
@@ -213,6 +219,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="100dp"
                         android:text="업종상위"
+                         android:fontFamily="@font/happinesssanstitle"
                          android:layout_marginLeft="6dp"
                          android:textColor="@color/black"
                         android:textSize="25sp"
@@ -239,6 +246,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginTop="5dp"
+                        android:fontFamily="@font/happinesssansregular"
                         android:textSize="15dp"
                         android:layout_marginRight="20dp"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -274,6 +282,7 @@
                     android:layout_marginTop="100dp"
                     android:text="테마상위"
                     android:textSize="25sp"
+                    android:fontFamily="@font/happinesssanstitle"
                     android:layout_marginLeft="6dp"
                     android:textColor="@color/black"
                     tools:ignore="MissingConstraints" />
@@ -300,6 +309,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="5dp"
                     android:textSize="15dp"
+                    android:fontFamily="@font/happinesssansregular"
                     android:layout_marginRight="20dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -330,6 +340,7 @@
                     android:layout_marginTop="100dp"
                     android:text="종목 상승률 순위"
                     android:textSize="25sp"
+                    android:fontFamily="@font/happinesssanstitle"
                     android:layout_marginLeft="6dp"
                     android:textColor="@color/black"
                     tools:ignore="MissingConstraints" />
