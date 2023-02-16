@@ -16,5 +16,17 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.App" parent="Theme.MaterialComponents.Light.NoActionBar">
+        ...
+        <item name="android:dialogTheme">@style/DialogTheme</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
 
 </resources>

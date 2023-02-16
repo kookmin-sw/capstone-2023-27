@@ -8,4 +8,4 @@
     android:padding="7dp"
     android:text="종목번호"
     android:textColor="@color/black"
-    android:textSize="6pt" />
+    android:textSize="7pt" />

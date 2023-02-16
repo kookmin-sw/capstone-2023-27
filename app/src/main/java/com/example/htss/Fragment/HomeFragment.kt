@@ -45,7 +45,7 @@ import retrofit2.Response
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
-    var selectedPosition = 0
+    var     selectedPosition = 0
 
     private lateinit var view: FragmentHomeBinding
     private val retrofit = RetrofitClient.create()
@@ -83,66 +83,22 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 return super.getCount() - 1
             }
         }
-//아이템을 추가해 줍니다.
-        myAapter.addAll(items.toMutableList())
-//힌트로 사용할 문구를 마지막 아이템에 추가해 줍니다.
-        myAapter.add("항목선택")
-//어댑터를 연결해줍니다.
-        view.searchSpinner.adapter = myAapter
-//스피너 초기값을 마지막 아이템으로 설정해 줍니다. (마지막 아이템이 힌트 이기 때문이죠)
-        view.searchSpinner.setSelection(myAapter.count)
 
-//droplist를 spinner와 간격을 두고 나오게 해줍니다.)
-//아이템 크기가 45dp 이므로 45dp 간격을 주었습니다.
-//이때 dp 를 px 로 변환해 주는 작업이 필요합니다.
+        myAapter.addAll(items.toMutableList())
+        myAapter.add("항목선택")
+        view.searchSpinner.adapter = myAapter
+        view.searchSpinner.setSelection(myAapter.count)
         view.searchSpinner.dropDownVerticalOffset = dipToPixels(35f).toInt()
 
-//스피너 선택시 나오는 화면 입니다.
+//스피너 선택시 나오는 화면
         view.searchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedPosition = position
-
-                //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
             }
-
             override fun onNothingSelected(parent: AdapterView<*>) {
                 Log.d("MyTag", "onNothingSelected")
             }
         }
-
-//        val box = resources.getStringArray(R.array.search_array)
-//        val Bdapter = ArrayAdapter(requireContext(), R.layout.item_spinner, box)
-//        Bdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item){}
-//
-//        view.searchSpinner.apply {
-//            setSelection(0)
-//            adapter = Bdapter
-//            onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-//                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-////                    if (view != null) {
-////                        if(!view.search_spinner.getItemAtPosition(position).equals("항목선택")){
-//                            selectedPosition = position
-//                            Log.d("selectedPosition", selectedPosition.toString())
-////                        }
-////                    }
-//                }
-//                override fun onNothingSelected(p0: AdapterView<*>?) {
-//                }
-//            }
-//        }
-//        view.searchSpinner.setSelection(0)
-//        view.searchSpinner.adapter = Bdapter
-//        view.searchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                if (view != null) {
-//                    if(!view.search_spinner.getItemAtPosition(position).equals("항목선택")){
-//                        selectedPosition = position
-//                    }
-//                }
-//            }
-//            override fun onNothingSelected(p0: AdapterView<*>?) {
-//            }
-//        }
 
 /////////리사이클러뷰에 어댑터 붙이기
         view.recycle1.apply {
@@ -215,7 +171,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.open.setOnClickListener(this)
         view.close.setOnClickListener(this)
         view.searchBtn.setOnClickListener(this)
-
 
         return view.root
     }

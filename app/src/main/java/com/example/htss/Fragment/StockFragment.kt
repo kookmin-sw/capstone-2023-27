@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
@@ -29,7 +31,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class StockFragment : Fragment(), View.OnClickListener {
-    val spinnerList = arrayOf("키워드","종목번호","종목명")
+
     var selectedPosition = 0
     var newsNum = 3
     private lateinit var view: FragmentStockBinding
@@ -41,6 +43,7 @@ class StockFragment : Fragment(), View.OnClickListener {
     private var StockNewsListAdapter = MainNewsAdapter(StockNewsList)
 
     private var StockTicker = ""
+    private var StockName = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,29 +51,43 @@ class StockFragment : Fragment(), View.OnClickListener {
     ): View? {
 
         view = FragmentStockBinding.inflate(inflater, container, false)
-        val spinnerAdapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.search_array,
-            R.layout.item_spinner
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        }
-        view.searchSpinner.apply{
-            setSelection(0)
-            adapter = spinnerAdapter
-            onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
-                override fun onItemSelected(parent: AdapterView<*>?, v: View?, position: Int, id: Long) {
-                    selectedPosition = position
-                    Log.d("selectedPosition", selectedPosition.toString())
+        val items = resources.getStringArray(R.array.search_array)
+        val myAapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val v = super.getView(position, convertView, parent)
+                if (position == count) {
+                    //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
+                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).text = ""
+                    //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
+                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).hint = getItem(count)
                 }
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                }
+                return v
+            }
+            override fun getCount(): Int {
+                //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
+                return super.getCount() - 1
             }
         }
 
+        myAapter.addAll(items.toMutableList())
+        myAapter.add("항목선택")
+        view.searchSpinner.adapter = myAapter
+        view.searchSpinner.setSelection(myAapter.count)
+        view.searchSpinner.dropDownVerticalOffset = dipToPixels(35f).toInt()
 
+//스피너 선택시 나오는 화면
+        view.searchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedPosition = position
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Log.d("MyTag", "onNothingSelected")
+            }
+        }
 
         StockTicker = arguments?.getString("stock_ticker").toString()
+        StockName = arguments?.getString("stock_name").toString()
+
 //
         view.newsRecyclerview.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -90,6 +107,8 @@ class StockFragment : Fragment(), View.OnClickListener {
         view.newsCloseBtn.setOnClickListener(this)
         view.newsOpenBtn.setOnClickListener(this)
         view.stockSearchBtn.setOnClickListener(this)
+        view.stockKeywordEdit.setHint(StockName)
+
 
 
         setListenerToEditText()
@@ -286,6 +305,14 @@ class StockFragment : Fragment(), View.OnClickListener {
             .replace(R.id.mainFrameLayout, fragment)
             .addToBackStack(null)
             .commit()
+    }
+    //dp 값을 px 값으로 변환해 주는 함수
+    private fun dipToPixels(dipValue: Float): Float {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dipValue,
+            resources.displayMetrics
+        )
     }
     // 엔터치면 키보드 내리기
     private fun setListenerToEditText() {
