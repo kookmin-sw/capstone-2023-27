@@ -47,14 +47,10 @@ outputs = torch.tensor(outputs_list)
 predictions = nn.functional.softmax(outputs, dim=-1)
 
 df_sc = pd.DataFrame(predictions.detach().numpy())
-# df_sc.columns = ['Positive','Negative','Neutral']
 
 df_sc.columns = ['Negative', 'Neutral', 'Positive']
 
 news = pd.concat([news, df_sc], axis=1)
-news
-
-news[180:250]
 
 news.to_csv('news_with_sent.csv', index=False)
 
