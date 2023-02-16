@@ -2,7 +2,7 @@
 """FinBERT_감성분석.ipynb
 입력: news.csv
 출력: news_with_sent.csv (부정, 중립, 긍정 지수가 포함됨)
-"""### Loading FinBERT model"""
+"""
 
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 from tqdm import tqdm
