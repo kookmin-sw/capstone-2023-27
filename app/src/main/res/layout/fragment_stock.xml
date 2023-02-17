@@ -268,6 +268,20 @@
                 android:fontFamily="@font/one_mobile_pop"
                 android:textColor="@color/black"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/news_stock_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:text="종목이 포함된 뉴스가 없습니다"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textColor="@color/black"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

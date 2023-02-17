@@ -326,7 +326,11 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
             }
         }
         RelatedStockListAdapter.notifyDataSetChanged()
-        if(RelatedStockList.size < 3){
+        if(RelatedStockList.size in 1..2){
+            view.stockOpenBtn.visibility = View.GONE
+        }
+        else if(RelatedStockList.size == 0){
+            view.stockNoBtn.visibility = View.VISIBLE
             view.stockOpenBtn.visibility = View.GONE
         }
     }
@@ -365,8 +369,12 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
             }
         }
         KeywordCategoryListAdapter.notifyDataSetChanged()
-        if(KeywordCategoryList.size < 3){
+        if(KeywordCategoryList.size in 1..2){
             view.categoryOpenBtn.visibility = View.GONE
+        }
+        else if(KeywordCategoryList.size == 0){
+            view.categoryOpenBtn.visibility = View.GONE
+            view.categoryNoBtn.visibility = View.VISIBLE
         }
 
     }
@@ -406,8 +414,12 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
             }
         }
         KeywordThemeListAdapter.notifyDataSetChanged()
-        if(KeywordThemeList.size < 3){
+        if(KeywordThemeList.size in 1..2){
             view.themeOpenBtn.visibility = View.GONE
+        }
+        else if(KeywordThemeList.size == 0){
+            view.themeOpenBtn.visibility = View.GONE
+            view.themeNoBtn.visibility = View.VISIBLE
         }
     }
 //수정..
@@ -440,7 +452,11 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
             }
         }
         RelatedNewsListAdapter.notifyDataSetChanged()
-        if(RelatedNewsList.size < 3){
+        if(RelatedNewsList.size in 1 ..2){
+            view.newsOpenBtn.visibility = View.GONE
+        }
+        else if(RelatedNewsList.size == 0){
+            view.newsNoBtn.visibility = View.VISIBLE
             view.newsOpenBtn.visibility = View.GONE
         }
     }

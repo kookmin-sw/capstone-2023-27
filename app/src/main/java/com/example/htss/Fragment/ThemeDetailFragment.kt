@@ -164,8 +164,12 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
             }
         }
         themeDetailListAdapter.notifyDataSetChanged()
-        if(ThemeDetailList.size < 3 ){
+        if(ThemeDetailList.size in 1..2 ){
             view.themeDetailOpenBtn.visibility = View.GONE
+        }
+        else if(ThemeDetailList.size == 0){
+            view.themeDetailOpenBtn.visibility = View.GONE
+            view.themeDetailNoBtn.visibility = View.VISIBLE
         }
     }
     fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int){
@@ -197,8 +201,12 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
             }
         }
         themeNewslListAdapter.notifyDataSetChanged()
-        if(ThemeNewsList.size < 3){
+        if(ThemeNewsList.size in 1..2){
             view.themeIncludeNewsOpenBtn.visibility = View.GONE
+        }
+        else if(ThemeNewsList.size == 0){
+            view.themeIncludeNewsOpenBtn.visibility = View.GONE
+            view.themeIncludeNewsNoBtn.visibility = View.VISIBLE
         }
     }
 

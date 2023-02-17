@@ -10,10 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/layout_stroke"
+        android:background="@color/white"
         android:orientation="vertical">
-
-
 
             <ImageButton
                 android:id="@+id/back"
@@ -33,7 +31,6 @@
             android:focusableInTouchMode="true">
 
             <Spinner
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -44,9 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:id="@+id/search_spinner"/>
-
-
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -148,6 +142,7 @@
                  />
 
             <TextView
+                android:fontFamily="@font/one_mobile_pop"
                 android:id="@+id/category_close_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,6 +150,20 @@
                 android:gravity="center"
 
                 android:text="접기"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/category_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:fontFamily="@font/one_mobile_pop"
+                android:text="키워드와 관련된 업종이 없습니다"
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginTop="3dp"
@@ -228,6 +237,20 @@
                 android:background="@drawable/rounded_corner2"
                 android:gravity="center"
                 android:text="접기"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/theme_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:text="관련된 테마가 없습니다"
+                android:fontFamily="@font/one_mobile_pop"
                 android:textColor="@color/black"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
@@ -364,6 +387,20 @@
                 android:textSize="18dp"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/stock_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:text="키워드와 같이 언급된 주식이 없습니다"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -428,6 +465,20 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:text="접기"
+                android:fontFamily="@font/one_mobile_pop"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/news_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="키워드가 포함된 뉴스가 없습니다"
                 android:fontFamily="@font/one_mobile_pop"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"

@@ -198,7 +198,11 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
             }
         }
         categorydetailNewsAdapter.notifyDataSetChanged()
-        if(CategoryDetailNewsList.size < 3){
+        if(CategoryDetailNewsList.size in 1..2){
+            view.categoryIncludeNewsOpenBtn.visibility = View.GONE
+        }
+        else if(CategoryDetailNewsList.size == 0){
+            view.categoryIncludeNewsNoBtn.visibility = View.VISIBLE
             view.categoryIncludeNewsOpenBtn.visibility = View.GONE
         }
     }

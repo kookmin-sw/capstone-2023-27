@@ -258,8 +258,12 @@ class StockFragment : Fragment(), View.OnClickListener {
             }
         }
         StockNewsListAdapter.notifyDataSetChanged()
-        if(StockNewsList.size < 3){
+        if(StockNewsList.size in 1..2){
             view.newsOpenBtn.visibility = View.GONE
+        }
+        else if(StockNewsList.size == 0){
+            view.newsOpenBtn.visibility = View.GONE
+            view.newsStockNoBtn.visibility = View.VISIBLE
         }
     }
     fun softkeyboardHide() {

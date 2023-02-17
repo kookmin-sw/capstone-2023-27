@@ -150,6 +150,21 @@
 
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/category_detail_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/one_mobile_pop"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:text="업종관련 종목이 없습니다"
+                android:background="@drawable/rounded_corner2"
+
+                android:visibility="gone" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -216,6 +231,20 @@
                 android:padding="5dp"
                 android:textSize="18dp"
                 android:text="접기"
+                android:textColor="@color/black"
+                android:fontFamily="@font/one_mobile_pop"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/category_include_news_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:text="업종이 포함된 뉴스가 없습니다"
                 android:textColor="@color/black"
                 android:fontFamily="@font/one_mobile_pop"
                 android:visibility="gone"/>
