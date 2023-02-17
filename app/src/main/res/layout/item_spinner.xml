@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tvItemSpinner"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:padding="4dp"
     android:text="종목번호"
+    android:textColorHint="@color/hmmm"
     android:fontFamily="@font/one_mobile_pop"
     android:textColor="@color/black"
-    android:textSize="7pt" />
+    android:textSize="8pt" />

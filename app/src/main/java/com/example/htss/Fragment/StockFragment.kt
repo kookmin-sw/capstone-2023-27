@@ -117,7 +117,7 @@ class StockFragment : Fragment(), View.OnClickListener {
 
 
         setListenerToEditText()
-        getSectorThemeKeywordIncludeNews(view.stockName.toString(),3)
+        getSectorThemeKeywordIncludeNews(StockName,3)
         getStockNowPrice(StockTicker)
         getCompanyInfo(StockTicker)
 
@@ -194,6 +194,7 @@ class StockFragment : Fragment(), View.OnClickListener {
                     if(!response.body().isNullOrBlank()){
                         val bundle = Bundle()
                         bundle.putString("stock_ticker", response.body())
+                        bundle.putString("stock_name", name)
                         replaceFragment(StockFragment(), bundle)
                     } else {
                         Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
@@ -274,13 +275,13 @@ class StockFragment : Fragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.news_open_btn -> {
-                getSectorThemeKeywordIncludeNews(view.stockName.toString(),10)
+                getSectorThemeKeywordIncludeNews(StockName,10)
                 view.newsCloseBtn.visibility = View.VISIBLE
                 view.newsOpenBtn.visibility = View.GONE
 
             }
             R.id.news_close_btn -> {
-                getSectorThemeKeywordIncludeNews(view.stockName.toString(),3)
+                getSectorThemeKeywordIncludeNews(StockName,3)
                 view.newsCloseBtn.visibility = View.GONE
                 view.newsOpenBtn.visibility = View.VISIBLE
             }
@@ -293,7 +294,7 @@ class StockFragment : Fragment(), View.OnClickListener {
                     2 -> { // 종목명
                         getTickerByStockName(view.stockKeywordEdit.text.toString().trim())
                     }
-                    else -> { // 키워드, 업종, 테마
+                    else -> { // 키워드
                         val bundle = Bundle()
                         bundle.putString("keyword", view.stockKeywordEdit.text.toString().trim())
                         bundle.putInt("type", selectedPosition)

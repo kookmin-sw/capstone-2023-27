@@ -449,6 +449,8 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
         else{
             for(item in body){
                 RelatedNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+                Log.d("count","H")
+
             }
         }
         RelatedNewsListAdapter.notifyDataSetChanged()

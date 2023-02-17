@@ -25,11 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:padding="4dp"
             android:focusable="true"
             android:background="@drawable/layout_stroke"
             android:focusableInTouchMode="true">
 
             <Spinner
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -62,10 +64,12 @@
                     android:layout_marginTop="4dp"
                     android:singleLine="true"
                     android:background="@null"
+                    android:textColor="@color/black"
                     android:fontFamily="@font/one_mobile_pop"
                     android:hint="검색어를 입력하세요."
+                    android:textColorHint="@color/hmmm"
                     android:imeOptions="actionDone"
-                    android:textSize="7pt"
+                    android:textSize="8pt"
                     />
 
                 <ImageButton
@@ -111,7 +115,7 @@
                 android:textSize="13sp"
                 android:textColor="@color/brown"
                 android:fontFamily="@font/one_mobile_pop"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="4dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -183,7 +187,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="기업개요"
-
                 android:textColor="@color/black"
                 android:layout_marginBottom="5dp"
                 android:textSize="18sp"

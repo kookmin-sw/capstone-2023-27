@@ -67,7 +67,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         view = FragmentHomeBinding.inflate(inflater, container, false)
         val items = resources.getStringArray(R.array.search_array)
-        val myAapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
+        val myAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val v = super.getView(position, convertView, parent)
                 if (position == count) {
@@ -83,13 +83,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 return super.getCount() - 1
             }
         }
-
-        myAapter.addAll(items.toMutableList())
-        myAapter.add("항목선택")
-        view.searchSpinner.adapter = myAapter
-        view.searchSpinner.setSelection(myAapter.count)
+        myAdapter.addAll(items.toMutableList())
+        myAdapter.add("항목선택")
+        view.searchSpinner.adapter = myAdapter
+        view.searchSpinner.setSelection(myAdapter.count)
         view.searchSpinner.dropDownVerticalOffset = dipToPixels(35f).toInt()
-
 //스피너 선택시 나오는 화면
         view.searchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -212,6 +210,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     if(!response.body().isNullOrBlank()){
                         val bundle = Bundle()
                         bundle.putString("stock_ticker", response.body())
+                        bundle.putString("stock_name", name)
                         replaceFragment(StockFragment(), bundle)
                     } else {
                         Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
