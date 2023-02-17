@@ -19,11 +19,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="업종별 시세 "
-            android:textSize="10pt"
+            android:textSize="27sp"
             android:padding="5dp"
             android:gravity="center"
             android:textColor="@color/black"
-            android:textStyle="bold"
+            android:fontFamily="@font/one_mobile_pop"
             android:id="@+id/sector"/>
         <TextView
             android:layout_width="0dp"
@@ -31,10 +31,10 @@
             android:layout_weight="1"
             android:text="테마별 시세"
             android:padding="5dp"
-            android:textSize="10pt"
+            android:textSize="27sp"
 
             android:gravity="center"
-            android:textStyle="bold"
+            android:fontFamily="@font/one_mobile_pop"
             android:textColor="@color/black"
             android:id="@+id/theme"/>
     </LinearLayout>

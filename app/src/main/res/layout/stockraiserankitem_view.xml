@@ -19,7 +19,7 @@
         android:textColor="@color/black"
         android:textAlignment="center"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/one_mobile_pop" />
 
     <TextView
         android:id="@+id/stock_raise_name"
@@ -30,8 +30,7 @@
         android:layout_marginStart="3dp"
         android:text="샌즈랩"
         android:textColor="@color/black"
-        android:textStyle="bold"
-
+        android:fontFamily="@font/one_mobile_pop"
         android:textSize="15sp" />
     <TextView
         android:id="@+id/stock_raise_price"
@@ -42,7 +41,7 @@
         android:layout_marginStart="3dp"
         android:text="9200"
         android:textColor="@color/black"
-        android:textStyle="bold"
+        android:fontFamily="@font/one_mobile_pop"
 
         android:textSize="11sp" />
 
@@ -67,18 +66,18 @@
         android:textColor="@color/blue"
         android:gravity="right|center"
         android:textSize="13sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/one_mobile_pop"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/stock_mention"
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:layout_height="match_parent"
-        android:gravity="right|center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="13sp" />
+<!--    <TextView-->
+<!--        android:id="@+id/stock_mention"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_weight="2"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:gravity="right|center"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textSize="13sp" />-->
 
 
 </LinearLayout>

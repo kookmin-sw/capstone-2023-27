@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Adapter.ThemeDetailListAdapter
@@ -72,6 +73,12 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
         view.themeDetail2.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = themeNewslListAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    view.themeDetail2.context,
+                    LinearLayoutManager(context).orientation
+                )
+            )
         }
 
         view.back2.setOnClickListener {

@@ -12,42 +12,41 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textSize="15sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/one_mobile_pop"
         android:id="@+id/category_detail_name"
         android:text="오브젠"
         />
 
     <TextView
+        android:id="@+id/category_current_value"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="4"
+        android:fontFamily="@font/one_mobile_pop"
         android:gravity="right"
         android:padding="10dp"
-        android:textColor="@color/black"
-        android:id="@+id/category_current_value"
-        android:textSize="15sp"
-        android:textStyle="bold"
         android:text="9,200"
-        />
+        android:textColor="@color/black"
+        android:textSize="15sp" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="5"
         android:gravity="right"
         android:textSize="15sp"
         android:id="@+id/category_detail_pluspercent"
         android:padding="10dp"
         android:text="+30%"
-        android:textStyle="bold"
+        android:fontFamily="@font/one_mobile_pop"
         android:textColor="@color/blue" />
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="5"
         android:gravity="right"
         android:textSize="15sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/one_mobile_pop"
         android:id="@+id/category_detail_minuspercent"
         android:padding="10dp"
         android:visibility="gone"

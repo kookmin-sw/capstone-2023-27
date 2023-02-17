@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.CategoryDetailListAdapter
 import com.example.htss.Adapter.MainNewsAdapter
@@ -73,6 +74,12 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
         view.recycleCategoryDetail2.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = categorydetailNewsAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    view.recycleCategoryDetail2.context,
+                    LinearLayoutManager(context).orientation
+                )
+            )
         }
 
 

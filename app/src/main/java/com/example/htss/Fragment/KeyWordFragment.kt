@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.CategoryListAdapter
 import com.example.htss.Adapter.HomeAdapter
@@ -122,7 +123,15 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
         view.newsRecyclerview.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = RelatedNewsListAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    view.newsRecyclerview.context,
+                    LinearLayoutManager(context).orientation
+                )
+            )
         }
+
+
 
         KeyWordName = arguments?.getString("keyword").toString()
 
@@ -192,8 +201,6 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
         view.newsCloseBtn.setOnClickListener(this)
         view.newsOpenBtn.setOnClickListener(this)
         view.searchBtn2.setOnClickListener(this)
-        view.keywordEdit.setHint(KeyWordName)
-
 
         return view.root
     }

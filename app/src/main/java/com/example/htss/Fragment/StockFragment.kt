@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Model.NewsModel
@@ -92,7 +93,12 @@ class StockFragment : Fragment(), View.OnClickListener {
         view.newsRecyclerview.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = StockNewsListAdapter
-
+            addItemDecoration(
+                DividerItemDecoration(
+                    view.newsRecyclerview.context,
+                    LinearLayoutManager(context).orientation
+                )
+            )
         }
 
         view.back.setOnClickListener {
@@ -107,7 +113,6 @@ class StockFragment : Fragment(), View.OnClickListener {
         view.newsCloseBtn.setOnClickListener(this)
         view.newsOpenBtn.setOnClickListener(this)
         view.stockSearchBtn.setOnClickListener(this)
-        view.stockKeywordEdit.setHint(StockName)
 
 
 

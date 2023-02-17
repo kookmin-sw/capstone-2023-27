@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.htss.Adapter.ThemeListAdapter
@@ -43,6 +44,13 @@ class ThemeListFragment : Fragment() {
         view.recycle5.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = themeListAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    view.recycle5.context,
+                    LinearLayoutManager(context).orientation
+                )
+            )
+
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
