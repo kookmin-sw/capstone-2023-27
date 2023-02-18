@@ -1,7 +1,5 @@
 package com.example.htss.Retrofit.Model
 
-class CompanyInfo : ArrayList<CompanyInfoListItem>()
-
 data class CompanyInfoListItem (
     val ticker:String,
     val company_name:String,

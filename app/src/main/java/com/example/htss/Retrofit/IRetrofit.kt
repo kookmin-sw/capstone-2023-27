@@ -82,7 +82,7 @@ interface IRetrofit {
     @GET("/stock/info")
     fun getCompanyInfo(
         @Query("ticker") ticker:String
-    ) : Call<CompanyInfo>
+    ) : Call<CompanyInfoListItem>
 
 
     @GET("/stock/now-price")

@@ -126,28 +126,28 @@ class StockFragment : Fragment(), View.OnClickListener {
     }
 
     fun getCompanyInfo(ticker: String){
-        retrofit.getCompanyInfo(ticker).enqueue(object : Callback<CompanyInfo> {
+        retrofit.getCompanyInfo(ticker).enqueue(object : Callback<CompanyInfoListItem> {
             override fun onResponse(
-                call: Call<CompanyInfo>,
-                response: Response<CompanyInfo>
+                call: Call<CompanyInfoListItem>,
+                response: Response<CompanyInfoListItem>
             ) {
                 if(response.code()==200) {
-                    if(!response.body().isNullOrEmpty()) addcompanyInfo(response.body()!!)
+                    if(response.body() != null ) addcompanyInfo(response.body()!!)
                     Log.d("stock/info/API호출!!!!!!", response.raw().toString())
                 } else {
                     Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
                 }
             }
-            override fun onFailure(call: Call<CompanyInfo>, t: Throwable) {
-                Log.d("API호출2", t.message.toString())
+            override fun onFailure(call: Call<CompanyInfoListItem>, t: Throwable) {
+                Log.d("API호출3333", t.message.toString())
             }
         })
     }
-    private fun addcompanyInfo(body: CompanyInfo) {
-        view.stockName.text = body[0].company_name
-        view.stockName2.text = body[0].company_name
-        view.stockInfo.text = body[0].company_info
-        getSectorThemeKeywordIncludeNews(body[0].company_name, newsNum)
+    private fun addcompanyInfo(body: CompanyInfoListItem) {
+        view.stockName.text = body.company_name
+        view.stockName2.text = body.company_name
+        view.stockInfo.text = body.company_info
+        getSectorThemeKeywordIncludeNews(body.company_name, newsNum)
     }
 
     fun getStockNowPrice(ticker: String){
