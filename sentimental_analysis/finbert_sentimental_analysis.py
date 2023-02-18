@@ -12,9 +12,9 @@ import pandas as pd
 
 # FinBERT 모델 로드 - huggingface 사용
 tokenizer = AutoTokenizer.from_pretrained("snunlp/KR-FinBert-SC")
-model = AutoModelForSequenceClassification.from_pretrained("snunlp/KR-FinBert-SC").cuda()
+model = AutoModelForSequenceClassification.from_pretrained("snunlp/KR-FinBert-SC")
 
-device = "cuda:0" if torch.cuda.is_available() else "cpu"
+device = "cpu"
 
 # 뉴스 csv 데이터 로드
 news = pd.read_csv('drive/MyDrive/Capstone/data/news.csv')
