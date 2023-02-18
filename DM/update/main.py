@@ -10,11 +10,19 @@ from konlpy.tag import Mecab
 import re
 import time
 import config
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
+import torch
+import torch.nn as nn
 class Update():
+
+
+
     def __init__(self):
         # self.engine = create_engine("mysql+pymysql://root:" + "1234" + "@localhost/capstone_db", encoding='utf-8')
         self.engine = create_engine(
             "mysql+pymysql://admin:" + config.db_config["password"] + config.db_config["location"], encoding='utf-8')
+
+
 
     # 하루에 한번
     def update_now_price(self):
@@ -27,8 +35,38 @@ class Update():
         df = df.reset_index()[["티커", "시가", "고가", "저가", "종가", "등락률"]]
         df.columns = ["ticker", "start_price", "high_price", "low_price", "end_price", "rate"]
         df.to_sql(name='now_stock_price', con=self.engine, if_exists='replace', index=False)
+
+        # 코스피 코스닥 지수 크롤링
+        market_index_list = []
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/100.0.48496.75"}
+        url = 'https://finance.naver.com/sise/sise_index.naver?code=KOSPI'
+        html = requests.get(url, headers=headers)
+        page = BeautifulSoup(html.text, "html.parser")
+        now_value = page.select("#now_value")[0].text
+        now_value = re.sub('&nbsp;| |\t|\r|\n', '', now_value).replace(",", "")
+        values_rate = page.select("#change_value_and_rate")[0].text
+        values_rate = re.sub('%상승', '', values_rate).replace(",", "").split(" ")
+        change_value = values_rate[0]
+        change_rate = values_rate[1]
+        market_index_list.append(["코스피", float(now_value), float(change_value), float(change_rate)])
+        url = 'https://finance.naver.com/sise/sise_index.naver?code=KOSDAQ'
+        html = requests.get(url, headers=headers)
+        page = BeautifulSoup(html.text, "html.parser")
+        now_value = page.select("#now_value")[0].text
+        now_value = re.sub('&nbsp;| |\t|\r|\n', '', now_value).replace(",", "")
+        values_rate = page.select("#change_value_and_rate")[0].text
+        values_rate = re.sub('%상승', '', values_rate).replace(",", "").split(" ")
+        change_value = values_rate[0]
+        change_rate = values_rate[1]
+        market_index_list.append(["코스닥", float(now_value), float(change_value), float(change_rate)])
+        df = pd.DataFrame(market_index_list, columns=["market", "now_value", "change_value", "change_rate"])
+        df.to_sql(name='market_index', con=self.engine, if_exists='replace', index=False)
+
         self.engine.execute("update time_table set day_minute1= '{now}' limit 1".format(now=datetime.now()))
         print("end now_stock_price")
+
+
+
 
     def update_price(self):
         a = self.engine.execute("select day_date from time_table")
@@ -47,8 +85,8 @@ class Update():
 
         day_list = stock.get_market_ohlcv(start_date, end_date, "005930").index.to_list()
         day_list = list(map(str_day, day_list))
-
         df = pd.DataFrame(columns=["티커", "시가", "고가", "저가", "종가", "거래량", "거래대금", "등락률", "날짜"])
+
         for day in (day_list):
             tmp_df = stock.get_market_ohlcv(day, market="KOSPI")
             tmp_df2 = stock.get_market_ohlcv(day, market="KOSDAQ")
@@ -69,6 +107,8 @@ class Update():
 
         print("end stock_price")
 
+
+
     def update_news(self):
         query1 = self.engine.execute("select day_minute10 from time_table")
         dd = query1.first()[0]
@@ -76,7 +116,7 @@ class Update():
         tickers = [ticker[0] for ticker in tic]
         tmp_li = []
         # 이전 업데이트~ 현재까지 새로운 뉴스를 크롤링
-        for ticker in tqdm(tickers):
+        for ticker in (tickers):
             p = 1
             fday = datetime.now()
             end_point = False
@@ -118,11 +158,15 @@ class Update():
                     print("err")
         res = sum(tmp_li, [])
         df = pd.DataFrame(res, columns=["ticker", "provider", "date", "rink", "title"])
-
+        #새로운 뉴스가 없는 경우 종료
+        if df.empty()==True:
+            print("empty")
+            self.engine.execute("update time_table set day_minute10 = '{now}' limit 1".format(now=datetime.now()))
+            return
         # 크롤링 해온 뉴스들의 본문 가져오기
         urls = df["rink"].values.tolist()
         t_li = []
-        for url in tqdm(urls):
+        for url in (urls):
             headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/100.0.48496.75"}
             html = requests.get(url, headers=headers)
             soup = BeautifulSoup(html.text, "html.parser")
@@ -191,18 +235,55 @@ class Update():
         df = df.drop_duplicates(subset=["ticker", "date"])
         #df.to_sql(name='news', con=self.engine, if_exists='append', index=False)
 
-        for row in tqdm(df.itertuples(), total=df.shape[0]):
+
+        print(df)
+
+        #감정분석
+        device = torch.device('cpu')
+        tokenizer = AutoTokenizer.from_pretrained("snunlp/KR-FinBert-SC")
+        model = AutoModelForSequenceClassification.from_pretrained("snunlp/KR-FinBert-SC")
+        # 뉴스 csv 데이터 로드
+        titles = list(df['title'])
+        outputs_list = []
+
+        # 뉴스 제목 loop돌며 감성분석 수행
+        for title in (titles):
+            inputs = tokenizer(title, return_tensors='pt').to(device)
+            output = model(**inputs)
+            output = output.logits.tolist()[0]
+            outputs_list.append(output)
+
+        # 소프트맥스 함수로 예측 값 생성
+        outputs = torch.tensor(outputs_list)
+        predictions = nn.functional.softmax(outputs, dim=-1)
+
+        # 데이터프레임에 column 추가. 각 column은 해당되는 감정의 지수를 나타냄
+        df_sc = pd.DataFrame(predictions.detach().numpy())
+        df_sc.columns = ['Negative', 'Neutral', 'Positive']
+        df = pd.concat([df, df_sc], axis=1)
+        df["sentiment"] = ""
+        for row in (df.itertuples()):
+            li = [getattr(row, 'Negative'), getattr(row, 'Neutral'), getattr(row, 'Positive')]
+            if li.index(max(li)) == 0:
+                df.loc[row.Index, "sentiment"] = "악재"
+            elif li.index(max(li)) == 1:
+                df.loc[row.Index, "sentiment"] = "중립"
+            else:
+                df.loc[row.Index, "sentiment"] = "호재"
+        df = df[['ticker', 'provider', 'date', 'rink', 'title','description', 'sentiment']]
+
+
+        for row in (df.itertuples()):
             title1 = getattr(row, "title")
             title1 = '\\"'.join(title1.split('"'))
             title1 = "\\'".join(title1.split("'"))
             title1 = "%%".join(title1.split("%"))
             title1= str(title1)
-            query = "INSERT IGNORE INTO news values(lpad({ticker},'6','0'),'{provider}','{date}','{rink}','{title}','{description}')".format(
-                ticker=getattr(row, "ticker"),provider=getattr(row, "provider"), date=getattr(row, "date"), rink=getattr(row, "rink"), title=title1, description=getattr(row, "description"))
+            query = "INSERT IGNORE INTO news values(lpad({ticker},'6','0'),'{provider}','{date}','{rink}','{title}','{description}','{sentiment}')".format(
+                ticker=getattr(row, "ticker"),provider=getattr(row, "provider"), date=getattr(row, "date"), rink=getattr(row, "rink"), title=title1, description=getattr(row, "description"), sentiment=getattr(row, "sentiment"))
             self.engine.execute(query)
 
-        for row in tqdm(noun_df.itertuples(), total=noun_df.shape[0]):
-
+        for row in (noun_df.itertuples()):
             query = "INSERT INTO search_noun VALUES (lpad({ticker},'6','0'), '{noun}', {count}, '{company_name}') ON DUPLICATE KEY UPDATE count = count+{count}".format(
                 ticker=(getattr(row, 'ticker')), noun=(getattr(row, 'noun')), count=int(getattr(row, 'count')),
                 company_name=(getattr(row, 'company_name')))
@@ -307,7 +388,7 @@ class Update():
         dvr_list=[]
 
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/100.0.48496.75"}
-        for ticker in tqdm(tickers):
+        for ticker in (tickers):
             url = 'https://finance.naver.com/item/main.naver?code={ticker}'.format(ticker=ticker)
             html = requests.get(url, headers=headers)
             page = BeautifulSoup(html.text, "html.parser")
@@ -425,12 +506,12 @@ class Update():
 
 
 
-# a = Update()
+a = Update()
 # a.update_now_price()
 # 1일 주기
 # a.update_price()
 # 1시간 주기
-# a.update_news()
+a.update_news()
 # 1주일 주기
 # a.update_sectors()
 # a.update_thema()

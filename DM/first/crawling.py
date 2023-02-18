@@ -305,7 +305,6 @@ def err_crawling_news_main():
 # err_crawling_news_main()
 # print(f"{time.time() - start:.4f} sec")
 
-# df = stock.get_market_ohlcv("20220102",market = "KOSPI")
 # df2 = stock.get_market_ohlcv("20220102",market = "KOSDAQ")
 # df = pd.concat([df,df2])["등락률"].reset_index()
 # df.columns = ["ticker","change_rate"]
@@ -317,21 +316,48 @@ def err_crawling_news_main():
 # print(dfn.groupby("noun")["change_rate"].mean().sort_values())
 # # df = pd.read_csv("csvFile/news.csv",index_col=0,dtype=str)
 
+# headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/100.0.48496.75"}
+# url = 'https://finance.naver.com/item/main.naver?code=000020'
+# html = requests.get(url, headers=headers)
+# page = BeautifulSoup(html.text, "html.parser")
+# marketCap = page.select("#_market_sum")[0].text
+# marketCap = re.sub('&nbsp;| |\t|\r|\n', '', marketCap).replace(",","").split("조")
+# marketCap = int(marketCap[0])*10000 + int(marketCap[1])
+# print(marketCap)
+# per = page.select("#_per")[0].text
+# eps = page.select("#_eps")[0].text.replace(",","")
+# # perEps = re.sub('&nbsp;| |\t|\r|\n', '', perEps).split("l")
+# print(per,eps)
+# estimatePer = page.select("#_cns_per")[0].text
+# estimateEps = page.select("#_cns_eps")[0].text.replace(",","")
+# print(estimatePer,estimateEps)
+# #배당수익률
+# dvr = page.select("#_dvr")[0].text
+# print(dvr)
+
+market_index_list = []
+
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/100.0.48496.75"}
-url = 'https://finance.naver.com/item/main.naver?code=000020'
+url = 'https://finance.naver.com/sise/sise_index.naver?code=KOSPI'
 html = requests.get(url, headers=headers)
 page = BeautifulSoup(html.text, "html.parser")
-marketCap = page.select("#_market_sum")[0].text
-marketCap = re.sub('&nbsp;| |\t|\r|\n', '', marketCap).replace(",","").split("조")
-marketCap = int(marketCap[0])*10000 + int(marketCap[1])
-print(marketCap)
-per = page.select("#_per")[0].text
-eps = page.select("#_eps")[0].text.replace(",","")
-# perEps = re.sub('&nbsp;| |\t|\r|\n', '', perEps).split("l")
-print(per,eps)
-estimatePer = page.select("#_cns_per")[0].text
-estimateEps = page.select("#_cns_eps")[0].text.replace(",","")
-print(estimatePer,estimateEps)
-#배당수익률
-dvr = page.select("#_dvr")[0].text
-print(dvr)
+now_value = page.select("#now_value")[0].text
+now_value = re.sub('&nbsp;| |\t|\r|\n', '', now_value).replace(",","")
+values_rate = page.select("#change_value_and_rate")[0].text
+values_rate= re.sub('%상승', '', values_rate).replace(",","").split(" ")
+change_value = values_rate[0]
+change_rate = values_rate[1]
+market_index_list.append(["코스피",float(now_value),float(change_value),float(change_rate)])
+url = 'https://finance.naver.com/sise/sise_index.naver?code=KOSDAQ'
+html = requests.get(url, headers=headers)
+page = BeautifulSoup(html.text, "html.parser")
+now_value = page.select("#now_value")[0].text
+now_value = re.sub('&nbsp;| |\t|\r|\n', '', now_value).replace(",","")
+values_rate = page.select("#change_value_and_rate")[0].text
+values_rate= re.sub('%상승', '', values_rate).replace(",","").split(" ")
+change_value = values_rate[0]
+change_rate = values_rate[1]
+market_index_list.append(["코스닥",float(now_value),float(change_value),float(change_rate)])
+df = pd.DataFrame(market_index_list,columns=["market","now_value","change_value","change_rate"])
+
+print(df)

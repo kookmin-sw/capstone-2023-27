@@ -11,4 +11,5 @@ public class NewsDto {
     private Date date;
     private String rink;
     private String title;
+    private String sentiment;
 }

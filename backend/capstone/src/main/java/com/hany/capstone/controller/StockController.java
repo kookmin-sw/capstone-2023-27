@@ -18,9 +18,9 @@ public class StockController {
 
     @ResponseBody
     @RequestMapping(value = "/info")
-    public List<CompanyInfoDto> getStockInfo(@RequestParam String ticker){
-        List<CompanyInfoDto>list = apiService.stockInfo(ticker);
-        return list;
+    public CompanyInfoDto getStockInfo(@RequestParam String ticker){
+        CompanyInfoDto info = apiService.stockInfo(ticker);
+        return info;
     }
 
     @ResponseBody
@@ -51,6 +51,13 @@ public class StockController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/high-now-price")
+    public List<NowPriceDto> getHighNowPrice(@RequestParam int num){
+        List<NowPriceDto> price = apiService.stockHighNowPrice(num);
+        return price;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/like")
     public List<String> getLike(@RequestParam String keyword){
         List<String> list = apiService.stockLike(keyword);
@@ -62,5 +69,11 @@ public class StockController {
     public DateDto getStockDate(){
         DateDto date = apiService.stockDate();
         return date;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/market")
+    public MarketIndexDto getStockMarket(@RequestParam String name){
+        MarketIndexDto mi = apiService.StockMarketId(name);
+        return mi;
     }
 }

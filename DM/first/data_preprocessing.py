@@ -27,7 +27,6 @@ def title_description_change_noun():
         eng_noun_list = re.sub('[^a-zA-Z]',' ', text).strip()
         # 다중공백 치환
         eng_noun_list= re.sub(' +', ' ', eng_noun_list).split(" ")
-
         eng_noun_list = [noun.lower() for noun in eng_noun_list if len(noun)!=1 and len(noun)<15]
         noun_list = noun_list+list(set(eng_noun_list))
         for none in noun_list:

@@ -16,6 +16,10 @@ class UploadMysql():
     #     df.columns = ["ticker", "open", "high", "low", "end", "volume", "mount", "rate", "day", "name"]
     #     df.to_sql(name='price', con=self.engine, if_exists='append', index=False)
 
+    def upload_terms(self):
+        df = pd.read_csv("csvFile/terms.csv",dtype=str,usecols=[1,2])
+        df.to_sql(name='terms_table', con=self.engine, if_exists='replace', index=False, index_label="terms")
+
     def upload_search_noun(self):
         df = pd.read_csv("csvFile/news_noun.csv",dtype=str)
         df = df.drop_duplicates(subset = ["ticker","noun"])
@@ -24,13 +28,11 @@ class UploadMysql():
         df.to_sql(name='search_noun', con=self.engine, if_exists='append', index=False, index_label="noun")
 
     def upload_news(self):
-        df = pd.read_csv("csvFile/news_description2.csv", dtype=str)
+        df = pd.read_csv("csvFile/news_description7.csv", dtype=str)
         # df['title'] = df['title'].str.replace('…', '...')
         df = df.drop_duplicates(subset = ["ticker","date"])
         df.to_sql(name='news', con=self.engine, if_exists='append', index=False)
 
-    def upload_best_rise_rate(self,day):
-        df.to_sql(name='best_rise_rate_keyword', con=self.engine, if_exists='append', index=False)
 
     def upload_price(self):
         df = pd.read_csv("csvFile/stock_price.csv",dtype=str)
@@ -68,6 +70,7 @@ class UploadMysql():
 
 
 a= UploadMysql()
+a.upload_news()
 # a.upload_search_noun()
 # a.upload_news()
 # a.upload_price()

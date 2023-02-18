@@ -40,11 +40,11 @@
     </select>
 
     <select id="newsRecent" resultType="NewsDto">
-        select ticker,provider,date,rink,title from news order by date desc limit #{num};
+        select ticker,provider,date,rink,title,sentiment from news order by date desc limit #{num};
     </select>
 
     <select id="newsLike" resultType="NewsDto">
-        select ticker,provider,date,rink,title from news where description like CONCAT('% ',#{keyword},'%')order by date desc limit #{num};
+        select ticker,provider,date,rink,title,sentiment from news where description like CONCAT('% ',#{keyword},'%')order by date desc limit #{num};
     </select>
 
     <select id="stockInfo" resultType="CompanyInfoDto">
@@ -63,8 +63,13 @@
     </select>
 
     <select id="stockNowPrice" resultType="NowPriceDto">
-        select * from now_stock_price where ticker = #{ticker};
+        select n.ticker,start_price,high_price,low_price,end_price,rate,company_name from now_stock_price n left join company_info_table c on n.ticker = c.ticker  where n.ticker =  #{ticker} ;
     </select>
+
+    <select id="stockHighNowPrice" resultType="NowPriceDto">
+        select n.ticker,start_price,high_price,low_price,end_price,rate,company_name from now_stock_price n left join company_info_table c on n.ticker = c.ticker order by rate desc limit #{num} ;
+    </select>
+
 
     <select id="stockLike" resultType="string">
         select company_name from company_info_table where company_name like CONCAT('%',#{keyword},'%');
@@ -73,4 +78,12 @@
     <select id = "stockDate" resultType="DateDto">
         select * from time_table;
     </select>
+
+    <select id = "StockMarketId" resultType="MarketIndexDto">
+        select * from market_index where market =#{market};
+    </select>
+    <select id = "searchTerms" resultType="TermsDto">
+        select * from terms_table where terms = #{terms};
+    </select>
+
 </mapper>
