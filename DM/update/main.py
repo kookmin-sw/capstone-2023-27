@@ -159,7 +159,7 @@ class Update():
         res = sum(tmp_li, [])
         df = pd.DataFrame(res, columns=["ticker", "provider", "date", "rink", "title"])
         #새로운 뉴스가 없는 경우 종료
-        if df.empty()==True:
+        if df.empty==True:
             print("empty")
             self.engine.execute("update time_table set day_minute10 = '{now}' limit 1".format(now=datetime.now()))
             return
