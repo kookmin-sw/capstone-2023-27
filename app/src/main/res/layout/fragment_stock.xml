@@ -182,24 +182,41 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="기업개요"
-                android:textColor="@color/black"
-                android:layout_marginBottom="5dp"
-                android:textSize="18sp"
-                android:fontFamily="@font/one_mobile_pop" />
-
-            <TextView
-                android:id="@+id/stock_info"
-                android:textSize="14sp"
-                android:textColor="@color/black"
-                android:fontFamily="@font/one_mobile_pop"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="기업개요" />
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:background="@color/white"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="기업개요"
+                    android:textSize="20sp"
+                    android:padding="2dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:id="@+id/company_info"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="투자정보"
+                    android:padding="2dp"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:textColor="@color/black"
+                    android:id="@+id/company_invest_info"/>
+            </LinearLayout>
+            <FrameLayout
+                android:id="@+id/company_frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
 
         </LinearLayout>
         <LinearLayout

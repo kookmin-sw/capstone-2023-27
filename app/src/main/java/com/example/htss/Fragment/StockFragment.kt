@@ -25,7 +25,9 @@ import com.example.htss.R
 import com.example.htss.Retrofit.Model.*
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentStockBinding
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.android.synthetic.main.fragment_stock.*
 import kotlinx.android.synthetic.main.fragment_stock.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,6 +37,7 @@ class StockFragment : Fragment(), View.OnClickListener {
 
     var selectedPosition = 0
     var newsNum = 3
+    var first = "company_info"
     private lateinit var view: FragmentStockBinding
     private val retrofit = RetrofitClient.create()
 
@@ -49,9 +52,17 @@ class StockFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
+
+
     ): View? {
 
         view = FragmentStockBinding.inflate(inflater, container, false)
+
+        view.companyInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+        view.companyInvestInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
+
+
         val items = resources.getStringArray(R.array.search_array)
         val myAapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -89,6 +100,15 @@ class StockFragment : Fragment(), View.OnClickListener {
         StockTicker = arguments?.getString("stock_ticker").toString()
         StockName = arguments?.getString("stock_name").toString()
 
+        val bundle = Bundle()
+        bundle.putString("stock_ticker", StockTicker)
+        when(first){
+            "company_info" -> replaceFragment2(Company_info_Fragment1(),bundle)
+        }
+        Log.d("BUNDLE",bundle.toString())
+
+
+
 //
         view.newsRecyclerview.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -113,6 +133,8 @@ class StockFragment : Fragment(), View.OnClickListener {
         view.newsCloseBtn.setOnClickListener(this)
         view.newsOpenBtn.setOnClickListener(this)
         view.stockSearchBtn.setOnClickListener(this)
+        view.companyInfo.setOnClickListener(this)
+        view.companyInvestInfo.setOnClickListener(this)
 
 
 
@@ -146,7 +168,7 @@ class StockFragment : Fragment(), View.OnClickListener {
     private fun addcompanyInfo(body: CompanyInfoListItem) {
         view.stockName.text = body.company_name
         view.stockName2.text = body.company_name
-        view.stockInfo.text = body.company_info
+//        view.stockInfo.text = body.company_info
         getSectorThemeKeywordIncludeNews(body.company_name, newsNum)
     }
 
@@ -303,6 +325,20 @@ class StockFragment : Fragment(), View.OnClickListener {
                 }
                 view.stockKeywordEdit.text = null
             }
+            R.id.company_info -> {
+                val bundle = Bundle()
+                bundle.putString("stock_ticker", StockTicker)
+                view.companyInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                view.companyInvestInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
+                replaceFragment2(Company_info_Fragment1(),bundle)
+            }
+            R.id.company_invest_info -> {
+                val bundle = Bundle()
+                bundle.putString("stock_ticker", StockTicker)
+                view.companyInvestInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+                view.companyInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
+                replaceFragment2(Company_info_Fragment2(),bundle)
+            }
 
         }
     }
@@ -314,6 +350,13 @@ class StockFragment : Fragment(), View.OnClickListener {
             .beginTransaction()
             .replace(R.id.mainFrameLayout, fragment)
             .addToBackStack(null)
+            .commit()
+    }
+    private fun replaceFragment2(fragment: Fragment,bundle: Bundle) {
+        fragment.arguments = bundle
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.company_frame_layout, fragment)
             .commit()
     }
     //dp 값을 px 값으로 변환해 주는 함수

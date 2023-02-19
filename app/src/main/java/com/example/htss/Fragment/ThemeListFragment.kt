@@ -16,7 +16,6 @@ import com.example.htss.Model.ThemelistModel
 import com.example.htss.R
 import com.example.htss.Retrofit.Model.SectorThemeList
 import com.example.htss.Retrofit.RetrofitClient
-import com.example.htss.databinding.FragmentListBinding
 import com.example.htss.databinding.FragmentThemeListBinding
 import retrofit2.Call
 import retrofit2.Callback

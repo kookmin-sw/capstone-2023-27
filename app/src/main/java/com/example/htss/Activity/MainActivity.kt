@@ -6,15 +6,11 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.example.htss.Fragment.AllListFragment
 import com.example.htss.Fragment.HomeFragment
-import com.example.htss.Fragment.ListFragment
 import com.example.htss.Fragment.SettingFragment
 import com.example.htss.R
 import com.example.htss.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener, View.OnClickListener {
 
