@@ -75,9 +75,6 @@ class ThemeListFragment : Fragment() {
             view.recycle5.requestFocus()
         }
 
-//        view.back.setOnClickListener {
-//            parentFragmentManager.popBackStack()
-//        }
 
         themeListAdapter.setItemClickListener(object : ThemeListAdapter.OnItemClickListener{
             override fun onClick(v:View, position: Int){

@@ -2,6 +2,7 @@ package com.example.htss.Fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.FocusFinder
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,7 @@ class Company_info_Fragment1 : Fragment() {
     private lateinit var view: FragmentCompanyInfo1Binding
     private val retrofit = RetrofitClient.create()
     private var StockTicker = ""
-
+    private var Info = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +31,15 @@ class Company_info_Fragment1 : Fragment() {
         view = FragmentCompanyInfo1Binding.inflate(inflater, container, false)
 
         StockTicker = arguments?.getString("stock_ticker").toString()
+
+        Info = arguments?.getString("Focus").toString()
+        Log.d("Gg",Info)
+
+        if(Info == "hu"){
+            view.companyInfo2 .isFocusableInTouchMode = true
+            view.companyInfo2.requestFocus()
+        }
+
 
         getCompanyInfo(StockTicker)
 
@@ -54,6 +64,6 @@ class Company_info_Fragment1 : Fragment() {
         })
     }
     private fun addcompanyInfo(body: CompanyInfoListItem) {
-        view.companyInfo.text = body.company_info
+        view.companyInfo2.text = body.company_info
     }
 }

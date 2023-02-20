@@ -38,6 +38,7 @@ class StockFragment : Fragment(), View.OnClickListener {
     var selectedPosition = 0
     var newsNum = 3
     var first = "company_info"
+
     private lateinit var view: FragmentStockBinding
     private val retrofit = RetrofitClient.create()
 
@@ -100,12 +101,13 @@ class StockFragment : Fragment(), View.OnClickListener {
         StockTicker = arguments?.getString("stock_ticker").toString()
         StockName = arguments?.getString("stock_name").toString()
 
+
         val bundle = Bundle()
         bundle.putString("stock_ticker", StockTicker)
         when(first){
             "company_info" -> replaceFragment2(Company_info_Fragment1(),bundle)
         }
-        Log.d("BUNDLE",bundle.toString())
+
 
 
 
@@ -328,6 +330,8 @@ class StockFragment : Fragment(), View.OnClickListener {
             R.id.company_info -> {
                 val bundle = Bundle()
                 bundle.putString("stock_ticker", StockTicker)
+                bundle.putString("Focus","hu")
+                Log.d("good",bundle.toString())
                 view.companyInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 view.companyInvestInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
                 replaceFragment2(Company_info_Fragment1(),bundle)
@@ -335,6 +339,7 @@ class StockFragment : Fragment(), View.OnClickListener {
             R.id.company_invest_info -> {
                 val bundle = Bundle()
                 bundle.putString("stock_ticker", StockTicker)
+                bundle.putString("Focuss","huu")
                 view.companyInvestInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 view.companyInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
                 replaceFragment2(Company_info_Fragment2(),bundle)

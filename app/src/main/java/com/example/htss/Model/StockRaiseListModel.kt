@@ -1,7 +1,8 @@
 package com.example.htss.Model
 
 class StockRaiseListModel (
-    val StockRaisename: String,
+    val StockRaiseTicker: String,
+    val StockRaisename: String?,
     val StockRaisePrice: String,
     val StockRaiseRate : String
 )

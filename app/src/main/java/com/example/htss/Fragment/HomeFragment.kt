@@ -30,11 +30,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Adapter.HomeAdapter
+import com.example.htss.Adapter.StockRaiseListAdapter
 import com.example.htss.Model.MainModel
 import com.example.htss.Model.NewsModel
+import com.example.htss.Model.StockRaiseListModel
 import com.example.htss.R
 import com.example.htss.Retrofit.Model.NewsList
 import com.example.htss.Retrofit.Model.SectorThemeList
+import com.example.htss.Retrofit.Model.StockHighRateList
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentHomeBinding
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -45,7 +48,7 @@ import retrofit2.Response
 
 class HomeFragment : Fragment(), View.OnClickListener {
 
-    var     selectedPosition = 0
+    var selectedPosition = 0
 
     private lateinit var view: FragmentHomeBinding
     private val retrofit = RetrofitClient.create()
@@ -53,17 +56,17 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private val categoryRankList = mutableListOf<MainModel>()
 
     private val themeRankList = mutableListOf<MainModel>()
-
+    private val stockRaiseList = mutableListOf<StockRaiseListModel>()
     private val newsRankList = mutableListOf<NewsModel>()
 //////////////////////////어댑터에 배열선언
     private val categoryRankListAdapter = HomeAdapter(categoryRankList)
     private val themeRankListAdapter = HomeAdapter(themeRankList)
     private val newsRankListAdapter = MainNewsAdapter(newsRankList)
-
+    private val stockRaiseListAdapter = StockRaiseListAdapter(stockRaiseList)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
 
         view = FragmentHomeBinding.inflate(inflater, container, false)
         val items = resources.getStringArray(R.array.search_array)
@@ -122,6 +125,21 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 )
             )
         }
+        view.recycleRate.apply {
+            layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false)
+            adapter = stockRaiseListAdapter
+        }
+
+        stockRaiseListAdapter.setItemClickListener(object:StockRaiseListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                val bundle = Bundle()
+                bundle.apply{
+                    bundle.putString("stock_ticker", stockRaiseList[position].StockRaiseTicker)
+                    bundle.putString("stock_name", stockRaiseList[position].StockRaisename)
+                }
+                replaceFragment(StockFragment(),bundle)
+            }
+        })
 
         categoryRankListAdapter.setItemClickListener(object:HomeAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
@@ -159,6 +177,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         getHighSectorList(3)
         getHighThemeList(3)
         getMainNewsList(3)
+        getStockHighRate(15)
 
 
         view.seeMore1.setOnClickListener(this)
@@ -169,6 +188,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.open.setOnClickListener(this)
         view.close.setOnClickListener(this)
         view.searchBtn.setOnClickListener(this)
+        view.seeMore3.setOnClickListener(this)
+        view.rightArrow3.setOnClickListener(this)
 
         return view.root
     }
@@ -202,6 +223,56 @@ class HomeFragment : Fragment(), View.OnClickListener {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
 
+    fun getStockHighRate(num: Int){
+        retrofit.getStockHighRate(num).enqueue(object: Callback<StockHighRateList>{
+            override fun onResponse(call: Call<StockHighRateList>, response: Response<StockHighRateList>) {
+                if(response.code() == 200){
+                    addStockHighRateList(response.body()!!)
+                    Log.d("API호출", response.raw().toString())
+                } else {
+                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<StockHighRateList>, t: Throwable) {
+                Log.d("API호출2", t.message.toString())
+            }
+        })
+    }
+    private fun addStockHighRateList(body: StockHighRateList?){
+        stockRaiseList.clear()
+        if(body.isNullOrEmpty()){
+
+        }
+        else{
+            for(item in body) {
+                if (item.rate >= 0) {
+                    stockRaiseList.add(
+                        StockRaiseListModel(
+                            item.ticker,
+                            item.company_name,
+                            item.end_price.toString(),
+                            "+"+item.rate.toString()+"%"
+                        )
+                    )
+                }
+                else{
+                    stockRaiseList.add(
+                        StockRaiseListModel(
+                            item.ticker,
+                            item.company_name,
+                            item.end_price.toString(),
+                            item.rate.toString()+"%"
+                        )
+                    )
+                }
+            }
+        }
+        stockRaiseListAdapter.notifyDataSetChanged()
+    }
+
+
+
 
     fun getTickerByStockName(name: String){
         retrofit.getTickerByStockName(name).enqueue(object: Callback<String>{
@@ -221,7 +292,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
             }
-
         })
     }
 
@@ -363,6 +433,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
             .addToBackStack(null)
             .commit()
     }
+
+    private fun replaceFragment2(fragment: Fragment) {
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.mainFrameLayout, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
     //dp 값을 px 값으로 변환해 주는 함수
     private fun dipToPixels(dipValue: Float): Float {
         return TypedValue.applyDimension(
@@ -422,6 +500,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 getMainNewsList(3)
                 view.close.visibility = View.GONE
                 view.open.visibility = View.VISIBLE
+            }
+            R.id.see_more3 -> {
+                replaceFragment2(StockHighRateListFragment())
+            }
+            R.id.right_arrow3 -> {
+                replaceFragment2(StockHighRateListFragment())
             }
         }
     }

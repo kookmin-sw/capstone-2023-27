@@ -103,7 +103,7 @@
                 android:layout_margin="7dp"
 
                 android:gravity="center"
-                android:text="삼성전자"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:fontFamily="@font/one_mobile_pop" />
@@ -111,7 +111,7 @@
                 android:id="@+id/ticker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="001000"
+                android:text=""
                 android:textSize="13sp"
                 android:textColor="@color/brown"
                 android:fontFamily="@font/one_mobile_pop"
@@ -125,7 +125,7 @@
                     android:id="@+id/stock_current"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="60700"
+                    android:text=""
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingTop="20dp"
-                    android:text="+3.5%"
+                    android:text=""
                     android:textSize="20sp"
                     android:fontFamily="@font/one_mobile_pop"
                     android:textColor="@color/blue"
@@ -173,6 +173,7 @@
             android:background="@color/gray" />
 
         <LinearLayout
+            android:id="@+id/goodbad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -240,7 +241,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:gravity="center"
-                    android:text="출판"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="8pt"
                     android:fontFamily="@font/one_mobile_pop" />

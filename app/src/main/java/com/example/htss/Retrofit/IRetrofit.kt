@@ -90,4 +90,9 @@ interface IRetrofit {
         @Query("ticker") ticker: String
     ) : Call<StockNowPriceListItem>
 
+    @GET("/stock/high-now-price")
+    fun getStockHighRate(
+        @Query("num") num: Int
+    ) :Call<StockHighRateList>
+
 }

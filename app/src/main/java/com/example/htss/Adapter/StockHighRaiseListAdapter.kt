@@ -1,6 +1,5 @@
 package com.example.htss.Adapter
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.htss.Model.StockRaiseListModel
 import com.example.htss.R
-import org.w3c.dom.Text
 
-class StockRaiseListAdapter(private val itemSet: MutableList<StockRaiseListModel>):
-        RecyclerView.Adapter<StockRaiseListAdapter.ViewHolder>(){
+class StockHighRaiseListAdapter(private val itemSet: MutableList<StockRaiseListModel>):
+    RecyclerView.Adapter<StockHighRaiseListAdapter.ViewHolder>(){
 
-        private lateinit var itemClickListener: StockRaiseListAdapter.OnItemClickListener
+    private lateinit var itemClickListener: StockHighRaiseListAdapter.OnItemClickListener
 
     override fun getItemCount(): Int {
         return itemSet.size
