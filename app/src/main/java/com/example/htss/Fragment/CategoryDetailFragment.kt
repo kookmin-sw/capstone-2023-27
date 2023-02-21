@@ -101,6 +101,12 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
             }
         })
 
+        categorydetailNewsAdapter.setLinkClickListener(object : MainNewsAdapter.OnLinkClickListener{
+            override fun onClick(v: View, position: Int) {
+               getStockNameByTicker(CategoryDetailNewsList[position].ticker)
+            }
+        })
+
         view.back.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
@@ -114,6 +120,28 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
         getSectorThemeKeywordIncludeNews(categoryName,3)
 
         return view.root
+    }
+    fun getStockNameByTicker(ticker: String){
+        retrofit.getStockNameByTicker(ticker).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    if(!response.body().isNullOrBlank()){
+                        val bundle = Bundle()
+                        bundle.putString("stock_ticker", ticker)
+                        bundle.putString("stock_name", response.body())
+                        Log.d("categorydetailfragment",response.body().toString())
+                        replaceFragment(StockFragment(), bundle)
+                    } else {
+                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(),"일치하는 종목이 없습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
     fun getSectorInclude(sector: String, num: Int){
         retrofit.getSectorInclude(sector, num).enqueue(object: Callback<SectorThemeIncludeList> {
@@ -194,7 +222,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
         }
         else{
             for(item in body){
-                CategoryDetailNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+                CategoryDetailNewsList.add(NewsModel(item.ticker,item.provider,item.date,item.rink,item.title,item.sentiment))
             }
         }
         categorydetailNewsAdapter.notifyDataSetChanged()

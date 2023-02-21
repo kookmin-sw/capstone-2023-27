@@ -180,6 +180,11 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
             }
 
         })
+        RelatedNewsListAdapter.setLinkClickListener(object : MainNewsAdapter.OnLinkClickListener{
+            override fun onClick(v: View, position: Int) {
+                getStockNameByTicker(RelatedNewsList[position].ticker)
+            }
+        })
 
         view.back.setOnClickListener {
             parentFragmentManager.popBackStack()
@@ -258,6 +263,8 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
                     if(!response.body().isNullOrBlank()){
                         val bundle = Bundle()
                         bundle.putString("stock_ticker", ticker)
+                        bundle.putString("stock_name", response.body())
+                        Log.d("keywordfragment",response.body().toString())
                         replaceFragment(StockFragment(), bundle)
                     } else {
                         Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
@@ -448,7 +455,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
         }
         else{
             for(item in body){
-                RelatedNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+                RelatedNewsList.add(NewsModel(item.ticker,item.provider,item.date,item.rink,item.title,item.sentiment))
                 Log.d("count","H")
 
             }

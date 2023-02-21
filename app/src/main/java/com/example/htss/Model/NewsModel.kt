@@ -6,4 +6,5 @@ class NewsModel (
     val date: String,
     val rink:String,
     val title:String,
+    val sentiment: String
 )

@@ -132,6 +132,14 @@ class StockFragment : Fragment(), View.OnClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(StockNewsList[position].rink)))
             }
         })
+
+        StockNewsListAdapter.setLinkClickListener(object : MainNewsAdapter.OnLinkClickListener{
+            override fun onClick(v: View, position: Int) {
+                getStockNameByTicker(StockNewsList[position].ticker)
+            }
+        })
+
+
         view.newsCloseBtn.setOnClickListener(this)
         view.newsOpenBtn.setOnClickListener(this)
         view.stockSearchBtn.setOnClickListener(this)
@@ -141,7 +149,6 @@ class StockFragment : Fragment(), View.OnClickListener {
 
 
         setListenerToEditText()
-        getSectorThemeKeywordIncludeNews(StockName,3)
         getStockNowPrice(StockTicker)
         getCompanyInfo(StockTicker)
 
@@ -170,7 +177,6 @@ class StockFragment : Fragment(), View.OnClickListener {
     private fun addcompanyInfo(body: CompanyInfoListItem) {
         view.stockName.text = body.company_name
         view.stockName2.text = body.company_name
-//        view.stockInfo.text = body.company_info
         getSectorThemeKeywordIncludeNews(body.company_name, newsNum)
     }
 
@@ -239,6 +245,8 @@ class StockFragment : Fragment(), View.OnClickListener {
                     if(!response.body().isNullOrBlank()){
                         val bundle = Bundle()
                         bundle.putString("stock_ticker", ticker)
+                        bundle.putString("stock_name", response.body())
+                        Log.d("hmmmddd",response.body().toString())
                         replaceFragment(StockFragment(), bundle)
                     } else {
                         Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
@@ -279,7 +287,7 @@ class StockFragment : Fragment(), View.OnClickListener {
         }
         else{
             for(item in body){
-                StockNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+                StockNewsList.add(NewsModel(item.ticker,item.provider,item.date,item.rink,item.title,item.sentiment))
             }
         }
         StockNewsListAdapter.notifyDataSetChanged()

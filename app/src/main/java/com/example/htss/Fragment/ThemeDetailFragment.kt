@@ -102,7 +102,12 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
             override fun onClick(v: View, position: Int) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(ThemeNewsList[position].rink)))
             }
+        })
 
+        themeNewslListAdapter.setLinkClickListener(object : MainNewsAdapter.OnLinkClickListener{
+            override fun onClick(v: View, position: Int) {
+                getStockNameByTicker(ThemeNewsList[position].ticker)
+            }
         })
 
         getThemeInclude(themename,3)
@@ -172,6 +177,28 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
             view.themeDetailNoBtn.visibility = View.VISIBLE
         }
     }
+    fun getStockNameByTicker(ticker: String){
+        retrofit.getStockNameByTicker(ticker).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    if(!response.body().isNullOrBlank()){
+                        val bundle = Bundle()
+                        bundle.putString("stock_ticker", ticker)
+                        bundle.putString("stock_name", response.body())
+                        Log.d("keywordfragment",response.body().toString())
+                        replaceFragment(StockFragment(), bundle)
+                    } else {
+                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(),"일치하는 종목이 없습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
     fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int){
         retrofit.getSectorThemeKeywordIncludeNews(keyword, num).enqueue(object: Callback<KeywordIncludeNewsList> {
             override fun onResponse(
@@ -197,7 +224,7 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
         }
         else{
             for(item in body){
-                ThemeNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+                ThemeNewsList.add(NewsModel(item.ticker,item.provider,item.date,item.rink,item.title,item.sentiment))
             }
         }
         themeNewslListAdapter.notifyDataSetChanged()

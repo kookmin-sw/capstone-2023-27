@@ -95,4 +95,9 @@ interface IRetrofit {
         @Query("num") num: Int
     ) :Call<StockHighRateList>
 
+    @GET("/stock/market")
+    fun getStockMarket(
+        @Query("name") name: String
+    ) :Call<StockMarketList>
+
 }

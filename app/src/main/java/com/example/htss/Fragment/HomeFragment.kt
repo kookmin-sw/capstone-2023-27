@@ -1,4 +1,5 @@
 package com.example.htss.Fragment
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
@@ -38,6 +39,7 @@ import com.example.htss.R
 import com.example.htss.Retrofit.Model.NewsList
 import com.example.htss.Retrofit.Model.SectorThemeList
 import com.example.htss.Retrofit.Model.StockHighRateList
+import com.example.htss.Retrofit.Model.StockMarketList
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentHomeBinding
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -169,8 +171,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
         newsRankListAdapter.setItemClickListener(object : MainNewsAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(newsRankList[position].rink)))
-            }
 
+            }
+        })
+
+        newsRankListAdapter.setLinkClickListener(object: MainNewsAdapter.OnLinkClickListener{
+            override fun onClick(v: View, position: Int) {
+               getStockNameByTicker(newsRankList[position].ticker)
+            }
         })
 
         setListenerToEditText()
@@ -178,7 +186,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
         getHighThemeList(3)
         getMainNewsList(3)
         getStockHighRate(15)
-
+        getStockMarket("코스피")
+        getStockMarket("코스닥")
 
         view.seeMore1.setOnClickListener(this)
         view.seeMore2.setOnClickListener(this)
@@ -221,6 +230,72 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
     private fun showToastMessage(msg: String?) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
+
+    fun getStockMarket(name: String){
+        retrofit.getStockMarket(name).enqueue(object: Callback<StockMarketList>{
+            override fun onResponse(call: Call<StockMarketList>, response: Response<StockMarketList>) {
+                if(response.code() == 200){
+                    addStockMarketList(response.body()!!)
+                    Log.d("API호출", response.raw().toString())
+                } else {
+                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<StockMarketList>, t: Throwable) {
+                Log.d("API호출2", t.message.toString())
+            }
+        })
+    }
+    @SuppressLint("SetTextI18n")
+    private fun addStockMarketList(body: StockMarketList){
+        if(body.market == "코스피"){
+            view.kospiPrice.text = body.now_value.toString()
+            if(body.change_rate >= 0.0){
+                view.kospiChangePlusRate.text = "+"+body.change_rate.toString()+"%"
+                view.kospiChangePlusRate.visibility = View.VISIBLE
+                view.kospiChangeMinusRate.visibility = View.GONE
+                view.kospiPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                view.kospiChangePlusValueShape.visibility = View.VISIBLE
+                view.kospiChangeMinusValueShape.visibility = View.GONE
+                view.kospiChangeValue.text = body.change_value.toString()
+                view.kospiChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+            }
+            else{
+                view.kospiChangeMinusRate.text = body.change_rate.toString()+"%"
+                view.kospiChangePlusRate.visibility = View.GONE
+                view.kospiChangeMinusRate.visibility = View.VISIBLE
+                view.kospiPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+                view.kospiChangePlusValueShape.visibility = View.GONE
+                view.kospiChangeMinusValueShape.visibility = View.VISIBLE
+                view.kospiChangeValue.text = body.change_value.toString()
+                view.kospiChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            }
+
+        }
+        else{
+            view.kosdakPrice.text = body.now_value.toString()
+            if(body.change_rate >= 0.0){
+                view.kosdakChangePlusRate.text = "+"+body.change_rate.toString()+"%"
+                view.kosdakChangePlusRate.visibility = View.VISIBLE
+                view.kosdakChangeMinusRate.visibility = View.GONE
+                view.kosdakPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                view.kosdakChangePlusValueShape.visibility = View.VISIBLE
+                view.kosdakChangeMinusValueShape.visibility = View.GONE
+                view.kosdakChangeValue.text = body.change_value.toString()
+                view.kosdakChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+            }
+            else{
+                view.kosdakChangeMinusRate.text = body.change_rate.toString()+"%"
+                view.kosdakChangePlusRate.visibility = View.GONE
+                view.kosdakChangeMinusRate.visibility = View.VISIBLE
+                view.kosdakPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+                view.kosdakChangePlusValueShape.visibility = View.GONE
+                view.kosdakChangeMinusValueShape.visibility = View.VISIBLE
+                view.kosdakChangeValue.text = body.change_value.toString()
+                view.kosdakChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+            }
+        }
     }
 
     fun getStockHighRate(num: Int){
@@ -302,6 +377,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     if(!response.body().isNullOrBlank()){
                         val bundle = Bundle()
                         bundle.putString("stock_ticker", ticker)
+                        bundle.putString("stock_name", response.body())
+                        Log.d("homefragment",bundle.toString())
                         replaceFragment(StockFragment(), bundle)
                     } else {
                         Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
@@ -419,7 +496,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         else{
             for(item in body){
                 Log.d("API뉴스결과",item.toString())
-                newsRankList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+                newsRankList.add(NewsModel(item.ticker,item.provider,item.date,item.rink,item.title,item.sentiment))
             }
             newsRankListAdapter.notifyDataSetChanged()
         }
