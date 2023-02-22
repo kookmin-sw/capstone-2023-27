@@ -68,13 +68,13 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="+10%"
+                        android:fontFamily="@font/one_mobile_pop"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         android:textColor="@color/red"
                         android:textSize="8pt"
-                        android:visibility="gone"
-                        android:textStyle="bold" />
+                        android:visibility="gone" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
             <LinearLayout
@@ -91,12 +91,12 @@
                     android:textColor="@color/black"
                     android:textSize="7pt"
                     android:fontFamily="@font/one_mobile_pop"
-                    android:background="@drawable/stroke_background"
+                    android:background="@drawable/layout_left_stroke"
                     android:layout_weight="5" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/stroke_background"
+                    android:background="@drawable/layout_middle_stroke"
                     android:text="현재가"
                     android:gravity="center"
                     android:textSize="7pt"
@@ -113,7 +113,7 @@
                     android:padding="10dp"
                     android:textSize="7pt"
                     android:fontFamily="@font/one_mobile_pop"
-                    android:background="@drawable/stroke_background"
+                    android:background="@drawable/layout_right_stroke"
                     android:layout_weight="2"/>
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView

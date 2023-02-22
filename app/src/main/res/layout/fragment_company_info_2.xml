@@ -4,7 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/invest">
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@android:color/darker_gray"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brown"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,12 +31,16 @@
             android:gravity="center"
             android:layout_weight="9"
             android:text=""
+            android:layout_marginLeft="10dp"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:id="@+id/total_current2"
             android:fontFamily="@font/one_mobile_pop" />
     </LinearLayout>
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@android:color/darker_gray"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brown"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,13 +86,14 @@
             android:fontFamily="@font/one_mobile_pop"
             android:gravity="center"
             android:text=""
+            android:layout_marginLeft="10dp"
             android:id="@+id/per2"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
+            android:layout_weight="0.1"
             android:fontFamily="@font/one_mobile_pop"
             android:gravity="center"
             android:text="|"
@@ -99,11 +107,14 @@
             android:layout_weight="2.5"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:id="@+id/eps2"
             android:fontFamily="@font/one_mobile_pop" />
     </LinearLayout>
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@android:color/darker_gray"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brown"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -149,13 +160,14 @@
             android:fontFamily="@font/one_mobile_pop"
             android:gravity="center"
             android:text=""
+            android:layout_marginLeft="10dp"
             android:id="@+id/est_per2"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
+            android:layout_weight="0.1"
             android:fontFamily="@font/one_mobile_pop"
             android:gravity="center"
             android:text="|"
@@ -169,11 +181,14 @@
             android:layout_weight="2.5"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:id="@+id/est_eps2"
             android:fontFamily="@font/one_mobile_pop" />
     </LinearLayout>
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@android:color/darker_gray"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brown"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -199,12 +214,16 @@
             android:gravity="center"
             android:layout_weight="9"
             android:text=""
+            android:layout_marginLeft="10dp"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:id="@+id/pbr2"
             android:fontFamily="@font/one_mobile_pop" />
     </LinearLayout>
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@android:color/darker_gray"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brown"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -231,6 +250,7 @@
             android:layout_weight="9"
             android:text=""
             android:textColor="@color/black"
+            android:layout_marginLeft="10dp"
             android:textSize="18sp"
             android:fontFamily="@font/one_mobile_pop" />
     </LinearLayout>

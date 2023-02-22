@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp"
+    android:padding="3dp"
     android:orientation="horizontal"
     tools:ignore="MissingDefaultResource">
 
@@ -53,7 +53,7 @@
         android:layout_height="match_parent"
         android:text="-0.5%"
         android:fontFamily="@font/one_mobile_pop"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:textColor="@color/red"
         android:gravity="right|center" />
 
@@ -66,7 +66,7 @@
         android:text="+0.5%"
         android:textColor="@color/blue"
         android:gravity="right|center"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:fontFamily="@font/one_mobile_pop"
         android:visibility="gone" />
 
@@ -77,6 +77,7 @@
         android:layout_height="match_parent"
         android:gravity="right|center"
         android:textColor="@color/black"
+        android:layout_marginRight="5dp"
         android:fontFamily="@font/one_mobile_pop"
         android:textSize="13sp" />
 

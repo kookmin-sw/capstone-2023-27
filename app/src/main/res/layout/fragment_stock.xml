@@ -100,8 +100,10 @@
                 android:id="@+id/stock_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="7dp"
-
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="9dp"
                 android:gravity="center"
                 android:text=""
                 android:textColor="@color/black"
@@ -118,7 +120,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
-                    <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -126,11 +128,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:textSize="33sp"
-                    android:padding="7dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="7dp"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
                     android:fontFamily="@font/one_mobile_pop"
                     tools:ignore="MissingConstraints" />
 

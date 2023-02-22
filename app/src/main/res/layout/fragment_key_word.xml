@@ -314,7 +314,7 @@
                     android:textColor="@color/black"
                     android:gravity="center"
                     android:fontFamily="@font/one_mobile_pop"
-                    android:background="@drawable/stroke_background"
+                    android:background="@drawable/layout_left_stroke"
                     android:layout_weight="4" />
                 <TextView
                     android:layout_width="0dp"
@@ -326,14 +326,14 @@
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="6pt"
-                    android:background="@drawable/stroke_background"
+                    android:background="@drawable/layout_middle_right_stroke"
                     android:layout_weight="2"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="전일대비"
-                    android:background="@drawable/stroke_background"
+                    android:background="@drawable/layout_middle_stroke"
                     android:gravity="center"
                     android:textSize="6pt"
                     android:paddingTop="5dp"
@@ -345,7 +345,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="언급횟수"
-                    android:background="@drawable/stroke_background"
+                    android:background="@drawable/layout_right_stroke"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:paddingTop="5dp"
