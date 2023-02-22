@@ -1,37 +1,31 @@
 package com.example.htss.Fragment
+
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.text.Selection.setSelection
 import android.util.Log
 import android.util.TypedValue
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.webkit.RenderProcessGoneDetail
-import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Adapter.HomeAdapter
+import com.example.htss.Adapter.InterestKeywordAdapter
+import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Adapter.StockRaiseListAdapter
+import com.example.htss.Model.InterestKeywordModel
 import com.example.htss.Model.MainModel
 import com.example.htss.Model.NewsModel
 import com.example.htss.Model.StockRaiseListModel
@@ -48,6 +42,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class HomeFragment : Fragment(), View.OnClickListener {
 
     var selectedPosition = 0
@@ -56,11 +51,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private val retrofit = RetrofitClient.create()
 /////////////배열선언
     private val categoryRankList = mutableListOf<MainModel>()
-
+    private val InterestKeywordList = mutableListOf<InterestKeywordModel>(
+        InterestKeywordModel("삼성전자"),
+//        InterestKeywordModel("SK하이닉스")
+    )
     private val themeRankList = mutableListOf<MainModel>()
     private val stockRaiseList = mutableListOf<StockRaiseListModel>()
     private val newsRankList = mutableListOf<NewsModel>()
 //////////////////////////어댑터에 배열선언
+    private val InterestKeywordListAdapter = InterestKeywordAdapter(InterestKeywordList)
     private val categoryRankListAdapter = HomeAdapter(categoryRankList)
     private val themeRankListAdapter = HomeAdapter(themeRankList)
     private val newsRankListAdapter = MainNewsAdapter(newsRankList)
@@ -132,6 +131,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
             adapter = stockRaiseListAdapter
         }
 
+        view.keyword.apply{
+            layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false)
+            adapter = InterestKeywordListAdapter
+        }
+
         stockRaiseListAdapter.setItemClickListener(object:StockRaiseListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val bundle = Bundle()
@@ -181,6 +185,20 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
         })
 
+        InterestKeywordListAdapter.setItemClickListener(object: InterestKeywordAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                val bundle = Bundle()
+                bundle.putString("keyword", InterestKeywordList[position].Keyword)
+                replaceFragment(KeyWordFragment(),bundle)
+            }
+        })
+
+        InterestKeywordListAdapter.setLinkClickListener(object : InterestKeywordAdapter.OnLinkClickListener{
+            override fun onClick(v: View, position: Int) {
+                InterestKeywordList.add(position+1,InterestKeywordModel(view.interestText.text.toString()))
+            }
+        })
+
         setListenerToEditText()
         getHighSectorList(3)
         getHighThemeList(3)
@@ -199,9 +217,18 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.searchBtn.setOnClickListener(this)
         view.seeMore3.setOnClickListener(this)
         view.rightArrow3.setOnClickListener(this)
+        view.plus.setOnClickListener(this)
+
+
+        val preferences = this.requireActivity()
+            .getSharedPreferences("pref", Context.MODE_PRIVATE)
+        val editor = preferences.edit()
+
 
         return view.root
     }
+
+
 
     //서치눌렀을 때 키보드 내려가게
     fun softkeyboardHide() {
@@ -255,21 +282,21 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 view.kospiChangePlusRate.text = "+"+body.change_rate.toString()+"%"
                 view.kospiChangePlusRate.visibility = View.VISIBLE
                 view.kospiChangeMinusRate.visibility = View.GONE
-                view.kospiPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                view.kospiPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
                 view.kospiChangePlusValueShape.visibility = View.VISIBLE
                 view.kospiChangeMinusValueShape.visibility = View.GONE
                 view.kospiChangeValue.text = body.change_value.toString()
-                view.kospiChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                view.kospiChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
             }
             else{
                 view.kospiChangeMinusRate.text = body.change_rate.toString()+"%"
                 view.kospiChangePlusRate.visibility = View.GONE
                 view.kospiChangeMinusRate.visibility = View.VISIBLE
-                view.kospiPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+                view.kospiPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
                 view.kospiChangePlusValueShape.visibility = View.GONE
                 view.kospiChangeMinusValueShape.visibility = View.VISIBLE
                 view.kospiChangeValue.text = body.change_value.toString()
-                view.kospiChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+                view.kospiChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
             }
 
         }
@@ -279,21 +306,21 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 view.kosdakChangePlusRate.text = "+"+body.change_rate.toString()+"%"
                 view.kosdakChangePlusRate.visibility = View.VISIBLE
                 view.kosdakChangeMinusRate.visibility = View.GONE
-                view.kosdakPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                view.kosdakPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
                 view.kosdakChangePlusValueShape.visibility = View.VISIBLE
                 view.kosdakChangeMinusValueShape.visibility = View.GONE
                 view.kosdakChangeValue.text = body.change_value.toString()
-                view.kosdakChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                view.kosdakChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
             }
             else{
                 view.kosdakChangeMinusRate.text = body.change_rate.toString()+"%"
                 view.kosdakChangePlusRate.visibility = View.GONE
                 view.kosdakChangeMinusRate.visibility = View.VISIBLE
-                view.kosdakPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+                view.kosdakPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
                 view.kosdakChangePlusValueShape.visibility = View.GONE
                 view.kosdakChangeMinusValueShape.visibility = View.VISIBLE
                 view.kosdakChangeValue.text = body.change_value.toString()
-                view.kosdakChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+                view.kosdakChangeValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
             }
         }
     }
@@ -583,6 +610,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
             R.id.right_arrow3 -> {
                 replaceFragment2(StockHighRateListFragment())
+            }
+            R.id.plus -> {
+                //////////////////////
             }
         }
     }

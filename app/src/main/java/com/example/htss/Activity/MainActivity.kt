@@ -23,11 +23,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         view = ActivityMainBinding.inflate(layoutInflater)
         setContentView(view.root)
-
         replaceFragment(HomeFragment())
-
         view.navigationBar.setOnItemSelectedListener(this)
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -61,13 +58,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
         return false
     }
-//    private fun progress(){
-//        showProgress(false)
-//    }
-//    fun showProgress(isShow:Boolean){
-//        if(isShow) progressBar.visibility = View.VISIBLE
-//        else progressBar.visibility = View.GONE
-//    }
 
 
     // 프래그먼트 전환 함수
@@ -77,7 +67,6 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onClick(p0: View?) {
 
-        TODO("Not yet implemented")
     }
 }
 

@@ -57,7 +57,7 @@
                 android:text="-10%"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:textColor="@color/red"
+                android:textColor="@color/blue"
                 android:textSize="13sp"
                 android:visibility="gone" />
 
@@ -71,7 +71,7 @@
                 android:fontFamily="@font/one_mobile_pop"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:textColor="@color/blue"
+                android:textColor="@color/red"
                 android:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

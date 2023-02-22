@@ -205,12 +205,12 @@ class StockFragment : Fragment(), View.OnClickListener {
         view.stockCurrent.text = body.end_price.toString()
         if(body.rate >= 0.0){
             view.stockPercent.apply{
-                setTextColor(ContextCompat.getColor(requireContext(),R.color.blue))
+                setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
                 text = "+"+body.rate.toString()+"%"
             }
         } else {
             view.stockPercent.apply{
-                setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
+                setTextColor(ContextCompat.getColor(requireContext(),R.color.blue))
                 text = body.rate.toString()+"%"
             }
         }

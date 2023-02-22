@@ -39,7 +39,7 @@
         android:padding="10dp"
         android:text="+30%"
         android:fontFamily="@font/one_mobile_pop"
-        android:textColor="@color/blue" />
+        android:textColor="@color/red" />
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -51,6 +51,6 @@
         android:padding="10dp"
         android:visibility="gone"
         android:text="-2.73%"
-        android:textColor="@color/red" />
+        android:textColor="@color/blue" />
 
 </LinearLayout>

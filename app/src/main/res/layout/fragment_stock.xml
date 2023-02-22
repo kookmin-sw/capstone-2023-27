@@ -89,8 +89,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -152,19 +150,6 @@
                     android:textColor="@color/blue"
                     app:layout_constraintLeft_toRightOf="@id/stock_current"
                     app:layout_constraintTop_toTopOf="parent" />
-<!--                <TextView-->
-<!--                    android:id="@+id/stock_minus_percent"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="center"-->
-<!--                    android:paddingTop="11dp"-->
-<!--                    android:text="-3.5%"-->
-<!--                    android:textSize="15sp"-->
-<!--                    android:visibility="gone"-->
-<!--                    android:textColor="@color/red"-->
-<!--                    android:textStyle="bold"-->
-<!--                    app:layout_constraintLeft_toRightOf="@id/stock_current"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
         <Spinner
             android:layout_gravity="right"
@@ -177,6 +162,8 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:background="@color/gray" />
+
+
 
         <LinearLayout
             android:id="@+id/goodbad"
