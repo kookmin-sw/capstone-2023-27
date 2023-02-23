@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.util.TypedValue
 import android.view.KeyEvent
@@ -36,6 +37,8 @@ import com.example.htss.Retrofit.Model.StockHighRateList
 import com.example.htss.Retrofit.Model.StockMarketList
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentHomeBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import retrofit2.Call
@@ -51,10 +54,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private val retrofit = RetrofitClient.create()
 /////////////배열선언
     private val categoryRankList = mutableListOf<MainModel>()
-    private val InterestKeywordList = mutableListOf<InterestKeywordModel>(
-        InterestKeywordModel("삼성전자"),
-//        InterestKeywordModel("SK하이닉스")
-    )
+    private val InterestKeywordList = mutableListOf<InterestKeywordModel>()
     private val themeRankList = mutableListOf<MainModel>()
     private val stockRaiseList = mutableListOf<StockRaiseListModel>()
     private val newsRankList = mutableListOf<NewsModel>()
@@ -87,6 +87,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 return super.getCount() - 1
             }
         }
+
         myAdapter.addAll(items.toMutableList())
         myAdapter.add("항목선택")
         view.searchSpinner.adapter = myAdapter
@@ -192,10 +193,15 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 replaceFragment(KeyWordFragment(),bundle)
             }
         })
-
+//////////////////////////관심 키워드
         InterestKeywordListAdapter.setLinkClickListener(object : InterestKeywordAdapter.OnLinkClickListener{
             override fun onClick(v: View, position: Int) {
-                InterestKeywordList.add(position+1,InterestKeywordModel(view.interestText.text.toString()))
+                Log.d("receive_delete_position",position.toString())
+                Log.d("InterestKeywordList",InterestKeywordList.toString())
+                InterestKeywordList.removeAt(position)
+                InterestKeywordListAdapter.notifyDataSetChanged()
+//                editor.remove("key").apply()
+
             }
         })
 
@@ -220,20 +226,20 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.plus.setOnClickListener(this)
 
 
-        val preferences = this.requireActivity()
-            .getSharedPreferences("pref", Context.MODE_PRIVATE)
-        val editor = preferences.edit()
-
 
         return view.root
     }
-
-
+//    val pref = requireActivity().getPreferences(0)
+//    val editor = pref.edit()
 
     //서치눌렀을 때 키보드 내려가게
     fun softkeyboardHide() {
         val imm = getSystemService(requireContext(), InputMethodManager::class.java)
         imm!!.hideSoftInputFromWindow(view.editText.windowToken, 0)
+    }
+    fun softkeyboardHide2() {
+        val imm = getSystemService(requireContext(), InputMethodManager::class.java)
+        imm!!.hideSoftInputFromWindow(view.interestText.windowToken, 0)
     }
 
 // 엔터눌렀을 때 키보드 내려가게
@@ -611,8 +617,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.right_arrow3 -> {
                 replaceFragment2(StockHighRateListFragment())
             }
+            /////////////////////////관심 키워드드
             R.id.plus -> {
-                //////////////////////
+                softkeyboardHide2()
+                InterestKeywordList.add(InterestKeywordModel(view.interestText.text.toString().trim()))
+                InterestKeywordListAdapter.notifyDataSetChanged()
+//                editor.putString("key",view.interestText.text.toString().trim()).apply()
+                view.interestText.text = null
             }
         }
     }

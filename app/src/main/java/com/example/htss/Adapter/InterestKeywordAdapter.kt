@@ -1,5 +1,6 @@
 package com.example.htss.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +39,7 @@ class InterestKeywordAdapter(private val itemSet: MutableList<InterestKeywordMod
         holder.keyword.text = itemSet[position].Keyword
         holder.delete.setOnClickListener{
             linkClickListener.onClick(it,position)
+            Log.d("delete_position", position.toString())
         }
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
