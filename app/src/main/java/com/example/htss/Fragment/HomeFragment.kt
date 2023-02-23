@@ -1,11 +1,10 @@
 package com.example.htss.Fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.preference.PreferenceManager
+import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.KeyEvent
@@ -20,12 +19,15 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.HomeAdapter
 import com.example.htss.Adapter.InterestKeywordAdapter
 import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Adapter.StockRaiseListAdapter
+import com.example.htss.Data.User
+import com.example.htss.Data.UserViewModel
 import com.example.htss.Model.InterestKeywordModel
 import com.example.htss.Model.MainModel
 import com.example.htss.Model.NewsModel
@@ -37,8 +39,6 @@ import com.example.htss.Retrofit.Model.StockHighRateList
 import com.example.htss.Retrofit.Model.StockMarketList
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentHomeBinding
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import retrofit2.Call
@@ -49,6 +49,8 @@ import retrofit2.Response
 class HomeFragment : Fragment(), View.OnClickListener {
 
     var selectedPosition = 0
+
+//    private lateinit var mUserViewModel: UserViewModel
 
     private lateinit var view: FragmentHomeBinding
     private val retrofit = RetrofitClient.create()
@@ -70,6 +72,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
     ): View? {
 
         view = FragmentHomeBinding.inflate(inflater, container, false)
+
+//        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+//
+//        view.plus.setOnClickListener{
+//            insertDataToDatabase()
+//        }
+
         val items = resources.getStringArray(R.array.search_array)
         val myAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -200,7 +209,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 Log.d("InterestKeywordList",InterestKeywordList.toString())
                 InterestKeywordList.removeAt(position)
                 InterestKeywordListAdapter.notifyDataSetChanged()
-//                editor.remove("key").apply()
+
 
             }
         })
@@ -229,8 +238,34 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
         return view.root
     }
-//    val pref = requireActivity().getPreferences(0)
-//    val editor = pref.edit()
+
+//    private fun insertDataToDatabase() {
+//        //사용자가 입력한 텍스트들을 가져옵니다.
+//        val keyword = view.interestText.text.toString()
+//
+//        if(inputCheck(keyword)){ //inputcheck라는 함수를 만들어주었습니다.
+//            //유저 오브젝트를 만들어줍니다.이 값이 database에 전송되게 됩니다.
+//
+//            val user = User(0,keyword)
+//            //id가 0인 이유는 우리가 PK를 자동으로 생성되게 만들어도 값을 넣어줘야합니다.
+//
+//            //뷰모델에 add user를 해줌으로써 데이터베이스에 user값을 넣어주게 됩니다.
+//            mUserViewModel.addUser(user)
+//
+//        }
+//        else{
+//            //만약 유저가 editText모두 넣지 않았다면 토스트 메세지를 띄웁니다.
+//            Toast.makeText(requireContext(), "Please fill out all fields.", Toast.LENGTH_LONG).show()
+//        }
+//    }
+
+//    private fun inputCheck(keyword: String): Boolean {
+//        return !(TextUtils.isEmpty(keyword))
+//    }
+
+    //텍스트박스가 비어있는지 확인합니다.
+
+
 
     //서치눌렀을 때 키보드 내려가게
     fun softkeyboardHide() {

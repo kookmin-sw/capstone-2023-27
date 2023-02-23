@@ -12,7 +12,7 @@ import com.example.htss.Model.InterestKeywordModel
 import com.example.htss.Model.KeywordRelatedStockModel
 import com.example.htss.R
 
-class InterestKeywordAdapter(private val itemSet: MutableList<InterestKeywordModel>) :
+class InterestKeywordAdapter(private var itemSet: MutableList<InterestKeywordModel>) :
     RecyclerView.Adapter<InterestKeywordAdapter.ViewHolder>() {
 
     private lateinit var itemClickListener: InterestKeywordAdapter.OnItemClickListener
@@ -59,6 +59,12 @@ class InterestKeywordAdapter(private val itemSet: MutableList<InterestKeywordMod
     }
     fun setLinkClickListener(onLinkClickListener: OnLinkClickListener){
         this.linkClickListener = onLinkClickListener
+    }
+
+    fun setData(user:MutableList<InterestKeywordModel>){
+        //유저리스트가 변경 되었을때, 업데이트해줍니다.
+        this.itemSet = user
+        notifyDataSetChanged()
     }
 }
 
