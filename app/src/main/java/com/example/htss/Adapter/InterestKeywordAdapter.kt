@@ -4,19 +4,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.htss.Model.InterestKeywordModel
-import com.example.htss.Model.KeywordRelatedStockModel
 import com.example.htss.R
 
-class InterestKeywordAdapter(private var itemSet: MutableList<InterestKeywordModel>) :
+class InterestKeywordAdapter(private var itemSet: MutableList<String>) :
     RecyclerView.Adapter<InterestKeywordAdapter.ViewHolder>() {
 
     private lateinit var itemClickListener: InterestKeywordAdapter.OnItemClickListener
-    private lateinit var linkClickListener: OnLinkClickListener
+    private lateinit var deleteClickListener: OnDeleteClickListener
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -28,17 +25,17 @@ class InterestKeywordAdapter(private var itemSet: MutableList<InterestKeywordMod
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-        ): ViewHolder {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.interest_item_view, parent, false)
-            return ViewHolder(view)
-        }
+    ): ViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.interest_item_view, parent, false)
+        return ViewHolder(view)
+    }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.keyword.text = itemSet[position].Keyword
+        holder.keyword.text = itemSet[position]
         holder.delete.setOnClickListener{
-            linkClickListener.onClick(it,position)
+            deleteClickListener.onClick(it,position)
             Log.d("delete_position", position.toString())
         }
         holder.itemView.setOnClickListener {
@@ -51,21 +48,20 @@ class InterestKeywordAdapter(private var itemSet: MutableList<InterestKeywordMod
     interface OnItemClickListener {
         fun onClick(v: View, position: Int)
     }
-    interface OnLinkClickListener {
+    interface OnDeleteClickListener {
         fun onClick(v: View, position: Int)
     }
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
-    fun setLinkClickListener(onLinkClickListener: OnLinkClickListener){
-        this.linkClickListener = onLinkClickListener
+    fun setDeleteClickListener(onDeleteClickListener: OnDeleteClickListener){
+        this.deleteClickListener = onDeleteClickListener
     }
 
-    fun setData(user:MutableList<InterestKeywordModel>){
-        //유저리스트가 변경 되었을때, 업데이트해줍니다.
-        this.itemSet = user
-        notifyDataSetChanged()
-    }
+//    fun setData(user:MutableList<String>){
+//        //유저리스트가 변경 되었을때, 업데이트해줍니다.
+//        this.itemSet = user
+//        notifyDataSetChanged()
+//    }
 }
-
 

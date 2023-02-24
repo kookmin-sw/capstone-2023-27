@@ -158,12 +158,22 @@
             android:layout_height="wrap_content"
             android:spinnerMode="dropdown" />
 
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@color/gray" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"/>
+        </LinearLayout>
 
 
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="150dp"-->
+<!--            android:background="@color/gray" />-->
 
         <LinearLayout
             android:id="@+id/goodbad"
