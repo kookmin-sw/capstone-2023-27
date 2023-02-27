@@ -35,7 +35,5 @@ class RetrofitClient {
             }
             return retrofit.create(IRetrofit::class.java) // IRetrofit의 구현 생성
         }
-
-
     }
 }

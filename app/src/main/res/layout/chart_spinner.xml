@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/chartItemSpinner"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="6dp"
+    android:text="종목번호"
+    android:textColorHint="@color/hmmm"
+    android:fontFamily="@font/one_mobile_pop"
+    android:textColor="@color/black"
+    android:textSize="6pt" />

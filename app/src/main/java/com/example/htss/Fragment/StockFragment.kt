@@ -46,6 +46,7 @@ import kotlin.collections.ArrayList
 class StockFragment : Fragment(), View.OnClickListener {
 
     var selectedPosition = 0
+    var selectedPosition2 = 0
     var newsNum = 3
     var first = "company_info"
 
@@ -72,9 +73,7 @@ class StockFragment : Fragment(), View.OnClickListener {
 
         view.companyInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         view.companyInvestInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
-
-
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         val items = resources.getStringArray(R.array.search_array)
         val myAapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
@@ -109,7 +108,59 @@ class StockFragment : Fragment(), View.OnClickListener {
                 Log.d("MyTag", "onNothingSelected")
             }
         }
+////////////////////////////// 차트 스피너
+        val items2 = resources.getStringArray(R.array.chart_array)
+        val myAdapter2 = object : ArrayAdapter<String>(requireContext(), R.layout.chart_spinner) {
+            override fun getView(position2: Int, convertView: View?, parent: ViewGroup): View {
+                val v2 = super.getView(position2, convertView, parent)
+//                if (position2 == count) {
+//                    //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
+//                    (v2.findViewById<View>(R.id.chartItemSpinner) as TextView).text = ""
+//                    //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
+//                    (v2.findViewById<View>(R.id.chartItemSpinner) as TextView).hint = getItem(count)
+//                }
+                return v2
+            }
 
+//            override fun getCount(): Int {
+//                //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
+//                return super.getCount() - 1
+//            }
+        }
+        myAdapter2.addAll(items2.toMutableList())
+        view.chartSpinner.adapter = myAdapter2
+        view.chartSpinner.setSelection(0)
+        view.chartSpinner.dropDownVerticalOffset = dipToPixels(30f).toInt()
+        //스피너 선택시 나오는 화면
+        view.chartSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position2: Int,
+                id: Long
+            ) {
+                selectedPosition2 = position2
+                Log.d("position", selectedPosition2.toString())
+                when (selectedPosition2) {
+                    0 -> {
+                        getStockPrice(StockTicker, 90)
+                    }
+                    1 -> {
+                        getStockPrice(StockTicker, 180)
+                    }
+                    2 -> {
+                        getStockPrice(StockTicker, 365)
+                    }
+                    3 -> {
+                        getStockPrice(StockTicker, 730)
+                    }
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Log.d("MyTag", "onNothingSelected")
+            }
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         StockTicker = arguments?.getString("stock_ticker").toString()
         StockName = arguments?.getString("stock_name").toString()
 
@@ -119,9 +170,6 @@ class StockFragment : Fragment(), View.OnClickListener {
         when(first){
             "company_info" -> replaceFragment2(Company_info_Fragment1(),bundle)
         }
-
-
-
 
 //
         view.newsRecyclerview.apply {
@@ -156,11 +204,15 @@ class StockFragment : Fragment(), View.OnClickListener {
         view.stockSearchBtn.setOnClickListener(this)
         view.companyInfo.setOnClickListener(this)
         view.companyInvestInfo.setOnClickListener(this)
+//        view.thirtyDays.setOnClickListener(this)
+//        view.ninetyDays.setOnClickListener(this)
+//        view.oneYear.setOnClickListener(this)
+//        view.hundredDays.setOnClickListener(this)
 
         setListenerToEditText()
         getStockNowPrice(StockTicker)
         getCompanyInfo(StockTicker)
-        getStockPrice(StockTicker,200)
+//        getStockPrice(StockTicker,100)
 
         return view.root
     }
@@ -172,7 +224,8 @@ class StockFragment : Fragment(), View.OnClickListener {
                 response: Response<CompanyInfoListItem>
             ) {
                 if(response.code()==200) {
-                    if(response.body() != null ) addcompanyInfo(response.body()!!)
+                    if(response.body() != null )
+                        addcompanyInfo(response.body()!!)
                     Log.d("stock/info/API호출!!!!!!", response.raw().toString())
                 } else {
                     Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
@@ -315,22 +368,24 @@ class StockFragment : Fragment(), View.OnClickListener {
         imm!!.hideSoftInputFromWindow(view.stockKeywordEdit.windowToken, 0)
     }
 
+
+
     override fun onClick(p0: View?) {
-        when(p0?.id){
+        when (p0?.id) {
             R.id.news_open_btn -> {
-                getSectorThemeKeywordIncludeNews(StockName,10)
+                getSectorThemeKeywordIncludeNews(StockName, 10)
                 view.newsCloseBtn.visibility = View.VISIBLE
                 view.newsOpenBtn.visibility = View.GONE
 
             }
             R.id.news_close_btn -> {
-                getSectorThemeKeywordIncludeNews(StockName,3)
+                getSectorThemeKeywordIncludeNews(StockName, 3)
                 view.newsCloseBtn.visibility = View.GONE
                 view.newsOpenBtn.visibility = View.VISIBLE
             }
             R.id.stock_search_btn -> {
                 softkeyboardHide()
-                when(selectedPosition){
+                when (selectedPosition) {
                     1 -> { // 종목번호
                         getStockNameByTicker(view.stockKeywordEdit.text.toString().trim())
                     }
@@ -349,23 +404,44 @@ class StockFragment : Fragment(), View.OnClickListener {
             R.id.company_info -> {
                 val bundle = Bundle()
                 bundle.putString("stock_ticker", StockTicker)
-                bundle.putString("Focus","hu")
-                Log.d("good",bundle.toString())
-                view.companyInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                view.companyInvestInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
-                replaceFragment2(Company_info_Fragment1(),bundle)
+                bundle.putString("Focus", "hu")
+                Log.d("good", bundle.toString())
+                view.companyInfo.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.black
+                    )
+                )
+                view.companyInvestInfo.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.hmmm
+                    )
+                )
+                replaceFragment2(Company_info_Fragment1(), bundle)
             }
             R.id.company_invest_info -> {
                 val bundle = Bundle()
                 bundle.putString("stock_ticker", StockTicker)
-                bundle.putString("Focuss","huu")
-                view.companyInvestInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-                view.companyInfo.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
-                replaceFragment2(Company_info_Fragment2(),bundle)
+                bundle.putString("Focuss", "huu")
+                view.companyInvestInfo.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.black
+                    )
+                )
+                view.companyInfo.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.hmmm
+                    )
+                )
+                replaceFragment2(Company_info_Fragment2(), bundle)
             }
 
         }
     }
+//
 
     private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle
@@ -510,8 +586,8 @@ class StockFragment : Fragment(), View.OnClickListener {
             addLimitLine(averageLine)
         }
         view.chart.axisRight.apply {
-            // 우측 Y축은 사용하지 않음
-            isEnabled = false
+            // 우측 Y축은 사용함
+            isEnabled = true
         }
         // X 축
         view.chart.xAxis.apply {
@@ -541,6 +617,7 @@ class StockFragment : Fragment(), View.OnClickListener {
         result.sortBy { it.createdAt }
         Log.d("StockPrice22",result.toString())
         return result
+
     }
 
 }

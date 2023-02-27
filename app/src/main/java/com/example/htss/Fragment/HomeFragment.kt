@@ -87,12 +87,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
 
 
-//        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-//
-//        view.plus.setOnClickListener{
-//            insertDataToDatabase()
-//        }
-
         val items = resources.getStringArray(R.array.search_array)
         val myAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -234,7 +228,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
                 // state == 3 키워드 삭제(데이터 포지션 파라미터에 담아야함)
                 setInterestKeywordList( 3, null, position)
-
             }
         })
 
@@ -257,7 +250,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.seeMore3.setOnClickListener(this)
         view.rightArrow3.setOnClickListener(this)
         view.plus.setOnClickListener(this)
-
+        view.deleteAll.setOnClickListener(this)
 
 
         return view.root
@@ -817,6 +810,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 )
 //                editor.putString("key",view.interestText.text.toString().trim()).apply()
                 view.interestText.text = null
+            }
+            R.id.delete_all -> {
+                MySharedPreferences.clear(requireContext())
             }
         }
     }
