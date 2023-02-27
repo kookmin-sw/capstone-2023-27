@@ -25,6 +25,7 @@ import com.example.htss.databinding.FragmentCategoryDetailBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 import kotlin.math.log
 
 
@@ -42,6 +43,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
 
     private var categoryName = ""
     private var categoryPercent = ""
+    val dec = DecimalFormat("#,###.##")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -173,7 +175,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
                         StockListModel(
                             item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             "+" + item.rate.toString() + "%"
                         )
                     )
@@ -182,7 +184,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
                         StockListModel(
                             item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             item.rate.toString() + "%"
                         )
                     )

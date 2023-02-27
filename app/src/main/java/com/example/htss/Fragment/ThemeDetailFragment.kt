@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.fragment_all_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 
 
 class ThemeDetailFragment : Fragment(),View.OnClickListener {
@@ -40,7 +41,7 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
 
     private var themename = ""
     private var themepercent = ""
-
+    val dec = DecimalFormat("#,###.##")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -151,7 +152,7 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
                         StockListModel(
                             item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             "+" + item.rate.toString() + "%"
                         )
                     )
@@ -161,7 +162,7 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
                         StockListModel(
                             item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             item.rate.toString()+"%"
                         )
                     )

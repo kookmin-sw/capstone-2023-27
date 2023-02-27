@@ -65,7 +65,7 @@ class Company_info_Fragment2 : Fragment() {
     }
     private fun addcompanyInfo(body: CompanyInfoListItem) {
         var a = 0
-        val dec = DecimalFormat("#,###")
+        val dec = DecimalFormat("#,###.##")
         view.totalCurrent2.text = dec.format(body.market_cap).toString() + "억원"
         if(body.per == a.toFloat()) {
             view.per2.text = "N/A"

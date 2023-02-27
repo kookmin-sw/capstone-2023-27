@@ -31,6 +31,7 @@ import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.utils.EntryXComparator
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_stock.*
@@ -38,6 +39,7 @@ import kotlinx.android.synthetic.main.fragment_stock.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -57,7 +59,7 @@ class StockFragment : Fragment(), View.OnClickListener {
 
     private var StockTicker = ""
     private var StockName = ""
-
+    val dec = DecimalFormat("#,###.##")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -149,25 +151,19 @@ class StockFragment : Fragment(), View.OnClickListener {
             }
         })
 
-
         view.newsCloseBtn.setOnClickListener(this)
         view.newsOpenBtn.setOnClickListener(this)
         view.stockSearchBtn.setOnClickListener(this)
         view.companyInfo.setOnClickListener(this)
         view.companyInvestInfo.setOnClickListener(this)
 
-
-
         setListenerToEditText()
         getStockNowPrice(StockTicker)
         getCompanyInfo(StockTicker)
-        getStockPrice(StockTicker,20)
-
+        getStockPrice(StockTicker,200)
 
         return view.root
     }
-
-
 
     fun getCompanyInfo(ticker: String){
         retrofit.getCompanyInfo(ticker).enqueue(object : Callback<CompanyInfoListItem> {
@@ -217,7 +213,7 @@ class StockFragment : Fragment(), View.OnClickListener {
     }
     private fun addStockNowPrice(body: StockNowPriceListItem) {
         view.ticker.text = StockTicker
-        view.stockCurrent.text = body.end_price.toString()
+        view.stockCurrent.text = dec.format(body.end_price).toString()
         if(body.rate >= 0.0){
             view.stockPercent.apply{
                 setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
@@ -474,6 +470,7 @@ class StockFragment : Fragment(), View.OnClickListener {
                 entries.add(Entry(stock.createdAt.time.toFloat(), stock.price.toFloat()))
                 colors.add(Color.BLUE)
             }
+            Collections.sort(entries, EntryXComparator())
         }
 
         val dataSet = LineDataSet(entries, "").apply {
@@ -536,11 +533,12 @@ class StockFragment : Fragment(), View.OnClickListener {
         }
         else{
             for(item in body) {
-                Log.d("body",body.toString())
                 result.add((StockChartModel(item.date, item.end_price.toLong())))
             }
 //            Log.d("StockPrice", StockPrice.toString())
         }
+
+        result.sortBy { it.createdAt }
         Log.d("StockPrice22",result.toString())
         return result
     }

@@ -21,6 +21,7 @@ import com.example.htss.databinding.FragmentStockHighRateListBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 
 class StockHighRateListFragment : Fragment(), View.OnClickListener {
     var num = 200
@@ -29,7 +30,7 @@ class StockHighRateListFragment : Fragment(), View.OnClickListener {
 
     private var stockRaiseRateList = arrayListOf<StockRaiseListModel>()
     private var stockRaiseRateAdapter = StockHighRaiseListAdapter(stockRaiseRateList)
-
+    val dec = DecimalFormat("#,###.##")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -107,7 +108,7 @@ class StockHighRateListFragment : Fragment(), View.OnClickListener {
                         StockRaiseListModel(
                             item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             "+"+item.rate.toString()+"%"
                         )
                     )
@@ -117,7 +118,7 @@ class StockHighRateListFragment : Fragment(), View.OnClickListener {
                         StockRaiseListModel(
                             item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             item.rate.toString()+"%"
                         )
                     )

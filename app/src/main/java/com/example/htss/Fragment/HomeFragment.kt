@@ -41,6 +41,7 @@ import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 
 
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -67,6 +68,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private val themeRankListAdapter = HomeAdapter(themeRankList)
     private val newsRankListAdapter = MainNewsAdapter(newsRankList)
     private val stockRaiseListAdapter = StockRaiseListAdapter(stockRaiseList)
+
+    val dec = DecimalFormat("#,###.##")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -401,7 +404,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun addStockMarketList(body: StockMarketList) {
         if (body.market == "코스피") {
-            view.kospiPrice.text = body.now_value.toString()
+            view.kospiPrice.text = dec.format(body.now_value).toString()
             if (body.change_rate >= 0.0) {
                 view.kospiChangePlusRate.text = "+" + body.change_rate.toString() + "%"
                 view.kospiChangePlusRate.visibility = View.VISIBLE
@@ -433,7 +436,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
 
         } else {
-            view.kosdakPrice.text = body.now_value.toString()
+            view.kosdakPrice.text = dec.format(body.now_value).toString()
             if (body.change_rate >= 0.0) {
                 view.kosdakChangePlusRate.text = "+" + body.change_rate.toString() + "%"
                 view.kosdakChangePlusRate.visibility = View.VISIBLE
@@ -503,7 +506,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         StockRaiseListModel(
                             item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             "+" + item.rate.toString() + "%"
                         )
                     )
@@ -512,7 +515,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         StockRaiseListModel(
                             item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             item.rate.toString() + "%"
                         )
                     )

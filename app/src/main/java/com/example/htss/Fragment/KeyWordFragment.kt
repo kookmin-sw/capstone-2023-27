@@ -39,6 +39,7 @@ import kotlinx.android.synthetic.main.fragment_key_word.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 
 
 class KeyWordFragment : Fragment(), View.OnClickListener {
@@ -62,6 +63,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
 
 
     private var KeyWordName = ""
+    val dec = DecimalFormat("#,###.##")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -312,7 +314,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
                         KeywordRelatedStockModel(
                             item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             "+"+item.rate.toString()+"%",
                             item.count.toString() + "회"
                         )
@@ -324,7 +326,7 @@ class KeyWordFragment : Fragment(), View.OnClickListener {
                         KeywordRelatedStockModel(
                             item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             item.rate.toString()+"%",
                             item.count.toString() + "회"
                         )
