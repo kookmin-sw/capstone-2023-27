@@ -59,7 +59,7 @@
     </select>
 
     <select id="stockPrice" resultType="DatePriceDto">
-        select * from stock_price where ticker = #{ticker} order by date limit #{num};
+        select * from stock_price where ticker = #{ticker} order by date desc limit #{num};
     </select>
 
     <select id="stockNowPrice" resultType="NowPriceDto">

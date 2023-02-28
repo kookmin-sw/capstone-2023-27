@@ -109,7 +109,7 @@ def crawling_ticker_name():
 
 def crawling_stock_price():
     df = pd.DataFrame(columns=["티커","시가","고가","저가","종가","거래량","거래대금","등락률","날짜"])
-    tmpDays = stock.get_market_ohlcv("20221002", "20230111", "005930")
+    tmpDays = stock.get_market_ohlcv("20200101", "20221004", "005930")
     def str_day(d):
         return d.strftime('%Y%m%d')
     days = list(map(str_day, tmpDays.index.to_list()))
@@ -122,7 +122,7 @@ def crawling_stock_price():
         df = pd.concat([df,tmp_df])
     df["등락률"] = round(df["등락률"].astype('float'), 3)
     df = df[["티커","날짜","종가","등락률"]]
-    df.to_csv("csvFile/stock_price.csv",mode='w',index=False)
+    df.to_csv("csvFile/stock_price2.csv",mode='w',index=False)
 
 
 # df = pd.read_csv("csvFile/stock_price.csv",dtype=str)
@@ -298,7 +298,7 @@ def err_crawling_news_main():
             print(2)
             return [""]
     result = asyncio.run(main())
-
+crawling_ticker_name()
 # crawling_company_info()
 #
 # start = time.time()  # 시작
@@ -335,29 +335,29 @@ def err_crawling_news_main():
 # dvr = page.select("#_dvr")[0].text
 # print(dvr)
 
-market_index_list = []
-
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/100.0.48496.75"}
-url = 'https://finance.naver.com/sise/sise_index.naver?code=KOSPI'
-html = requests.get(url, headers=headers)
-page = BeautifulSoup(html.text, "html.parser")
-now_value = page.select("#now_value")[0].text
-now_value = re.sub('&nbsp;| |\t|\r|\n', '', now_value).replace(",","")
-values_rate = page.select("#change_value_and_rate")[0].text
-values_rate= re.sub('%상승', '', values_rate).replace(",","").split(" ")
-change_value = values_rate[0]
-change_rate = values_rate[1]
-market_index_list.append(["코스피",float(now_value),float(change_value),float(change_rate)])
-url = 'https://finance.naver.com/sise/sise_index.naver?code=KOSDAQ'
-html = requests.get(url, headers=headers)
-page = BeautifulSoup(html.text, "html.parser")
-now_value = page.select("#now_value")[0].text
-now_value = re.sub('&nbsp;| |\t|\r|\n', '', now_value).replace(",","")
-values_rate = page.select("#change_value_and_rate")[0].text
-values_rate= re.sub('%상승', '', values_rate).replace(",","").split(" ")
-change_value = values_rate[0]
-change_rate = values_rate[1]
-market_index_list.append(["코스닥",float(now_value),float(change_value),float(change_rate)])
-df = pd.DataFrame(market_index_list,columns=["market","now_value","change_value","change_rate"])
-
-print(df)
+# market_index_list = []
+#
+# headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/100.0.48496.75"}
+# url = 'https://finance.naver.com/sise/sise_index.naver?code=KOSPI'
+# html = requests.get(url, headers=headers)
+# page = BeautifulSoup(html.text, "html.parser")
+# now_value = page.select("#now_value")[0].text
+# now_value = re.sub('&nbsp;| |\t|\r|\n', '', now_value).replace(",","")
+# values_rate = page.select("#change_value_and_rate")[0].text
+# values_rate= re.sub('%상승', '', values_rate).replace(",","").split(" ")
+# change_value = values_rate[0]
+# change_rate = values_rate[1]
+# market_index_list.append(["코스피",float(now_value),float(change_value),float(change_rate)])
+# url = 'https://finance.naver.com/sise/sise_index.naver?code=KOSDAQ'
+# html = requests.get(url, headers=headers)
+# page = BeautifulSoup(html.text, "html.parser")
+# now_value = page.select("#now_value")[0].text
+# now_value = re.sub('&nbsp;| |\t|\r|\n', '', now_value).replace(",","")
+# values_rate = page.select("#change_value_and_rate")[0].text
+# values_rate= re.sub('%상승', '', values_rate).replace(",","").split(" ")
+# change_value = values_rate[0]
+# change_rate = values_rate[1]
+# market_index_list.append(["코스닥",float(now_value),float(change_value),float(change_rate)])
+# df = pd.DataFrame(market_index_list,columns=["market","now_value","change_value","change_rate"])
+#
+# print(df)

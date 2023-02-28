@@ -77,7 +77,8 @@ def news_description():
     #명사 추출
     def noun_extraction(title):
         noun_list = mecab.nouns(title)
-        #추출한 명사중 한글자인 것들은 제외 - 제대로된 명사인 경우가 적다
+        #추출한 명사중 한글자인 것들은 제외 - y
+        # 제대로된 명사인 경우가 적다
         noun_list = [noun for noun in noun_list if len(noun)!=1]
         return noun_list
     for row in tqdm(df.itertuples()):

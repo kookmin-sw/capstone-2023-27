@@ -511,7 +511,7 @@ a = Update()
 # 1일 주기
 # a.update_price()
 # 1시간 주기
-a.update_news()
+# a.update_news()
 # 1주일 주기
 # a.update_sectors()
 # a.update_thema()

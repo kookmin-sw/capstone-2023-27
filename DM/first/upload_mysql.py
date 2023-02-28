@@ -35,11 +35,11 @@ class UploadMysql():
 
 
     def upload_price(self):
-        df = pd.read_csv("csvFile/stock_price.csv",dtype=str)
+        df = pd.read_csv("csvFile/stock_price2.csv",dtype=str)
         df.columns = ["ticker", "date", "end_price", "rate"]
+        df.drop(df[(df['date'] == "20221004")].index, inplace=True)
         df2 =pd.read_csv("csvFile/company.csv", dtype=str)
         df = pd.merge(left=df, right=df2, how="inner", on="ticker")
-        # df.columns = ["ticker","date","end_price","rate"]
         df.to_sql(name='stock_price', con=self.engine, if_exists='append', index=False)
 
 
@@ -70,10 +70,10 @@ class UploadMysql():
 
 
 a= UploadMysql()
-a.upload_news()
+# a.upload_news()
 # a.upload_search_noun()
 # a.upload_news()
-# a.upload_price()
+a.upload_price()
 # a.upload_sector()
 # a.upload_thema()
 # a.upload_date()
