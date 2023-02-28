@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="2dp"
+    android:orientation="horizontal"
+    tools:ignore="MissingDefaultResource">
+
+    <TextView
+        android:id="@+id/stock_raise_rank"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="1dp"
+        android:background="@drawable/rounded_corner"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textSize="13sp"
+        android:fontFamily="@font/one_mobile_pop" />
+
+    <TextView
+        android:id="@+id/stock_raise_name"
+        android:layout_width="0dp"
+        android:layout_weight="4"
+        android:layout_height="match_parent"
+        android:gravity="left|center_vertical"
+        android:layout_marginStart="3dp"
+        android:text="샌즈랩"
+        android:textColor="@color/black"
+        android:fontFamily="@font/one_mobile_pop"
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/stock_raise_price"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginStart="3dp"
+        android:text="9200"
+        android:textColor="@color/black"
+        android:fontFamily="@font/one_mobile_pop"
+
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/stock_raise_minuspercent"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:text="-0.5%"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:gravity="right|center"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/stock_raise_pluspercent"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:layout_marginStart="3dp"
+        android:text="+0.5%"
+        android:textColor="@color/red"
+        android:gravity="right|center"
+        android:textSize="13sp"
+        android:fontFamily="@font/one_mobile_pop"
+        android:visibility="gone" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/stock_mention"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_weight="2"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:gravity="right|center"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textSize="13sp" />-->
+
+
+</LinearLayout>

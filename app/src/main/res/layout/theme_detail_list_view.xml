@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/white">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="6"
+        android:gravity="left"
+
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/one_mobile_pop"
+        android:textSize="13sp"
+        android:id="@+id/theme_detail_name"
+        android:text="코난 테크놀로지"
+         />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:gravity="right"
+        android:fontFamily="@font/one_mobile_pop"
+        android:padding="10dp"
+        android:id="@+id/theme_current_value"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:text="20,300"
+       />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3.8"
+        android:gravity="right"
+        android:textSize="13sp"
+        android:id="@+id/theme_detail_minuspercent"
+        android:padding="10dp"
+        android:fontFamily="@font/one_mobile_pop"
+        android:text="-3.05%"
+        android:textColor="@color/blue" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3.8"
+        android:gravity="right"
+        android:textSize="13sp"
+        android:fontFamily="@font/one_mobile_pop"
+        android:id="@+id/theme_detail_pluspercent"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:text="+2.73%"
+        android:textColor="@color/red" />
+
+</LinearLayout>
