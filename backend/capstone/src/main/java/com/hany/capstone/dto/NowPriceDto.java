@@ -10,4 +10,5 @@ public class NowPriceDto {
     private int low_price;
     private int end_price;
     private float rate;
+    private String company_name;
 }
