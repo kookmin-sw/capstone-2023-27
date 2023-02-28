@@ -764,7 +764,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 val bundle = Bundle()
                 bundle.putString("foccus", "hue")
                 replaceFragment(AllListFragment(), bundle)
-            }////
+            }//////
             R.id.search_btn -> {
                 softkeyboardHide()
                 when (selectedPosition) {
