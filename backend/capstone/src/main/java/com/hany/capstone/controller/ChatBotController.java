@@ -182,7 +182,7 @@ public class ChatBotController {
             if (mi ==null){
                 return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
             }
-            return  "value : "+mi.getNow_value() +" change_value : "+mi.getChange_value()+" change_rate : "+mi.getChange_value();
+            return  "value : "+mi.getNow_value() +" change_value : "+mi.getChange_value()+" change_rate : "+mi.getChange_rate();
         }
         else if(result.equals("8")) {
             MarketIndexDto mi = apiService.StockMarketId("코스닥");
