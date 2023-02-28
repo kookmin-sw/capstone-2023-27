@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.CategoryDetailFragment"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_baseline_arrow_circle_left_24"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="3dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/category_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/layout_stroke"
+            android:elevation="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/category_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:text="출판"
+                    android:textColor="@color/black"
+                    android:textSize="10pt"
+                    android:fontFamily="@font/one_mobile_pop" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/category_value_plus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="+10%"
+                        android:textColor="@color/red"
+                        android:textSize="8pt"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:fontFamily="@font/one_mobile_pop" />
+                    <TextView
+                        android:id="@+id/category_value_minus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="+10%"
+                        android:fontFamily="@font/one_mobile_pop"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:textColor="@color/blue"
+                        android:textSize="8pt"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="종목명"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="7pt"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:background="@drawable/layout_left_stroke"
+                    android:layout_weight="5" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_middle_stroke"
+                    android:text="현재가"
+                    android:gravity="center"
+                    android:textSize="7pt"
+                    android:padding="10dp"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:textColor="@color/black"
+                    android:layout_weight="2.5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전일대비"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:padding="10dp"
+                    android:textSize="7pt"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:background="@drawable/layout_right_stroke"
+                    android:layout_weight="2"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_category_detail1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                />
+
+            <TextView
+                android:id="@+id/category_detail_open_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="펼치기"
+                android:fontFamily="@font/one_mobile_pop"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/category_detail_close_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/one_mobile_pop"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:text="접기"
+                android:background="@drawable/rounded_corner2"
+
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/category_detail_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/one_mobile_pop"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:text="업종관련 종목이 없습니다"
+                android:background="@drawable/rounded_corner2"
+
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/category_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/layout_stroke"
+            android:elevation="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/category_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:text="출판"
+                    android:textColor="@color/black"
+                    android:textSize="10pt"
+                    android:fontFamily="@font/one_mobile_pop"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="이(가) 포함된 뉴스"
+                    android:textColor="@color/gray"
+                    android:textSize="10pt"
+                    android:fontFamily="@font/one_mobile_pop" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_category_detail2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            <TextView
+                android:id="@+id/category_include_news_open_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:text="펼치기"
+                android:fontFamily="@font/one_mobile_pop"
+                 />
+            <TextView
+                android:id="@+id/category_include_news_close_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:text="접기"
+                android:textColor="@color/black"
+                android:fontFamily="@font/one_mobile_pop"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/category_include_news_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:text="업종이 포함된 뉴스가 없습니다"
+                android:textColor="@color/black"
+                android:fontFamily="@font/one_mobile_pop"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

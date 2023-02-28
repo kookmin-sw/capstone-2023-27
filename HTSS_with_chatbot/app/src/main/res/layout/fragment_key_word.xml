@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.KeyWordFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_baseline_arrow_circle_left_24" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="4dp"
+            android:focusable="true"
+            android:background="@drawable/layout_stroke"
+            android:focusableInTouchMode="true">
+
+            <Spinner
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:spinnerMode="dropdown"
+                android:popupBackground="@drawable/layout_stroke"
+
+                android:dropDownWidth="90dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:id="@+id/search_spinner"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <EditText
+                    android:id="@+id/keyword_edit"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="7dp"
+                    android:padding="8dp"
+                    android:layout_marginTop="4dp"
+                    android:singleLine="true"
+                    android:background="@null"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hmmm"
+                    android:hint="검색어를 입력하세요."
+                    android:imeOptions="actionDone"
+                    android:textSize="8pt"
+                    android:fontFamily="@font/one_mobile_pop"
+                    />
+
+                <ImageButton
+                    android:id="@+id/search_btn2"
+                    android:background="@color/transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_baseline_search_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/layout_stroke"
+            android:elevation="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/keyword_name1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:text="키워드"
+                    android:textColor="@color/black"
+                    android:textSize="8pt"
+                    android:fontFamily="@font/one_mobile_pop" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+                    android:text="와(과) 관련된 업종"
+                    android:textColor="@color/hmmm"
+                    android:textSize="8pt"
+                    android:fontFamily="@font/one_mobile_pop" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/category_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="3dp"/>
+
+            <TextView
+                android:id="@+id/category_open_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textColor="@color/black"
+                android:text="펼치기"
+                 />
+
+            <TextView
+                android:fontFamily="@font/one_mobile_pop"
+                android:id="@+id/category_close_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+
+                android:text="접기"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/category_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:fontFamily="@font/one_mobile_pop"
+                android:text="키워드와 관련된 업종이 없습니다"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/layout_stroke"
+            android:elevation="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/keyword_name2"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:text="키워드"
+                    android:textColor="@color/black"
+                    android:textSize="8pt"
+                    android:fontFamily="@font/one_mobile_pop" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+                    android:text="와(과) 관련된 테마"
+                    android:textColor="@color/hmmm"
+                    android:textSize="8pt"
+                    android:fontFamily="@font/one_mobile_pop" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/theme_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="3dp"/>
+
+            <TextView
+                android:id="@+id/theme_open_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:text="펼치기"
+                android:fontFamily="@font/one_mobile_pop"
+                 />
+
+            <TextView
+                android:id="@+id/theme_close_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:text="접기"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/theme_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:text="키워드와 관련된 테마가 없습니다"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/layout_stroke"
+            android:elevation="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:id="@+id/keyword_name3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:text="키워드"
+                    android:textSize="8pt"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/one_mobile_pop" />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="와(과) 같이 언급된 주식"
+                    android:textSize="8pt"
+                    android:textColor="@color/hmmm"
+
+                    android:fontFamily="@font/one_mobile_pop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="종목명"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="6pt"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:background="@drawable/layout_left_stroke"
+                    android:layout_weight="4" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="현재가"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="6pt"
+                    android:background="@drawable/layout_middle_right_stroke"
+                    android:layout_weight="2"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="전일대비"
+                    android:background="@drawable/layout_middle_stroke"
+                    android:gravity="center"
+                    android:textSize="6pt"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:textColor="@color/black"
+                    android:layout_weight="1.5"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="언급횟수"
+                    android:background="@drawable/layout_right_stroke"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:textSize="6pt"
+                    android:layout_weight="1.5"/>
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/stock_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="3dp"/>
+
+            <TextView
+                android:id="@+id/stock_open_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:fontFamily="@font/one_mobile_pop"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:text="펼치기"
+                 />
+
+            <TextView
+                android:id="@+id/stock_close_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:text="접기"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/stock_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:text="키워드와 같이 언급된 주식이 없습니다"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/layout_stroke"
+            android:elevation="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/keyword_name4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:text="키워드"
+                    android:textSize="8pt"
+                    android:fontFamily="@font/one_mobile_pop" />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="이(가) 포함된 뉴스"
+                    android:textSize="8pt"
+                    android:textColor="@color/hmmm"
+                    android:fontFamily="@font/one_mobile_pop" />
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/news_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="3dp"/>
+
+            <TextView
+                android:id="@+id/news_open_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textColor="@color/black"
+                android:text="펼치기"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/news_close_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="접기"
+                android:fontFamily="@font/one_mobile_pop"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/news_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="키워드가 포함된 뉴스가 없습니다"
+                android:fontFamily="@font/one_mobile_pop"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

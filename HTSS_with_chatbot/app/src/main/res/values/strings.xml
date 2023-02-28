@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">HTSS</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="search_array">
+        <item>키워드</item>
+        <item>종목번호</item>
+        <item>종목명</item>
+    </string-array>
+
+    <string-array name="chart_array">
+        <item>90일</item>
+        <item>180일</item>
+        <item>1년</item>
+        <item>2년</item>
+    </string-array>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.StockHighRateListFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:padding="15dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:text="상승률별 종목 순위 TOP200"
+                android:gravity="left"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textSize="25sp"
+                android:textColor="@color/black"/>
+
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:padding="10dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="4"-->
+<!--                android:text="전일대비"-->
+<!--                android:textSize="25sp"-->
+<!--                android:gravity="right"-->
+<!--                android:fontFamily="@font/one_mobile_pop"-->
+<!--                android:textColor="@color/black"/>-->
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/stock_raiselist_rank"
+            android:nestedScrollingEnabled="false"/>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
