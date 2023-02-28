@@ -49,7 +49,7 @@ class StockFragment : Fragment(), View.OnClickListener {
     var selectedPosition2 = 0
     var newsNum = 3
     var first = "company_info"
-////////
+///////////
     private lateinit var view: FragmentStockBinding
     private val retrofit = RetrofitClient.create()
 
