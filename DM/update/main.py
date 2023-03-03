@@ -32,8 +32,8 @@ class Update():
         date = str_day(datetime.now())
         df = pd.concat(
             [stock.get_market_ohlcv(date, market="KOSPI"), stock.get_market_ohlcv(date, market="KOSDAQ")])
-        df = df.reset_index()[["티커", "시가", "고가", "저가", "종가", "등락률"]]
-        df.columns = ["ticker", "start_price", "high_price", "low_price", "end_price", "rate"]
+        df = df.reset_index()[["티커", "시가", "고가", "저가", "종가","거래량","등락률"]]
+        df.columns = ["ticker", "start_price", "high_price", "low_price", "end_price","volume", "rate"]
         df.to_sql(name='now_stock_price', con=self.engine, if_exists='replace', index=False)
 
         # 코스피 코스닥 지수 크롤링
