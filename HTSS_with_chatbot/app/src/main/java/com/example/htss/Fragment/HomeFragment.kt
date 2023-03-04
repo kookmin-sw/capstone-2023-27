@@ -1,6 +1,7 @@
 package com.example.htss.Fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,7 +14,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
@@ -70,6 +70,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     private val stockRaiseListAdapter = StockRaiseListAdapter(stockRaiseList)
 
     val dec = DecimalFormat("#,###.##")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -397,72 +398,67 @@ class HomeFragment : Fragment(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun addStockMarketList(body: StockMarketList) {
         if (body.market == "코스피") {
-            view.kospiPrice.text = dec.format(body.now_value).toString()
+            if(body.now_value >= 0.0){
+                view.kospiRisePrice.text = dec.format(body.now_value).toString()
+                view.kospiDecreasePrice.visibility = View.GONE
+                view.kospiRisePrice.visibility = View.VISIBLE
+            }
+            else{
+                view.kospiDecreasePrice.text = dec.format(body.now_value).toString()
+                view.kospiDecreasePrice.visibility = View.VISIBLE
+                view.kospiRisePrice.visibility = View.GONE
+            }
             if (body.change_rate >= 0.0) {
                 view.kospiChangePlusRate.text = "+" + body.change_rate.toString() + "%"
                 view.kospiChangePlusRate.visibility = View.VISIBLE
                 view.kospiChangeMinusRate.visibility = View.GONE
-                view.kospiPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
                 view.kospiChangePlusValueShape.visibility = View.VISIBLE
                 view.kospiChangeMinusValueShape.visibility = View.GONE
-                view.kospiChangeValue.text = body.change_value.toString()
-                view.kospiChangeValue.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.red
-                    )
-                )
-            } else {
+                view.kospiRiseChangeValue.text = body.change_value.toString()
+                view.kospiRiseChangeValue.visibility = View.VISIBLE
+                view.kospiDecreaseChangeValue.visibility = View.GONE
+            }
+            else {
                 view.kospiChangeMinusRate.text = body.change_rate.toString() + "%"
                 view.kospiChangePlusRate.visibility = View.GONE
                 view.kospiChangeMinusRate.visibility = View.VISIBLE
-                view.kospiPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
                 view.kospiChangePlusValueShape.visibility = View.GONE
                 view.kospiChangeMinusValueShape.visibility = View.VISIBLE
-                view.kospiChangeValue.text = body.change_value.toString()
-                view.kospiChangeValue.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.blue
-                    )
-                )
+                view.kospiDecreaseChangeValue.text = body.change_value.toString()
+                view.kospiRiseChangeValue.visibility = View.GONE
+                view.kospiDecreaseChangeValue.visibility = View.VISIBLE
             }
-
-        } else {
-            view.kosdakPrice.text = dec.format(body.now_value).toString()
+        }
+        else {
+            if(body.now_value >= 0.0){
+            view.kosdakRisePrice.text = dec.format(body.now_value).toString()
+            view.kosdakDecreasePrice.visibility = View.GONE
+            view.kosdakRisePrice.visibility = View.VISIBLE
+        }
+            else{
+                view.kosdakDecreasePrice.text = dec.format(body.now_value).toString()
+                view.kosdakDecreasePrice.visibility = View.VISIBLE
+                view.kosdakRisePrice.visibility = View.GONE
+            }
             if (body.change_rate >= 0.0) {
                 view.kosdakChangePlusRate.text = "+" + body.change_rate.toString() + "%"
                 view.kosdakChangePlusRate.visibility = View.VISIBLE
                 view.kosdakChangeMinusRate.visibility = View.GONE
-                view.kosdakPrice.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
                 view.kosdakChangePlusValueShape.visibility = View.VISIBLE
                 view.kosdakChangeMinusValueShape.visibility = View.GONE
-                view.kosdakChangeValue.text = body.change_value.toString()
-                view.kosdakChangeValue.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.red
-                    )
-                )
+                view.kosdakRiseChangeValue.text = body.change_value.toString()
+                view.kosdakRiseChangeValue.visibility = View.VISIBLE
+                view.kosdakDecreaseChangeValue.visibility = View.GONE
+
             } else {
                 view.kosdakChangeMinusRate.text = body.change_rate.toString() + "%"
                 view.kosdakChangePlusRate.visibility = View.GONE
                 view.kosdakChangeMinusRate.visibility = View.VISIBLE
-                view.kosdakPrice.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.blue
-                    )
-                )
                 view.kosdakChangePlusValueShape.visibility = View.GONE
                 view.kosdakChangeMinusValueShape.visibility = View.VISIBLE
-                view.kosdakChangeValue.text = body.change_value.toString()
-                view.kosdakChangeValue.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.blue
-                    )
-                )
+                view.kosdakDecreaseChangeValue.text = body.change_value.toString()
+                view.kosdakRiseChangeValue.visibility = View.GONE
+                view.kosdakDecreaseChangeValue.visibility = View.VISIBLE
             }
         }
     }

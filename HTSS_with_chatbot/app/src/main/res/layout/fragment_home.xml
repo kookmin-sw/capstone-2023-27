@@ -199,19 +199,38 @@
                         android:textColor="@color/black"
                         android:layout_marginLeft="6dp"
                         android:textSize="20sp"/>
-
-                    <TextView
-                        android:id="@+id/kospi_price"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
+                        android:layout_height="wrap_content">
 
-                        android:fontFamily="@font/one_mobile_pop"
-                        android:gravity="center"
-                        android:textColor="@color/black"
+                        <TextView
+                            android:id="@+id/kospi_rise_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:fontFamily="@font/one_mobile_pop"
+                            android:gravity="center"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="6dp"
+                            android:visibility="visible"
+                            android:textSize="25sp"
+                            tools:ignore="MissingConstraints" />
 
-                        android:layout_marginLeft="6dp"
-                        android:textSize="25sp"/>
+                        <TextView
+                            android:id="@+id/kospi_decrease_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="3,4320.7"
+                            android:fontFamily="@font/one_mobile_pop"
+                            android:gravity="center"
+                            android:textColor="@color/blue"
+                            android:layout_marginLeft="6dp"
+                            android:textSize="25sp"
+                            android:visibility="gone"
+                            tools:ignore="MissingConstraints" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -228,7 +247,7 @@
                                 android:layout_height="wrap_content"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toLeftOf="@+id/kospi_change_value"
+                                app:layout_constraintRight_toLeftOf="@+id/kospi_rise_change_value"
                                 android:gravity="center"
                                 android:paddingLeft="15dp"
                                 android:src="@drawable/baseline_arrow_drop_up_24"
@@ -242,7 +261,7 @@
                                 android:layout_height="wrap_content"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toLeftOf="@+id/kospi_change_value"
+                                app:layout_constraintRight_toLeftOf="@+id/kospi_rise_change_value"
                                 android:gravity="center"
                                 android:paddingLeft="15dp"
                                 android:src="@drawable/baseline_arrow_drop_down_24"
@@ -251,7 +270,7 @@
                                 android:visibility="gone"
                                 />
                             <TextView
-                                android:id="@+id/kospi_change_value"
+                                android:id="@+id/kospi_rise_change_value"
                                 android:layout_width="wrap_content"
                                 app:layout_constraintLeft_toRightOf="@+id/kospi_change_plus_value_shape"
                                 android:layout_height="match_parent"
@@ -261,8 +280,24 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 android:text=""
                                 app:layout_constraintTop_toTopOf="parent"
+                                android:textColor="@color/red"
+                                android:fontFamily="@font/one_mobile_pop"
+                                tools:ignore="MissingConstraints" />
+
+                            <TextView
+                                android:id="@+id/kospi_decrease_change_value"
+                                android:layout_width="wrap_content"
+                                app:layout_constraintLeft_toRightOf="@+id/kospi_change_plus_value_shape"
+                                android:layout_height="match_parent"
+                                android:gravity="left"
+                                android:textSize="12sp"
+                                android:padding="5dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:text="4.22"
+                                app:layout_constraintTop_toTopOf="parent"
                                 android:textColor="@color/blue"
                                 android:fontFamily="@font/one_mobile_pop"
+                                android:visibility="gone"
                                 tools:ignore="MissingConstraints" />
                             <TextView
                                 android:id="@+id/blank"
@@ -270,7 +305,7 @@
                                 android:padding="5dp"
                                 android:layout_height="match_parent"
                                 app:layout_constraintRight_toLeftOf="@+id/kospi_change_plus_rate"
-                                app:layout_constraintLeft_toRightOf="@+id/kospi_change_value"
+                                app:layout_constraintLeft_toRightOf="@+id/kospi_rise_change_value"
                                 tools:ignore="MissingConstraints" />
                             <TextView
                                 android:id="@+id/kospi_change_plus_rate"
@@ -284,7 +319,6 @@
                                 android:textColor="@color/red"
                                 android:fontFamily="@font/one_mobile_pop"
                                 android:text=""
-
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 tools:ignore="MissingConstraints" />
                             <TextView
@@ -298,7 +332,7 @@
                                 android:textSize="12sp"
                                 android:textColor="@color/blue"
                                 android:fontFamily="@font/one_mobile_pop"
-                                android:text="+050.58%"
+                                android:text="50.58%"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 tools:ignore="MissingConstraints"
                                 android:visibility="gone"/>
@@ -332,16 +366,36 @@
                         android:layout_marginLeft="6dp"
                         android:layout_marginBottom="5dp"
                         android:textSize="20sp"/>
-                    <TextView
-                        android:id="@+id/kosdak_price"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:gravity="center"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/one_mobile_pop"
-                        android:layout_marginLeft="6dp"
-                        android:textSize="25sp"/>
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/kosdak_rise_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:fontFamily="@font/one_mobile_pop"
+                            android:gravity="center"
+                            android:textColor="@color/red"
+                            android:layout_marginLeft="6dp"
+                            android:visibility="visible"
+                            android:textSize="25sp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/kosdak_decrease_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="502.42"
+                            android:fontFamily="@font/one_mobile_pop"
+                            android:gravity="center"
+                            android:textColor="@color/blue"
+                            android:layout_marginLeft="6dp"
+                            android:textSize="25sp"
+                            android:visibility="gone"
+                            tools:ignore="MissingConstraints" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -357,7 +411,7 @@
                                 android:layout_height="wrap_content"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toLeftOf="@+id/kosdak_change_value"
+                                app:layout_constraintRight_toLeftOf="@+id/kosdak_rise_change_value"
                                 android:gravity="center"
                                 android:paddingLeft="15dp"
                                 android:src="@drawable/baseline_arrow_drop_up_24"
@@ -371,7 +425,7 @@
                                 android:layout_height="wrap_content"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintRight_toLeftOf="@+id/kosdak_change_value"
+                                app:layout_constraintRight_toLeftOf="@+id/kosdak_rise_change_value"
                                 android:gravity="right|center"
                                 android:paddingLeft="15dp"
                                 android:src="@drawable/baseline_arrow_drop_down_24"
@@ -380,7 +434,7 @@
                                 android:visibility="gone"
                                 />
                             <TextView
-                                android:id="@+id/kosdak_change_value"
+                                android:id="@+id/kosdak_rise_change_value"
                                 android:layout_width="wrap_content"
                                 android:padding="5dp"
                                 app:layout_constraintLeft_toRightOf="@+id/kosdak_change_plus_value_shape"
@@ -392,6 +446,23 @@
                                 android:textSize="12sp"
                                 android:textColor="@color/red"
                                 android:fontFamily="@font/one_mobile_pop"
+                                android:visibility="visible"
+                                tools:ignore="MissingConstraints" />
+
+                            <TextView
+                                android:id="@+id/kosdak_decrease_change_value"
+                                android:layout_width="wrap_content"
+                                android:padding="5dp"
+                                app:layout_constraintLeft_toRightOf="@+id/kosdak_change_plus_value_shape"
+                                android:layout_height="match_parent"
+                                android:gravity="left"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:text="5.23"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:textSize="12sp"
+                                android:textColor="@color/blue"
+                                android:fontFamily="@font/one_mobile_pop"
+                                android:visibility="gone"
                                 tools:ignore="MissingConstraints" />
                             <TextView
                                 android:id="@+id/blank2"
@@ -399,7 +470,7 @@
                                 android:padding="5dp"
                                 android:layout_height="match_parent"
                                 app:layout_constraintRight_toLeftOf="@+id/kosdak_change_plus_rate"
-                                app:layout_constraintLeft_toRightOf="@+id/kosdak_change_value"
+                                app:layout_constraintLeft_toRightOf="@+id/kosdak_rise_change_value"
                                 tools:ignore="MissingConstraints" />
                             <TextView
                                 android:id="@+id/kosdak_change_plus_rate"
@@ -411,7 +482,7 @@
                                 android:textSize="12sp"
                                 android:textColor="@color/red"
                                 android:fontFamily="@font/one_mobile_pop"
-                                android:text="+050.58%"
+                                android:text="1.93%"
                                 android:padding="5dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 tools:ignore="MissingConstraints"
