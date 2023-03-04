@@ -91,25 +91,25 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val myAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val v = super.getView(position, convertView, parent)
-                if (position == count) {
-                    //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
-                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).text = ""
-                    //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
-                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).hint = getItem(count)
-                }
+//                if (position == count) {
+//                    //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
+//                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).text = ""
+//                    //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
+//                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).hint = getItem(count)
+//                }
                 return v
             }
 
-            override fun getCount(): Int {
-                //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
-                return super.getCount() - 1
-            }
+//            override fun getCount(): Int {
+//                //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
+//                return super.getCount() - 1
+//            }
         }
 
         myAdapter.addAll(items.toMutableList())
-        myAdapter.add("항목선택")
+//        myAdapter.add("항목선택")
         view.searchSpinner.adapter = myAdapter
-        view.searchSpinner.setSelection(myAdapter.count)
+        view.searchSpinner.setSelection(0)
         view.searchSpinner.dropDownVerticalOffset = dipToPixels(35f).toInt()
         //스피너 선택시 나오는 화면
         view.searchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
