@@ -29,9 +29,21 @@ class ChatbotResponse(private val url: String) {
                 val input = BufferedReader(InputStreamReader(connection.inputStream))
                 val response = StringBuffer()
                 var inputLine: String?
-                while (input.readLine().also { inputLine = it } != null) {
-                    response.append(inputLine)
+                Log.d("ChatbotResponse.input", input.toString())
+                var currentLine = input.readLine()
+                var nextLine = input.readLine()
+
+                while (currentLine != null) {
+                    // 마지막 줄 아닌 경우 줄바꿈 적용
+                    if (null != nextLine) {
+                        response.append(currentLine+'\n')
+                    } else {
+                        response.append(currentLine)
+                    }
+                    currentLine = nextLine
+                    nextLine = input.readLine()
                 }
+
                 input.close()
                 Handler(Looper.getMainLooper()).post {
                     onFetched(response.toString())
