@@ -3,6 +3,7 @@ package com.example.htss.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.htss.Model.ChatbotMessageModel
 import androidx.recyclerview.widget.RecyclerView
@@ -27,14 +28,15 @@ class ChatbotAdapter: RecyclerView.Adapter<ChatbotAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentMessage = messagesList[position]
+        val botMessageBlock: LinearLayout = holder.itemView.findViewById(R.id.chatbot_message_block)
         val userMessage: TextView = holder.itemView.findViewById(R.id.user_message)
-        val botMessage: TextView = holder.itemView.findViewById(R.id.chatbot_message)
+        val botMessage: TextView = botMessageBlock.findViewById(R.id.chatbot_message)
 
         when(currentMessage.id) {
             "user_id" -> {
                 userMessage.text = currentMessage.message
                 userMessage.visibility = View.VISIBLE
-                botMessage.visibility = View.GONE
+                botMessageBlock.visibility = View.GONE
             }
             "bot_id" -> {
                 botMessage.text = currentMessage.message

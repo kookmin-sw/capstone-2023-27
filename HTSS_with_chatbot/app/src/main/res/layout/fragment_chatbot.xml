@@ -13,11 +13,16 @@
         android:layout_below="@+id/dark_divider"
         tools:itemCount="20"
         tools:listitem="@layout/chatbot_message_item" />
-    <View
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/gray"
-        android:id="@+id/dark_divider"/>
+        android:layout_height="wrap_content"
+        android:gravity="left|center"
+        android:padding="10dp"
+        android:text="챗봇"
+        android:textSize="20sp"
+        android:background="@color/hwangto"
+        android:id="@+id/dark_divider"
+        android:fontFamily="@font/one_mobile_pop" />
 
     <LinearLayout
         android:id="@+id/chatbot_layout_bar"
