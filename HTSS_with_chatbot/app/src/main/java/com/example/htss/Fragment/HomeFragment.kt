@@ -108,7 +108,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         }
 
         myAdapter.addAll(items.toMutableList())
-//        myAdapter.add("항목선택")
         view.searchSpinner.adapter = myAdapter
         view.searchSpinner.setSelection(0)
         view.searchSpinner.dropDownVerticalOffset = dipToPixels(35f).toInt()
@@ -312,7 +311,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
     }
 
 
-//    pr제vate fun insertDataToDatabase() {
+//    private fun insertDataToDatabase() {
 //        //사용자가 입력한 텍스트들을 가져옵니다.
 //        val keyword = view.interestText.text.toString()
 //
@@ -398,17 +397,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
     @SuppressLint("SetTextI18n")
     private fun addStockMarketList(body: StockMarketList) {
         if (body.market == "코스피") {
-            if(body.now_value >= 0.0){
+            if (body.change_rate >= 0.0) {
                 view.kospiRisePrice.text = dec.format(body.now_value).toString()
                 view.kospiDecreasePrice.visibility = View.GONE
                 view.kospiRisePrice.visibility = View.VISIBLE
-            }
-            else{
-                view.kospiDecreasePrice.text = dec.format(body.now_value).toString()
-                view.kospiDecreasePrice.visibility = View.VISIBLE
-                view.kospiRisePrice.visibility = View.GONE
-            }
-            if (body.change_rate >= 0.0) {
+
                 view.kospiChangePlusRate.text = "+" + body.change_rate.toString() + "%"
                 view.kospiChangePlusRate.visibility = View.VISIBLE
                 view.kospiChangeMinusRate.visibility = View.GONE
@@ -419,6 +412,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 view.kospiDecreaseChangeValue.visibility = View.GONE
             }
             else {
+                view.kospiDecreasePrice.text = dec.format(body.now_value).toString()
+                view.kospiDecreasePrice.visibility = View.VISIBLE
+                view.kospiRisePrice.visibility = View.GONE
+
                 view.kospiChangeMinusRate.text = body.change_rate.toString() + "%"
                 view.kospiChangePlusRate.visibility = View.GONE
                 view.kospiChangeMinusRate.visibility = View.VISIBLE
@@ -430,17 +427,11 @@ class HomeFragment : Fragment(), View.OnClickListener {
             }
         }
         else {
-            if(body.now_value >= 0.0){
-            view.kosdakRisePrice.text = dec.format(body.now_value).toString()
-            view.kosdakDecreasePrice.visibility = View.GONE
-            view.kosdakRisePrice.visibility = View.VISIBLE
-        }
-            else{
-                view.kosdakDecreasePrice.text = dec.format(body.now_value).toString()
-                view.kosdakDecreasePrice.visibility = View.VISIBLE
-                view.kosdakRisePrice.visibility = View.GONE
-            }
             if (body.change_rate >= 0.0) {
+                view.kosdakRisePrice.text = dec.format(body.now_value).toString()
+                view.kosdakDecreasePrice.visibility = View.GONE
+                view.kosdakRisePrice.visibility = View.VISIBLE
+
                 view.kosdakChangePlusRate.text = "+" + body.change_rate.toString() + "%"
                 view.kosdakChangePlusRate.visibility = View.VISIBLE
                 view.kosdakChangeMinusRate.visibility = View.GONE
@@ -451,6 +442,10 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 view.kosdakDecreaseChangeValue.visibility = View.GONE
 
             } else {
+                view.kosdakDecreasePrice.text = dec.format(body.now_value).toString()
+                view.kosdakDecreasePrice.visibility = View.VISIBLE
+                view.kosdakRisePrice.visibility = View.GONE
+
                 view.kosdakChangeMinusRate.text = body.change_rate.toString() + "%"
                 view.kosdakChangePlusRate.visibility = View.GONE
                 view.kosdakChangeMinusRate.visibility = View.VISIBLE
