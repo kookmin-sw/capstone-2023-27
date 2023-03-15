@@ -13,22 +13,20 @@ import config
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 import torch
 import torch.nn as nn
+
+
 class Update():
 
-
-
     def __init__(self):
-        # self.engine = create_engine("mysql+pymysql://root:" + "1234" + "@localhost/capstone_db", encoding='utf-8')
         self.engine = create_engine(
             "mysql+pymysql://admin:" + config.db_config["password"] + config.db_config["location"], encoding='utf-8')
 
 
-
-    # 하루에 한번
     def update_now_price(self):
         def str_day(d):
             return d.strftime('%Y%m%d')
 
+        #  현재 주가 크롤링
         date = str_day(datetime.now())
         df = pd.concat(
             [stock.get_market_ohlcv(date, market="KOSPI"), stock.get_market_ohlcv(date, market="KOSDAQ")])
@@ -65,10 +63,9 @@ class Update():
         self.engine.execute("update time_table set day_minute1= '{now}' limit 1".format(now=datetime.now()))
         print("end now_stock_price")
 
-
-
-
+    # 하루에 한번 장 마감 후 종가,등락률 등등 크롤링해서 전처리
     def update_price(self):
+
         a = self.engine.execute("select day_date from time_table")
         for i in a:
             start_datetime = i.day_date
@@ -93,13 +90,16 @@ class Update():
             tmp_df = pd.concat([tmp_df, tmp_df2]).reset_index()
             tmp_df["날짜"] = day
             df = pd.concat([df, tmp_df])
+
         df["등락률"] = round(df["등락률"].astype('float'), 3)
         df = df[["티커", "날짜", "종가", "등락률"]]
         tickers = df["티커"].to_list()
         tmp_li = []
+
         for ticker in (tickers):
             name = stock.get_market_ticker_name(ticker)
             tmp_li.append(name)
+
         df["company_name"] = tmp_li
         df.columns = ["ticker", "date", "end_price", "rate", "company_name"]
         df.to_sql(name='stock_price', con=self.engine, if_exists='append', index=False)
@@ -107,9 +107,9 @@ class Update():
 
         print("end stock_price")
 
-
-
+    # 뉴스 크롤링
     def update_news(self):
+
         query1 = self.engine.execute("select day_minute10 from time_table")
         dd = query1.first()[0]
         tic = self.engine.execute("select distinct(ticker) from stock_price;")
@@ -158,11 +158,13 @@ class Update():
                     print("err")
         res = sum(tmp_li, [])
         df = pd.DataFrame(res, columns=["ticker", "provider", "date", "rink", "title"])
+
         #새로운 뉴스가 없는 경우 종료
         if df.empty==True:
             print("empty")
             self.engine.execute("update time_table set day_minute10 = '{now}' limit 1".format(now=datetime.now()))
             return
+
         # 크롤링 해온 뉴스들의 본문 가져오기
         urls = df["rink"].values.tolist()
         t_li = []
@@ -183,6 +185,7 @@ class Update():
                 print(1, e, url)
             t_li.append(description)
         df["description"] = t_li
+
         # 제목과 본문에서 명사를 추출해서 description에 저장, 그 명사들로 새로운 ticker:명사 쌍 테이블 생성
         mecab = Mecab()
         ticker_noun_list = []
@@ -216,8 +219,6 @@ class Update():
         noun_df = noun_df.groupby(["ticker", "noun"])["count"].sum().reset_index().sort_values("count", ascending=False)
         rm_id = noun_df[noun_df["count"] == 1].index
         noun_df.drop(rm_id, inplace=True)
-        # 명사별로 그룹핑한뒤 count 상위 10개만 남겨둠
-        # noun_df = noun_df.astype({'count': 'int'}).sort_values(by="count", ascending=False).groupby("noun").head(10)
         # 종목명 추가
         tickers = set(df["ticker"].to_list())
         tmp_list = []
@@ -226,17 +227,8 @@ class Update():
             tmp_list.append([ticker, name])
         df2 = pd.DataFrame(tmp_list, columns=["ticker", "company_name"])
         noun_df = pd.merge(left=noun_df, right=df2, how="inner", on="ticker")
-        # 명사와 회사명이 완전이 일치하는 경우를 제거
-        # rm_index2 = noun_df[noun_df["noun"] == noun_df["company_name"]].index
-        # noun_df.drop(rm_index2, inplace=True)
 
-        # df는 news 테이블, noun_df는 search_noun 테이블
-        # mysql upload
         df = df.drop_duplicates(subset=["ticker", "date"])
-        #df.to_sql(name='news', con=self.engine, if_exists='append', index=False)
-
-
-        print(df)
 
         #감정분석
         device = torch.device('cpu')
@@ -272,18 +264,19 @@ class Update():
                 df.loc[row.Index, "sentiment"] = "호재"
         df = df[['ticker', 'provider', 'date', 'rink', 'title','description', 'sentiment']]
 
-
         for row in (df.itertuples()):
             title1 = getattr(row, "title")
             title1 = '\\"'.join(title1.split('"'))
             title1 = "\\'".join(title1.split("'"))
             title1 = "%%".join(title1.split("%"))
             title1= str(title1)
+
             query = "INSERT IGNORE INTO news values(lpad({ticker},'6','0'),'{provider}','{date}','{rink}','{title}','{description}','{sentiment}')".format(
                 ticker=getattr(row, "ticker"),provider=getattr(row, "provider"), date=getattr(row, "date"), rink=getattr(row, "rink"), title=title1, description=getattr(row, "description"), sentiment=getattr(row, "sentiment"))
             self.engine.execute(query)
 
         for row in (noun_df.itertuples()):
+
             query = "INSERT INTO search_noun VALUES (lpad({ticker},'6','0'), '{noun}', {count}, '{company_name}') ON DUPLICATE KEY UPDATE count = count+{count}".format(
                 ticker=(getattr(row, 'ticker')), noun=(getattr(row, 'noun')), count=int(getattr(row, 'count')),
                 company_name=(getattr(row, 'company_name')))
@@ -292,6 +285,7 @@ class Update():
         self.engine.execute("update time_table set day_minute10 = '{now}' limit 1".format(now=datetime.now()))
         print("end news")
 
+    # 테마 업데이트
     def update_thema(self):
         # 테마명들 구하기
         urls = []
@@ -309,7 +303,6 @@ class Update():
             resp = requests.get(url, headers=headers)
             # 인코딩을 통해 한글 꺠짐 문제 해결
             soup = BeautifulSoup(resp.content, "html.parser", from_encoding='cp949')
-            # contentarea > div:nth-child(5) > table > tbody > tr:nth-child(1) > td.name > div > a
             # 테마명 뽑아오기
             thema_pages = soup.select("#contentarea_left > table > tr > td > div > div > strong.info_title")
             company_pages = soup.select("#contentarea > div > table > tbody > tr > td.name > div.name_area > a")
@@ -331,7 +324,6 @@ class Update():
             self.engine.execute(query)
         self.engine.execute("update time_table set day_week = '{now}' limit 1".format(now=datetime.now()))
 
-        # crawling_thema()
         print("end thema")
 
     def update_sectors(self):
@@ -375,6 +367,7 @@ class Update():
         self.engine.execute("update time_table set day_week = '{now}' limit 1".format(now=datetime.now()))
         print("end sector")
 
+    # 기업정보 업데이트
     def update_company_info(self):
         tmp_df = pd.read_sql("select distinct(ticker),company_name from stock_price;", self.engine)
         tickers = tmp_df["ticker"].tolist()
@@ -423,7 +416,6 @@ class Update():
             else:
                 eps = 0
             eps_list.append(eps)
-            # perEps = re.sub('&nbsp;| |\t|\r|\n', '', perEps).split("l")
 
             estimatePer = page.select("#_cns_per")
             if len(estimatePer)!=0:
@@ -438,7 +430,6 @@ class Update():
             else:
                 estimateEps = 0
             est_eps_list.append(estimateEps)
-
 
             pbr = page.select("#_pbr")
             if len(pbr) !=0:
@@ -465,6 +456,7 @@ class Update():
         tmp_df["dvr"] = dvr_list
         tmp_df.to_sql(name='company_info_table', con=self.engine, if_exists='replace', index=False, index_label="ticker")
 
+    # 기업 설명 추가
     def update_company_info2(self):
         tic = self.engine.execute("select distinct(ticker) from stock_price;")
         tickers = [ticker[0] for ticker in tic]
@@ -506,6 +498,7 @@ class Update():
 
 
 
+# crontab을 이용해서 주기별로 코드를 실행
 a = Update()
 # a.update_now_price()
 # 1일 주기
