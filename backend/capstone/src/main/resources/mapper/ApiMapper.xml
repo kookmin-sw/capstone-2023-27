@@ -86,4 +86,13 @@
         select * from terms_table where terms = #{terms};
     </select>
 
+    <select id="chartTrend" resultType="ChartTrendDto">
+        select * from chart_trend where period = #{period}
+    </select>
+
+    <select id="trendStock" resultType="TrendStockDto">
+        select * from trend_stock where period = #{period}
+    </select>
+
+
 </mapper>

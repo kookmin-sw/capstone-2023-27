@@ -37,9 +37,10 @@ public interface ApiMapper {
     DateDto stockDate();
     MarketIndexDto StockMarketId(String market);
 
-
     TermsDto searchTerms(String terms);
 
+    List<ChartTrendDto> chartTrend(int period);
+    List<TrendStockDto> trendStock(int period);
 
 
 }
