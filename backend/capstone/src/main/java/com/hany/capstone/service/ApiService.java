@@ -75,11 +75,16 @@ public class ApiService {
         return apiMapper.StockMarketId(market);
     };
 
-
     public TermsDto searchTerms(String terms){
         return apiMapper.searchTerms(terms);
     };
 
+    public List<ChartTrendDto> chartTrend(int period){
+        return apiMapper.chartTrend(period);
+    }
+    public List<TrendStockDto> trendStock(int period){
+        return apiMapper.trendStock(period);
+    };
 
 
 
