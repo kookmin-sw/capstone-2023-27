@@ -26,16 +26,6 @@
                 android:textSize="25sp"
                 android:textColor="@color/black"/>
 
-<!--            <TextView-->
-<!--                android:layout_width="0dp"-->
-<!--                android:padding="10dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="4"-->
-<!--                android:text="전일대비"-->
-<!--                android:textSize="25sp"-->
-<!--                android:gravity="right"-->
-<!--                android:fontFamily="@font/one_mobile_pop"-->
-<!--                android:textColor="@color/black"/>-->
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

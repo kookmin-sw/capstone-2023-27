@@ -8,6 +8,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.htss.Fragment.HomeFragment
 import com.example.htss.Fragment.ChatbotFragment
+import com.example.htss.Fragment.PredictFragment
 import com.example.htss.R
 import com.example.htss.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
@@ -45,11 +46,11 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     Log.d("framgent", "home")
                 }
 
-//            R.id.listFragment -> {
-//                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, AllListFragment::class.java.name)
-//                replaceFragment(fragment)
-//                Log.d("framgent","category")
-//            }
+            R.id.predictFragment -> {
+                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, PredictFragment::class.java.name)
+                replaceFragment(fragment)
+                Log.d("framgent","predict")
+            }
             R.id.chatbotFragment -> {
                 val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, ChatbotFragment::class.java.name)
                 replaceFragment(fragment)

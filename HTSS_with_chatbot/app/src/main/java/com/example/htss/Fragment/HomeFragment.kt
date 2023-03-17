@@ -92,19 +92,9 @@ class HomeFragment : Fragment(), View.OnClickListener {
         val myAdapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val v = super.getView(position, convertView, parent)
-//                if (position == count) {
-//                    //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
-//                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).text = ""
-//                    //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
-//                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).hint = getItem(count)
-//                }
+
                 return v
             }
-
-//            override fun getCount(): Int {
-//                //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
-//                return super.getCount() - 1
-//            }
         }
 
         myAdapter.addAll(items.toMutableList())
@@ -138,7 +128,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
             adapter = themeRankListAdapter
 
         }
-
         view.recycle3.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = newsRankListAdapter
@@ -194,14 +183,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
             }
         })
-
         newsRankListAdapter.setItemClickListener(object : MainNewsAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(newsRankList[position].rink)))
 
             }
         })
-
+        //뉴스 옆 ticker 아이콘 클릭 리스너
         newsRankListAdapter.setLinkClickListener(object : MainNewsAdapter.OnLinkClickListener {
             override fun onClick(v: View, position: Int) {
                 getStockNameByTicker(newsRankList[position].ticker)
@@ -250,7 +238,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.seeMore3.setOnClickListener(this)
         view.rightArrow3.setOnClickListener(this)
         view.plus.setOnClickListener(this)
-        view.deleteAll.setOnClickListener(this)
 
 
         return view.root
@@ -277,7 +264,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                         interestKeywordList.add(interestKeywordJson.optString(i))
                     }
                 }
-
             }
             2 -> { // 추가 키워드 있어야함
                 if (keyword != null) {
@@ -302,7 +288,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 } else {
                     Toast.makeText(requireContext(),"삭제할 키워드를 다시 선택해주세요.", Toast.LENGTH_SHORT).show()
                 }
-
             }
         }
         interestKeywordListAdapter.notifyDataSetChanged()
@@ -310,40 +295,13 @@ class HomeFragment : Fragment(), View.OnClickListener {
         Log.d("키워드리스트22", interestKeywordList.toString())
     }
 
-
-//    private fun insertDataToDatabase() {
-//        //사용자가 입력한 텍스트들을 가져옵니다.
-//        val keyword = view.interestText.text.toString()
-//
-//        if(inputCheck(keyword)){ //inputcheck라는 함수를 만들어주었습니다.
-//            //유저 오브젝트를 만들어줍니다.이 값이 database에 전송되게 됩니다.
-//
-//            val user = User(0,keyword)
-//            //id가 0인 이유는 우리가 PK를 자동으로 생성되게 만들어도 값을 넣어줘야합니다.
-//
-//            //뷰모델에 add user를 해줌으로써 데이터베이스에 user값을 넣어주게 됩니다.
-//            mUserViewModel.addUser(user)
-//
-//        }
-//        else{
-//            //만약 유저가 editText모두 넣지 않았다면 토스트 메세지를 띄웁니다.
-//            Toast.makeText(requireContext(), "Please fill out all fields.", Toast.LENGTH_LONG).show()
-//        }
-//    }
-
-//    private fun inputCheck(keyword: String): Boolean {
-//        return !(TextUtils.isEmpty(keyword))
-//    }
-
-    //텍스트박스가 비어있는지 확인합니다.
-
-
     //서치눌렀을 때 키보드 내려가게
     fun softkeyboardHide() {
         val imm = getSystemService(requireContext(), InputMethodManager::class.java)
         imm!!.hideSoftInputFromWindow(view.editText.windowToken, 0)
     }
 
+    // 관심키워드 키보드 내려가게
     fun softkeyboardHide2() {
         val imm = getSystemService(requireContext(), InputMethodManager::class.java)
         imm!!.hideSoftInputFromWindow(view.interestText.windowToken, 0)
@@ -790,7 +748,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.right_arrow3 -> {
                 replaceFragment2(StockHighRateListFragment())
             }
-            /////////////////////////관심 키워드드
+            /////////////////////////관심 키워드
             R.id.plus -> {
                 softkeyboardHide2()
                 // state == 2 키워드 추가
@@ -802,11 +760,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
 //                editor.putString("key",view.interestText.text.toString().trim()).apply()
                 view.interestText.text = null
             }
-            R.id.delete_all -> {
-                MySharedPreferences.clear(requireContext())
-            }
         }
     }
-
-
 }
