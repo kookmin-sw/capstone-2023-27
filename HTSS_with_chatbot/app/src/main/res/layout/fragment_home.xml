@@ -114,12 +114,6 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
                     tools:ignore="MissingConstraints" />
-                <ImageView
-                    android:id="@+id/delete_all"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/baseline_delete_sweep_24"
-                    android:layout_marginLeft="10dp"/>
 
             </LinearLayout>
 

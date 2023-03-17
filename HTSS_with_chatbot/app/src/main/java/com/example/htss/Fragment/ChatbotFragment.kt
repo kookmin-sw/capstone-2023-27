@@ -82,7 +82,7 @@ class ChatbotFragment: Fragment() {
         GlobalScope.launch {
             delay(1000)
             withContext(Dispatchers.Main) {
-                rv_messages.scrollToPosition(adapter.itemCount-1)
+                rv_messages.scrollToPosition(adapter.itemCount - 1)
             }
         }
     }
