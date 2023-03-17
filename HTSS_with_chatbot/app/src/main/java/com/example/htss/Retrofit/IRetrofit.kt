@@ -7,7 +7,6 @@ import retrofit2.http.Query
 
 interface IRetrofit {
 
-    //https://54.180.109.32:8080/sector/high/?num=""
     // 업종 상위
     @GET("/sector/high")
     fun getHighSectorList(
