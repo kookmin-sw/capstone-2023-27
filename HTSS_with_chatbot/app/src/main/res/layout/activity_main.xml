@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="ExtraText">
 
     <FrameLayout
         android:id="@+id/mainFrameLayout"
@@ -20,12 +21,11 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_weight="1"
-        android:background="@color/good"
-        app:itemBackground="@color/good"
+        android:background="@color/good" app:itemBackground="@color/good"
         app:itemIconTint="@drawable/menu_click_color"
         app:itemTextColor="@drawable/menu_click_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu"
         tools:ignore="MissingConstraints" />
-
+    app:labelVisibilityMode="labeled"
 </androidx.constraintlayout.widget.ConstraintLayout>

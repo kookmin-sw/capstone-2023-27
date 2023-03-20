@@ -3,18 +3,21 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_home"/>
+        android:icon="@drawable/ic_home"
+        android:title="홈" />
 
 
 
     <item
         android:id="@+id/predictFragment"
-        android:icon="@drawable/baseline_insights_24" />
+        android:icon="@drawable/baseline_insights_24"
+        android:title="추세 그래프"/>
 
 
 
     <item
         android:id="@+id/chatbotFragment"
-        android:icon="@drawable/ic_baseline_chat_24" />
+        android:icon="@drawable/ic_baseline_chat_24"
+        android:title="챗봇" />
 
 </menu>
