@@ -297,7 +297,7 @@ class Analysis():
 
         best_label_df = pd.read_sql("select * from period_best_label;", self.engine)
         df = pd.read_sql("select * from trend_chart;", self.engine)
-        data = pd.read_sql("select * from stock_price;", engine)
+        data = pd.read_sql("select * from stock_price;", self.engine)
         num_labels = 50
 
         period_list = [5, 15, 30]
@@ -329,5 +329,5 @@ class Analysis():
 if __name__ == "__main__":
     a = Analysis()
     # a.upload_trend_chart()
-    a.upload_period_best_label()
+    # a.upload_period_best_label()
     a.upload_trend_stock()
