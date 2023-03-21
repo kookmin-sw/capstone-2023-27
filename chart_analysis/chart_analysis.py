@@ -23,31 +23,28 @@ from tslearn.barycenters import softdtw_barycenter
 from collections import defaultdict
 
 
+# get_trend_data 함수 속도 개선
 def get_trend_data(data, recent_days):
+    data['date'] = pd.to_datetime(data['date'])
     # 1년전 데이터에서 상승률 8% 이상이었던 종목 추출
     rise_data = data.loc[(data['rate']>=8)]
     day_before_year = datetime.date.today() - timedelta(days=365)
     rise_data = rise_data[rise_data['date'].dt.date>=day_before_year]
-
-    # 추출한 [종목, 날짜] 데이터의 날짜별로 N일 전부터 날짜까지의 정보 추출
-    trend_data = pd.DataFrame(columns=['ticker', 'date', 'end_price', 'rate', 'company_name', 'idx'])
-    idx = 0
-    for row in tqdm(rise_data.itertuples()):
-        ticker, date = row[1], row[2]
-        temp_df = data.loc[(data['ticker']==ticker)] 
-        temp_df.set_index('date', inplace=True)
-        temp_df = temp_df.iloc[:temp_df.index.get_loc(date)].tail(recent_days)
-        temp_df.reset_index(inplace=True)
-        temp_df['idx'] = [idx]*len(temp_df)
-        if len(temp_df) == recent_days:
-            trend_data = trend_data.append(temp_df)
-            idx += 1
-
-    # end_price, rate 정규화
+    rise_data_idx = rise_data.index.tolist()
+    end_id_list = []
+    for idx in tqdm(rise_data_idx):
+        ticker = data.iloc[idx,0]
+        # 급등날과 급등날 - recent_days의 ticker가 같으면 급등날을 end_id_list 추가 
+        if data.iloc[idx-recent_days,0] == ticker:
+            end_id_list.append(idx)
+    id_list = [[i for i in range(id-recent_days,id)] for id in end_id_list ]
+    id_list = sum(id_list, [])
+    trend_data = data.iloc[id_list]
+    tmp_li = [[i]*recent_days for i in range(int(trend_data.shape[0]/recent_days))]
+    trend_data['idx'] = sum(tmp_li,[])
     normalized = trend_data.groupby('idx').transform(lambda x: (x / x.max()))
     normalized.columns = ['end_price_n', 'rate_n']
     trend_data = pd.concat([trend_data, normalized], axis=1)
-
     return trend_data
 
 
@@ -158,8 +155,6 @@ def calculate_similarity_by_label(prices_list, prices_softdtw_list, pred, num_la
         prices_avg = prices_softdtw_list[i]
         for j in range(len(prices_list)):
             idx, ticker, dates, prices, company_name = prices_list[j]
-            if pred[j] != i:
-                continue
             similarity = dtw.dtw(prices_avg, prices, keep_internals=True).distance
             similarity_dic[i].append([ticker, max(dates), similarity, company_name])
             
