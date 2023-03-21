@@ -1,190 +1,333 @@
 # Package 설치!
 # pip install dtw-python
 # pip install tslearn
-'''
-1. 8% 이상 상승 종목 추출
-2. 주가와 날짜를 기준으로 TimeSeriesKMeans를 사용해 클러스트링하여 부분집합별로 나눠줌
-3. 라벨별 평균 차트와 각 종목 차트 간의 dtw 점수 계산
-'''
-from time import strptime
 
 '''
 output:
 - trend_df: 추세 (label별)
-- latest_df: 추세와 비슷한 종목 정보
+- similarity_df: 추세와 비슷한 종목 정보
 '''
-
+import pandas as pd
 import warnings
 
+from sqlalchemy import create_engine
+
 warnings.filterwarnings('ignore')
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import datetime
+from datetime import date, timedelta
+from tqdm import tqdm
 import dtw
 from tslearn.clustering import TimeSeriesKMeans, KShape
 from tslearn.barycenters import softdtw_barycenter
-from collections import defaultdict
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-pd.options.display.max_rows = 100
-pd.options.display.max_columns = 10
-
-# 최근 N일 간의 Stock 중 상승률 5% 이상인 데이터를 추출, end_price 정규화도 수행
-def data_preprocessing(data, recent_days):
-    date = (datetime.today() - relativedelta(years=1)).strftime("%Y-%m-%d")
-    up_rate_df = data[(data["date"]>=date) & (data["rate"]>=5)][["ticker","date"]]
-    print(up_rate_df)
-    # print(up_rate_df.values.tolist())
-
-    # days = recent_days
-    #
-    # df = data[(data["date"]>=date) & (data["rate"]>=8)]
-    #
-    # days = recent_days
-    # # ticker로 그룹화한 후 최근 days 만큼의 데이터 추출
-    # latest_data = data.groupby(['ticker']).tail(days + 1)
-    # print(latest_data)
-    # # 오늘 상승률이 5% 이상인 종목의 ticker 추출
-    # current_rate_data = latest_data.groupby(['ticker']).last()
-    # rise_ticker_list = current_rate_data[current_rate_data['rate'] >= 5].index.tolist()
-    # # 종목별로 오늘 row를 제거
-    # latest_data.drop(latest_data.groupby('ticker').tail(1).index, axis=0, inplace=True)
-    # # 고 상승률 종목만 추출
-    # latest_data = latest_data[latest_data['ticker'].isin(rise_ticker_list)]
-    # # end_price 정규화
-    # normalized = latest_data.groupby('ticker').transform(lambda x: (x / x.max()))
-    # normalized.columns = ['end_price_n', 'rate_n']
-    #
-    # latest_data = pd.concat([latest_data, normalized], axis=1)
-    # print(latest_data)
-    # return latest_data
+import config
 
 
-# [[ticker, dates, prices], ...] 형태의 리스트 생성
-def get_prices_list(latest_data):
-    prices_list = []
-    rise_ticker_list = latest_data['ticker'].unique()
+class Analysis():
 
-    for ticker in rise_ticker_list:
-        dates = latest_data[latest_data['ticker'] == ticker]['date'].tolist()
-        prices = latest_data[latest_data['ticker'] == ticker]['end_price_n'].tolist()
-        prices_list.append([ticker, dates, prices])
+    def __init__(self):
+        self.engine = create_engine(
+            "mysql+pymysql://admin:" + config.db_config["password"] + config.db_config["location"], encoding='utf-8')
 
-    return prices_list
+    def get_trend_data(self, data, recent_days):
+        # 1년전 데이터에서 상승률 8% 이상이었던 종목 추출
+        rise_data = data.loc[(data['rate'] >= 8)]
+        day_before_year = datetime.date.today() - timedelta(days=365)
+        rise_data = rise_data[rise_data['date'].dt.date >= day_before_year]
 
+        # 추출한 [종목, 날짜] 데이터의 날짜별로 N일 전부터 날짜까지의 정보 추출
+        trend_data = pd.DataFrame(columns=['ticker', 'date', 'end_price', 'rate', 'company_name', 'idx'])
+        idx = 0
+        for row in tqdm(rise_data.itertuples(), total=rise_data.shape[0]):
+            ticker, date = row[1], row[2]
+            temp_df = data.loc[(data['ticker'] == ticker)]
+            temp_df.set_index('date', inplace=True)
+            temp_df = temp_df.iloc[:temp_df.index.get_loc(date)].tail(recent_days)
+            temp_df.reset_index(inplace=True)
+            temp_df['idx'] = [idx] * len(temp_df)
+            if len(temp_df) == recent_days:
+                trend_data = trend_data.append(temp_df)
+                idx += 1
 
-# 클러스터링 수행
-def clustering(prices_list, metric, num_labels):
-    model = TimeSeriesKMeans(n_clusters=num_labels, metric=metric,
-                             max_iter=1000)
+        # end_price, rate 정규화
+        normalized = trend_data.groupby('idx').transform(lambda x: (x / x.max()))
+        normalized.columns = ['end_price_n', 'rate_n']
+        trend_data = pd.concat([trend_data, normalized], axis=1)
 
-    X_train = [row[2] for row in prices_list]
-    pred = model.fit_predict(X_train)
+        return trend_data
 
-    return pred
+    # 위 함수 속도 개선
+    def get_trend_data2(self, data, recent_days):
+        data['date'] = pd.to_datetime(data['date'])
+        # 1년전 데이터에서 상승률 8% 이상이었던 종목 추출
+        rise_data = data.loc[(data['rate'] >= 8)]
+        day_before_year = datetime.date.today() - timedelta(days=365)
+        rise_data = rise_data[rise_data['date'].dt.date >= day_before_year]
+        rise_data_idx = rise_data.index.tolist()
+        end_id_list = []
+        for idx in tqdm(rise_data_idx):
+            ticker = data.iloc[idx, 0]
+            # 급등날과 급등날 - recent_days의 ticker가 같으면 급등날을 end_id_list 추가
+            if data.iloc[idx - recent_days, 0] == ticker:
+                end_id_list.append(idx)
+        id_list = [[i for i in range(id - recent_days, id)] for id in end_id_list]
+        id_list = sum(id_list, [])
+        trend_data = data.iloc[id_list]
+        tmp_li = [[i] * recent_days for i in range(int(trend_data.shape[0] / recent_days))]
+        trend_data['idx'] = sum(tmp_li, [])
+        normalized = trend_data.groupby('idx').transform(lambda x: (x / x.max()))
+        normalized.columns = ['end_price_n', 'rate_n']
+        trend_data = pd.concat([trend_data, normalized], axis=1)
+        return trend_data
 
+    # [[index, ticker, dates, prices, company_name], ...] 형태의 리스트 생성
+    def get_trend_prices_list(self, latest_data):
+        trend_prices_list = []
 
-# 라벨별로 시각화
-def visualize_by_label(prices_list, num_labels):
-    figsize = (3, 1)
-    X_train = [row[2] for row in prices_list]
-    for i in range(num_labels):
-        print('Label: ', i)
-        prices_sum = [0] * len(X_train[0])
-        X = []
-        for j in range(len(X_train)):
-            if pred[j] == i:
-                plt.figure(figsize=figsize)
-                plt.plot(X_train[j])
-                plt.show()
-                prices_sum = [x + y for x, y in zip(prices_sum, X_train[j])]
-                X.append(X_train[j])
-        print("AVERAGE")
-        plt.figure(figsize=figsize)
-        plt.plot([x / len(prices_sum) for x in prices_sum], 'r')
-        plt.show()
-        plt.figure(figsize=figsize)
-        plt.plot(softdtw_barycenter(X), 'r')
-        plt.show()
-
-
-# 라벨별 평균 차트 생성
-def get_average_chart_by_label(prices_list, pred, num_labels):
-    prices_avg_list = []
-    prices_softdtw_list = []
-
-    for i in range(num_labels):
-        prices_sum = [0] * len(prices_list[0][2])
-        prices = []
-        for j in range(len(prices_list)):
-            if pred[j] == i:
-                prices_sum = [x + y for x, y in zip(prices_sum, prices_list[j][2])]
-                prices.append(prices_list[j][2])
-        prices_avg = [x / len(prices_sum) for x in prices_sum]
-        prices_avg_list.append(prices_avg)
-        if len(prices) > 0:
-            prices_softdtw_list.append(softdtw_barycenter(prices).flatten())
-
-    return prices_avg_list, prices_softdtw_list
-
-
-# 라벨별 평균 차트와 각 종목 차트 간의 dtw 점수 계산
-def calculate_similarity_by_label(prices_list, prices_softdtw_list, pred, num_labels):
-    similarity_dic = defaultdict(list)
-
-    for i in range(num_labels):
-        prices_avg = prices_softdtw_list[i]
-        for j in range(len(prices_list)):
-            ticker, dates, prices = prices_list[j]
-            if pred[j] != i:
+        for i in range(max(latest_data['idx'] + 1)):
+            ticker = latest_data[latest_data['idx'] == i]['ticker'].unique().tolist()
+            if not ticker:
                 continue
-            similarity = dtw.dtw(prices_avg, prices, keep_internals=True).distance
-            similarity_dic[i].append([ticker, similarity])
+            ticker = ticker[0]
+            dates = latest_data[latest_data['idx'] == i]['date'].tolist()
+            prices = latest_data[latest_data['idx'] == i]['end_price_n'].tolist()
+            company_name = latest_data[latest_data['idx'] == i]['company_name'].unique().tolist()[0]
+            trend_prices_list.append([i, ticker, dates, prices, company_name])
 
-    return similarity_dic
+        return trend_prices_list
+
+    def get_recent_data(self, data, recent_days):
+        recent_data = data.groupby(['ticker']).tail(recent_days)
+        # end_price, rate 정규화
+        normalized = recent_data.groupby('ticker').transform(lambda x: (x / x.max()))
+        normalized.columns = ['end_price_n', 'rate_n']
+        recent_data = pd.concat([recent_data, normalized], axis=1)
+
+        return recent_data
+
+    def get_recent_prices_list(self, recent_data):
+        recent_prices_list = []
+        ticker_list = recent_data['ticker'].unique().tolist()
+        idx = 0
+
+        for ticker in ticker_list:
+            ticker_data = recent_data[recent_data['ticker'] == ticker]
+            dates = ticker_data['date'].tolist()
+            prices = ticker_data['end_price_n'].tolist()
+            company_name = ticker_data['company_name'].unique()[0]
+            rate = ticker_data['rate'].tolist()
+
+            recent_prices_list.append([idx, ticker, dates, prices, company_name, rate])
+            idx += 1
+
+        return recent_prices_list
+
+    # 클러스터링 수행
+    def clustering(self, prices_list, metric, num_labels):
+        print('Running Clustering...')
+        model = TimeSeriesKMeans(n_clusters=num_labels, metric=metric,
+                                 max_iter=10)
+
+        X_train = [row[3] for row in prices_list]
+        pred = model.fit_predict(X_train)
+
+        return pred
+
+    # 라벨별로 시각화
+    def visualize_by_label(self, prices_list, num_labels):
+        figsize = (2, 1)
+        X_train = [row[3] for row in prices_list]
+        for i in range(num_labels):
+            print('Label: ', i)
+            prices_sum = [0] * len(X_train[0])
+            X = []
+            for j in range(len(X_train)):
+                if pred[j] == i:
+                    # plt.figure(figsize=figsize)
+                    # plt.plot(X_train[j])
+                    # plt.show()
+                    prices_sum = [x + y for x, y in zip(prices_sum, X_train[j])]
+                    X.append(X_train[j])
+            print("AVERAGE")
+            plt.figure(figsize=figsize)
+            plt.plot([x / len(prices_sum) for x in prices_sum], 'r')
+            plt.show()
+            plt.figure(figsize=figsize)
+            plt.plot(softdtw_barycenter(X), 'r')
+            plt.show()
+
+    # 라벨별 추세 차트 생성
+    def get_average_chart_by_label(self, prices_list, pred, num_labels):
+        prices_avg_list = []
+        prices_softdtw_list = []
+
+        for i in range(num_labels):
+            prices_sum = [0] * len(prices_list[0][3])
+            prices = []
+            for j in range(len(prices_list)):
+                if pred[j] == i:
+                    prices_sum = [x + y for x, y in zip(prices_sum, prices_list[j][3])]
+                    prices.append(prices_list[j][3])
+            prices_avg = [x / len(prices_sum) for x in prices_sum]
+            prices_avg_list.append(prices_avg)
+            if len(prices) > 0:
+                prices_softdtw_list.append(softdtw_barycenter(prices).flatten())
+
+        return prices_avg_list, prices_softdtw_list
+
+    # 라벨별 평균 차트와 각 종목 차트 간의 dtw 점수를 구해서 가장 유사한 label 찾기
+    def calculate_similarity_by_label(self, prices_list, prices_softdtw_list, num_labels):
+        similarity_list = []
+        for j in range(len(prices_list)):
+            idx, ticker, dates, prices, company_name, rate_list = prices_list[j]  # data,price는 리스트
+            rate = rate_list[-1]
+            sim = 100
+            lab = 0
+            for i in range(num_labels):
+                prices_avg = prices_softdtw_list[i]
+                similarity = dtw.dtw(prices_avg, prices, keep_internals=True).distance
+                if similarity < sim:
+                    lab = i
+                    sim = similarity
+            similarity_list.append([ticker, max(dates), sim, company_name, rate, lab])
+
+        return similarity_list
+
+    # CLUSTERS 수 ELBOW_METHOD를 통해 구하기
+    # 5: 40 ,30: 60이 적당
+    def elbow_method(self, trend_prices_list):
+        recent_day_list = [5, 30, 90]
+        for recent_days in recent_day_list:
+            trend_data = self.get_trend_data(data, recent_days)
+            trend_prices_list = self.get_trend_prices_list(trend_data)
+            elbow_data = []
+            X_train = [row[3] for row in trend_prices_list]
+            for n_clusters in range(10, 500, 10):
+                km = TimeSeriesKMeans(n_clusters=n_clusters, verbose=False, random_state=42, n_jobs=-1)
+                y_pred = km.fit_predict(X_train)
+                # km.inertia_ 군집의 CENTER에 얼마나 잘 뭉쳤는지 알 수 있다
+                elbow_data.append((n_clusters, km.inertia_))
+            pd.DataFrame(elbow_data, columns=['clusters', 'distance']).plot(x='clusters', y='distance')
+
+    def find_best_label(self, data, engine, df):
+        best_label_df = pd.DataFrame(columns=["period", "label", "rate_mean", "count"])
+        num_labels = 50
+
+        period_list = [5, 15, 30]
+
+        date_list = pd.read_sql("select distinct(date) from stock_price;", engine).astype("str").values.tolist()
+        date_list = sum(date_list, [])
+        # 하나의 pred마다 5일 정도
+        test_day = [i for i in range(2, 7)]
+
+        for period in period_list:
+            tr_df = df[df["period"] == period]
+            prices_softdtw_list2 = tr_df["end_price"].values.reshape(num_labels, period)
+            test_data = data[data["date"] >= date_list[-(test_day[-1] + period)]]
+
+            test_prices_list = []
+
+            for d in test_day:
+                start_day = date_list[-(d + period)]
+                end_day = date_list[-d]
+                tmp_df = test_data[test_data["date"].between(start_day, end_day)]
+                normalized = tmp_df.groupby('ticker').transform(lambda x: (x / x.max()))
+                normalized.columns = ['end_price_n', 'rate_n']
+                tmp_df = pd.concat([tmp_df, normalized], axis=1)
+                ticker_list = tmp_df['ticker'].unique().tolist()
+                idx = 0
+
+                for ticker in ticker_list:
+                    ticker_data = tmp_df[tmp_df['ticker'] == ticker]
+                    dates = ticker_data['date'].tolist()
+                    prices = ticker_data['end_price_n'].tolist()
+                    company_name = ticker_data['company_name'].unique()[0]
+                    rate = ticker_data['rate'].tolist()
+                    test_prices_list.append([idx, ticker, dates, prices, company_name, rate])
+                    idx += 1
+
+            similarity_list = self.calculate_similarity_by_label(test_prices_list, prices_softdtw_list2, num_labels)
+            similarity_df = pd.DataFrame(similarity_list,
+                                         columns=['ticker', 'date', 'similarity', 'company_name', "rate", 'label'])
+            similarity_df = similarity_df.groupby("label")["rate"].agg(['mean', 'count'])
+            similarity_df["period"] = period
+            similarity_df.reset_index(inplace=True)
+            similarity_df = similarity_df[["period", "label", "mean", "count"]]
+            similarity_df = similarity_df.rename(columns={"mean": "rate_mean"})
+            best_label_df = pd.concat([best_label_df, similarity_df], axis=0)
+        return best_label_df
+        # best_label_df.to_csv("best_label_df.csv",mode="w")
+
+    # 추세그래프 저장
+    def upload_trend_chart(self):
+        data = pd.read_sql("select * from stock_price;", self.engine)
+        num_labels = 50
+        metric = 'dtw'
+        recent_days_list = [5, 15, 30]
+        df = pd.DataFrame(columns=["end_price", "period", "label"])
+        for recent_days in (recent_days_list):
+            # (1)추세 추출을 위한 데이터
+            trend_data = self.get_trend_data2(data, recent_days)
+            trend_prices_list = self.get_trend_prices_list(trend_data)
+            pred = self.clustering(trend_prices_list, metric, num_labels)  # 22분
+
+            prices_avg_list, prices_softdtw_list = self.get_average_chart_by_label(trend_prices_list, pred, num_labels)
+
+            trend_df = pd.DataFrame({'end_price': np.array(prices_softdtw_list).flatten(),
+                                     'period': [recent_days] * recent_days * num_labels,
+                                     'label': np.array([[x] * recent_days for x in range(num_labels)]).flatten()})
+            df = pd.concat([df, trend_df])
+        df["end_price"] = round(df["end_price"], 3)
+        df.to_sql(name='trend_chart', con=self.engine, if_exists='replace', index=False)
+
+    # period 별로 rate 평균이 높은 label 저장
+    def upload_period_best_label(self):
+        data = pd.read_sql("select * from stock_price;", self.engine)
+        df = pd.read_sql("select * from trend_chart;", self.engine)
+        best_label_df = self.find_best_label(data, self.engine, df)
+        best_label_df = best_label_df[best_label_df["count"] > 10]
+        best_label_df["ranking"] = best_label_df.groupby("period")["rate_mean"].rank(method="max", ascending=False)
+        best_label_df = best_label_df.sort_values(by=['period', 'ranking']).groupby('period').head(3)
+
+        best_label_df.to_sql(name='period_best_label', con=self.engine, if_exists='replace', index=False)
+
+    #  위에서 뽑은 period:label 쌍의 포함되는 오늘 종목 중 가장 유사도가 높은 종목 저장
+    def upload_trend_stock(self):
+
+        best_label_df = pd.read_sql("select * from period_best_label;", self.engine)
+        df = pd.read_sql("select * from trend_chart;", self.engine)
+        data = pd.read_sql("select * from stock_price;", engine)
+        num_labels = 50
+
+        period_list = [5, 15, 30]
+        period_best_label_dic = {}
+        for period in period_list:
+            period_best_label_dic[period] = best_label_df[best_label_df["period"] == period]["label"].values.tolist()
+
+        recent_df = pd.DataFrame(columns=["ticker", "date", "similarity", "company_name", "label", "ranking", "period"])
+        for period in period_list:
+            recent_data = self.get_recent_data(data, period)
+            recent_prices_list = self.get_recent_prices_list(recent_data)
+            p_df = df[df["period"] == period]
+            prices_softdtw_list2 = p_df["end_price"].values.reshape(num_labels, period)
+            similarity_list = self.calculate_similarity_by_label(recent_prices_list, prices_softdtw_list2, num_labels)
+            similarity_df = pd.DataFrame(similarity_list,
+                                         columns=['ticker', 'date', 'similarity', 'company_name', "rate", 'label'])
+
+            similarity_df = similarity_df[similarity_df["label"].isin(period_best_label_dic[period])]
+            similarity_df["ranking"] = similarity_df.groupby("label")["similarity"].rank(method="min", ascending=True)
+            similarity_df["period"] = period
+            similarity_df = similarity_df.sort_values(by=['label', 'ranking']).groupby('label').head(5)
+            similarity_df.drop('similarity', axis=1, inplace=True)
+            similarity_df.drop('rate', axis=1, inplace=True)
+            recent_df = pd.concat([recent_df, similarity_df])
+
+        recent_df.to_sql(name='trend_stock', con=self.engine, if_exists='replace', index=False)
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('stockPrice.csv', index_col=0)
-
-    recent_days = 30
-    num_labels = 7
-    metric = 'dtw'
-
-    latest_data = data_preprocessing(data, recent_days)
-
-    # prices_list = get_prices_list(latest_data)
-    # dates = [row[1] for row in prices_list][0]
-    # pred = clustering(prices_list, metric, num_labels)
-    # print(pred)
-    # prices_avg_list, prices_softdtw_list = get_average_chart_by_label(prices_list, pred, num_labels)
-    # similarity_dic = calculate_similarity_by_label(prices_list, prices_softdtw_list, pred, num_labels)
-    # # visualize_by_label(prices_list, num_labels)
-    # '''
-    # label별 추세 데이터프레임 생성
-    # trend_df --> [end_price, date, period, label]
-    # - end_price: 정규화된 추세의 종가
-    # - date: 날짜
-    # - period: 최근 몇일의 데이터를 가져왔는지
-    # - label: 분류 라벨 (몇 번째 그룹에 속하는가)
-    # '''
-    # trend_df = pd.DataFrame({'end_price': np.array(prices_softdtw_list).flatten(),
-    #                          'date': dates * num_labels,
-    #                          'period': [recent_days] * recent_days * num_labels,
-    #                          'label': np.array([[x] * recent_days for x in range(num_labels)]).flatten()})
-    # '''
-    # 추세 비슷한 종목 데이터프레임 생성
-    # latest_df --> [ticker, date, end_price, rate, company_name, end_price_n, rate_n, label, similarity]
-    # '''
-    # similarity_list = []
-    # for label, items in similarity_dic.items():
-    #     for ticker, similarity in items:
-    #         similarity_list.append([label, ticker, similarity])
-    # similarity_df = pd.DataFrame(similarity_list, columns=['label', 'ticker', 'similarity'])
-    # similarity_df["ranking"] = similarity_df.groupby("label")["similarity"].rank(method="min",ascending=True)
-    # print(similarity_df.sort_values(["label","ranking"],ascending=True))
-    # latest_df = pd.merge(latest_data, similarity_df, on='ticker')
-    # latest_df['ticker'] = latest_df['ticker'].apply(lambda x: '0' + str(x) if len(str(x)) == 5 else str(x))
-
-    # trend_df.to_csv('trend_df.csv', index=False)
-    # latest_df.to_csv('latest_df.csv', index=False)
+    a = Analysis()
+    # a.upload_trend_chart()
+    a.upload_period_best_label()
+    a.upload_trend_stock()
