@@ -39,8 +39,8 @@ public interface ApiMapper {
 
     TermsDto searchTerms(String terms);
 
-    List<ChartTrendDto> chartTrend(int period);
-    List<TrendStockDto> trendStock(int period);
-
+    List<ChartTrendDto> chartTrend(int period,Integer best_label);
+    List<TrendStockDto> trendStock(int period, int label);
+    List<PeriodBestLabelDto> periodBestLabel(int period);
 
 }

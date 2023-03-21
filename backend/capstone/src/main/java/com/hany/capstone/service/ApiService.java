@@ -79,12 +79,17 @@ public class ApiService {
         return apiMapper.searchTerms(terms);
     };
 
-    public List<ChartTrendDto> chartTrend(int period){
-        return apiMapper.chartTrend(period);
+    public List<ChartTrendDto> chartTrend(int period,Integer best_label){
+        return apiMapper.chartTrend(period,best_label);
     }
-    public List<TrendStockDto> trendStock(int period){
-        return apiMapper.trendStock(period);
+    public List<TrendStockDto> trendStock(int period,int label){
+        return apiMapper.trendStock(period, label);
     };
+
+    public List<PeriodBestLabelDto> periodBestLabel(int period){
+        return apiMapper.periodBestLabel(period);
+    };
+
 
 
 

@@ -297,7 +297,12 @@ class Analysis():
 
         best_label_df = pd.read_sql("select * from period_best_label;", self.engine)
         df = pd.read_sql("select * from trend_chart;", self.engine)
-        data = pd.read_sql("select * from stock_price;", self.engine)
+
+        dates_list = pd.read_sql("select distinct(date) from stock_price;", engine)["date"].astype(
+            "str").values.tolist()
+        data = pd.read_sql("select * from stock_price where date >= '{0}';".format(dates_list[-32]), engine)[
+            "date"].astype("str").values.tolist()
+
         num_labels = 50
 
         period_list = [5, 15, 30]
@@ -326,8 +331,10 @@ class Analysis():
         recent_df.to_sql(name='trend_stock', con=self.engine, if_exists='replace', index=False)
 
 
-if __name__ == "__main__":
-    a = Analysis()
+# if __name__ == "__main__":
+    # a = Analysis()
     # a.upload_trend_chart()
     # a.upload_period_best_label()
-    a.upload_trend_stock()
+    # a.upload_trend_stock()
+    # data.to_csv("ss.csv",mode= 'w')
+
