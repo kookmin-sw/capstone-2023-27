@@ -87,12 +87,15 @@
     </select>
 
     <select id="chartTrend" resultType="ChartTrendDto">
-        select * from chart_trend where period = #{period}
+        select * from trend_chart where period = #{period} and label =#{best_label}
     </select>
 
     <select id="trendStock" resultType="TrendStockDto">
-        select * from trend_stock where period = #{period}
+        select * from trend_stock where period = #{period} and label =#{label}
     </select>
 
+    <select id="periodBestLabel" resultType="PeriodBestLabelDto">
+        select * from period_best_label where period = #{period}
+    </select>
 
 </mapper>

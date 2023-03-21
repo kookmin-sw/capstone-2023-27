@@ -10,5 +10,5 @@ public class TrendStockDto {
     private String company_name;
     private int period;
     private int label;
-    private int rank;
+    private int ranking;
 }

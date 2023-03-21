@@ -330,6 +330,7 @@ def upload_trend_stock():
         similarity_df.drop('similarity', axis=1, inplace=True)
         similarity_df.drop('rate', axis=1, inplace=True)
         recent_df = pd.concat([recent_df,similarity_df])
+    recent_df.drop('similarity', axis=1, inplace=True)
 
     recent_df.to_csv("csvFile/trend_stock.csv",mode="w")
 
