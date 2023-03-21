@@ -96,7 +96,6 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 return v
             }
         }
-
         myAdapter.addAll(items.toMutableList())
         view.searchSpinner.adapter = myAdapter
         view.searchSpinner.setSelection(0)
