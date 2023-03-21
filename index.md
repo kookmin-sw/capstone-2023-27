@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## 2023 캡스톤 27팀 테스트 페이지
 
 You can use the [editor on GitHub](https://github.com/kookmin-sw/cap-template/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
