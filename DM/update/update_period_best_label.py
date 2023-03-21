@@ -1,0 +1,4 @@
+import chart_analysis
+if __name__ == '__main__':
+    update = chart_analysis.Analysis()
+    update.upload_period_best_label()
