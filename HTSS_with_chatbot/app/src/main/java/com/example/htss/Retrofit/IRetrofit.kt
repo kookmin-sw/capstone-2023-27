@@ -103,4 +103,9 @@ interface IRetrofit {
         @Query("ticker") ticker: String,
         @Query("num") num: Int
     ) :Call<StockPriceList>
+
+    @GET("/trend/data")
+    fun getTrendData(
+        @Query("period") period: Int
+    ) : Call<list>
 }
