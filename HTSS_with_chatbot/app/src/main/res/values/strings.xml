@@ -18,7 +18,7 @@
 
     <string-array name="predict_array">
         <item>5일</item>
+        <item>15일</item>
         <item>30일</item>
-        <item>90일</item>
     </string-array>
 </resources>

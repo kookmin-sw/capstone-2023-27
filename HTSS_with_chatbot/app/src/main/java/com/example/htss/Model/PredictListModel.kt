@@ -4,4 +4,5 @@ class PredictListModel (
     val ticker:String,
     val company:String,
     val period: String,
+
 )

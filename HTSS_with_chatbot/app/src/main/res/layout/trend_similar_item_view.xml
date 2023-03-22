@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="3dp"
+    android:orientation="horizontal"
+    tools:ignore="MissingDefaultResource">
+
+    <TextView
+        android:id="@+id/trend_similar_rank"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="3dp"
+        android:background="@drawable/rounded_corner"
+        android:gravity="center"
+        android:text="1"
+        android:fontFamily="@font/one_mobile_pop"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textSize="13sp"
+        />
+
+    <TextView
+        android:id="@+id/trend_similar_name"
+        android:layout_width="0dp"
+        android:layout_weight="5.5"
+        android:layout_height="match_parent"
+        android:gravity="left|center_vertical"
+        android:layout_marginStart="5dp"
+        android:text="삼성전자"
+        android:textColor="@color/black"
+        android:fontFamily="@font/one_mobile_pop"
+        android:textSize="15sp" />
+    <TextView
+        android:id="@+id/trend_similar_ticker"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginStart="3dp"
+        android:text="9200"
+        android:textColor="@color/black"
+        android:fontFamily="@font/one_mobile_pop"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/period"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:gravity="right|center"
+        android:textColor="@color/black"
+        android:layout_marginRight="5dp"
+        android:text="30일"
+        android:fontFamily="@font/one_mobile_pop"
+        android:textSize="13sp" />
+
+
+</LinearLayout>
