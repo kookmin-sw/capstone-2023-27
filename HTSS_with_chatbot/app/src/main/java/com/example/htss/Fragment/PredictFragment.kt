@@ -1,5 +1,6 @@
 package com.example.htss.Fragment
 
+import android.graphics.Color
 import com.example.htss.databinding.FragmentPredictBinding
 import android.os.Bundle
 import android.util.Log
@@ -14,12 +15,22 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.PredictListAdapter
 import com.example.htss.Model.PredictListModel
+import com.example.htss.Model.StockChartModel
 import com.example.htss.R
-import com.example.htss.Retrofit.Model.list
+import com.example.htss.Retrofit.Model.Stock
+import com.example.htss.Retrofit.Model.StockPriceList
+import com.example.htss.Retrofit.Model.TrendList
 import com.example.htss.Retrofit.RetrofitClient
+import com.github.mikephil.charting.components.LimitLine
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.utils.EntryXComparator
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PredictFragment : Fragment(), View.OnClickListener {
 
@@ -65,6 +76,17 @@ class PredictFragment : Fragment(), View.OnClickListener {
                 id: Long
             ) {
                 selectedPosition = position
+                when(selectedPosition){
+                    0 -> {
+                        getTrendData(5)
+                    }
+                    1-> {
+                        getTrendData(15)
+                    }
+                    2->{
+                        getTrendData(30)
+                    }
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -124,32 +146,90 @@ class PredictFragment : Fragment(), View.OnClickListener {
                 }
             })
         }
+
+
         return view.root
     }
 
-    //API 호출 다시 일단 보류
+    //API 호출
     fun getTrendData(period: Int){
-        retrofit.getTrendData(period).enqueue(object: Callback<list> {
-            override fun onResponse(call: Call<list>, response: Response<list>) {
+        retrofit.getTrendData(period).enqueue(object: Callback<TrendList> {
+            override fun onResponse(call: Call<TrendList>, response: Response<TrendList>) {
                 if(response.code() == 200){
                     addTrendDataList(response.body())
+                    Log.d("trend API호출", response.raw().toString())
                 } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
 
             }
-            override fun onFailure(call: Call<list>, t: Throwable) {
+            override fun onFailure(call: Call<TrendList>, t: Throwable) {
                 Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Log.d("trend API호출22", t.message.toString())
             }
-
         })
     }
 
-    ///추가해야하는디..
-    private fun addTrendDataList(body: list?){
+    private fun addTrendDataList(body: TrendList?) {
         predictList1.clear()
+        predictList2.clear()
+        predictList3.clear()
 
+        if (body != null) {
+            if(body.n0.stock.toString() == "[]"){
+                view.trendSimilarNoBtn1.visibility = View.VISIBLE
+            }
+            else{
+                for (item in body.n0.stock) {
+                    predictList1.add(
+                        PredictListModel(
+                            item.ticker,
+                            item.company_name,
+                            item.period.toString() + "일"
+                        )
+                    )
+                }
+                view.trendSimilarNoBtn1.visibility = View.GONE
+            }
+        }
+        predictAdapter1.notifyDataSetChanged()
+
+        if (body != null) {
+            if(body.n1.stock.toString() == "[]"){
+                view.trendSimilarNoBtn2.visibility = View.VISIBLE
+            }
+            else{
+                for (item in body.n1.stock) {
+                    predictList2.add(
+                        PredictListModel(
+                            item.ticker,
+                            item.company_name,
+                            item.period.toString() + "일"
+                        )
+                    )
+                }
+                view.trendSimilarNoBtn2.visibility = View.GONE
+            }
+        }
+        predictAdapter2.notifyDataSetChanged()
+
+        if (body != null) {
+            if(body.n2.stock.toString() == "[]"){
+                view.trendSimilarNoBtn3.visibility = View.VISIBLE
+            }
+            else{
+                for (item in body.n2.stock) {
+                    predictList3.add(
+                        PredictListModel(
+                            item.ticker,
+                            item.company_name,
+                            item.period.toString() + "일"
+                        )
+                    )
+                }
+                view.trendSimilarNoBtn3.visibility = View.GONE
+            }
+        }
+        predictAdapter3.notifyDataSetChanged()
     }
-
-
 
     private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle
@@ -169,6 +249,7 @@ class PredictFragment : Fragment(), View.OnClickListener {
             resources.displayMetrics
         )
     }
+
 
     override fun onClick(p0: View?) {
         TODO("Not yet implemented")

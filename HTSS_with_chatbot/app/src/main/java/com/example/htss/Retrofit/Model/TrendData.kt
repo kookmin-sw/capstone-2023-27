@@ -1,9 +1,11 @@
 package com.example.htss.Retrofit.Model
 
-data class list(
-    val n0: Graph,
-    val n1: Graph,
-    val n2: Graph
+import com.google.gson.annotations.SerializedName
+
+data class TrendList(
+    @SerializedName("0") val n0: Graph,
+    @SerializedName("1") val n1: Graph,
+    @SerializedName("2")val n2: Graph
 )
 data class Graph (
     val trendChart: List<TrendChart>,

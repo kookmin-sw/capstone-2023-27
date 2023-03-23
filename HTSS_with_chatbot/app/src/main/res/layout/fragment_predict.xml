@@ -190,6 +190,19 @@
                     android:background="@color/white"
                     android:nestedScrollingEnabled="false"
                     android:padding="5dp" />
+                <TextView
+                    android:id="@+id/trend_similar_no_btn1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_corner2"
+                    android:gravity="center"
+                    android:layout_marginTop="1dp"
+                    android:padding="5dp"
+                    android:textSize="18dp"
+                    android:text="추세와 유사한 종목이 없습니다"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:textColor="@color/black"
+                    android:visibility="visible"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -335,6 +348,19 @@
                     android:background="@color/white"
                     android:nestedScrollingEnabled="false"
                     android:padding="5dp" />
+                <TextView
+                    android:id="@+id/trend_similar_no_btn2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_corner2"
+                    android:gravity="center"
+                    android:layout_marginTop="1dp"
+                    android:padding="5dp"
+                    android:textSize="18dp"
+                    android:text="추세와 유사한 종목이 없습니다"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:textColor="@color/black"
+                    android:visibility="visible"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -478,6 +504,19 @@
                     android:background="@color/white"
                     android:nestedScrollingEnabled="false"
                     android:padding="5dp" />
+                <TextView
+                    android:id="@+id/trend_similar_no_btn3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_corner2"
+                    android:gravity="center"
+                    android:layout_marginTop="1dp"
+                    android:padding="5dp"
+                    android:textSize="18dp"
+                    android:text="추세와 유사한 종목이 없습니다"
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:textColor="@color/black"
+                    android:visibility="visible"/>
             </LinearLayout>
 
         </LinearLayout>
