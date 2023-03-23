@@ -32,7 +32,7 @@
         android:text="삼성전자"
         android:textColor="@color/black"
         android:fontFamily="@font/one_mobile_pop"
-        android:textSize="15sp" />
+        android:textSize="13sp" />
     <TextView
         android:id="@+id/trend_similar_ticker"
         android:layout_width="0dp"
