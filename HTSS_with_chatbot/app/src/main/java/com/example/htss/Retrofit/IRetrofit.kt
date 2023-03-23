@@ -107,5 +107,5 @@ interface IRetrofit {
     @GET("/trend/data")
     fun getTrendData(
         @Query("period") period: Int
-    ) : Call<list>
+    ) : Call<TrendList>
 }

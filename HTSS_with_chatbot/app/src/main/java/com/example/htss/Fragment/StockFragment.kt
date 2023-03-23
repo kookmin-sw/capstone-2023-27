@@ -617,7 +617,6 @@ class StockFragment : Fragment(), View.OnClickListener {
         result.sortBy { it.createdAt }
         Log.d("StockPrice22",result.toString())
         return result
-
     }
 
 }
