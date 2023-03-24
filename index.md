@@ -2,7 +2,7 @@
 
 ## 2023 캡스톤 27팀
 
-![https://ibb.co/G0vpf4m](https://i.ibb.co/vHxqC69/HTSS-logo.png))
+![https://ibb.co/G0vpf4m](https://i.ibb.co/vHxqC69/HTSS-logo.png)
 
 ### 1. 프로젝트 소개
 
@@ -21,6 +21,20 @@
 챗봇 기능을 추가하여 사용자가 원하는 정보를 자연어 쿼리를 통해 더욱 간편하게 검색할 수 있도록 한다.
 
 ### 2. Abstract
+
+Finding information about stocks is sometimes cumbersome. We create an application for people who are interested in stocks and eager to find information easily. The functions provided in the application are as follows.
+
+- Stock information
+
+It tells you what stocks have a high rate of increase and what stocks have a high rate of increase by industry and theme. In addition, news related to stocks is provided along with sentimental analysis to provide diversified information. It also searches for keywords and provides various stock-related information on keywords that you are interested in, such as industries related to the keyword, themes, stocks related to the keyword, and news related to the keyword.
+
+- Chart Analysis
+
+After calculating the trend of soaring stocks for a year on a 30, 60, and 90 day basis, it shows stocks with a high recent upward trend through time series clustering.
+
+- Chatbot
+
+A chatbot function is added to make it easier for users to search for desired information through natural language queries.
 
 ### 3. 소개영상
 
