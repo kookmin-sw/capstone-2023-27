@@ -2,7 +2,7 @@
 
 ## 2023 캡스톤 27팀
 
-![HTSS_logo.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d6779067-ab31-443c-af87-25fe77c03016/HTSS_logo.png)
+![HTSS_logo.png](https://ibb.co/G0vpf4m)
 
 ### 1. 프로젝트 소개
 
