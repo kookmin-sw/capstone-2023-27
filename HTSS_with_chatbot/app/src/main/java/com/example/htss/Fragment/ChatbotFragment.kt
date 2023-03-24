@@ -52,7 +52,7 @@ class ChatbotFragment: Fragment() {
         if (message.isNotEmpty()) {
             edit_message.setText("")
             adapter.insertMessage(ChatbotMessageModel(message, "user_id", timeStamp))
-            rv_messages.scrollToPosition(adapter.itemCount-1)
+            rv_messages?.scrollToPosition(adapter.itemCount-1)
 
             chatbotResponse(message)
         }
@@ -69,7 +69,7 @@ class ChatbotFragment: Fragment() {
                 val timeStamp = System.currentTimeMillis()
                 responseFetcher.fetch { response ->
                     adapter.insertMessage(ChatbotMessageModel(response, "bot_id", timeStamp))
-                    rv_messages.scrollToPosition(adapter.itemCount - 1)
+                    rv_messages?.scrollToPosition(adapter.itemCount - 1)
                     Log.d("챗봇 응답", response)
                 }
             }
@@ -79,10 +79,16 @@ class ChatbotFragment: Fragment() {
     override fun onStart() {
         super.onStart()
 
-        GlobalScope.launch {
-            delay(1000)
-            withContext(Dispatchers.Main) {
-                rv_messages.scrollToPosition(adapter.itemCount - 1)
+        if (::adapter.isInitialized && rv_messages != null && rv_messages.adapter != null) {
+            GlobalScope.launch {
+                delay(1000)
+                withContext(Dispatchers.Main) {
+                    rv_messages?.apply {
+                        if (adapter != null && adapter!!.itemCount > 0) {
+                            scrollToPosition(adapter!!.itemCount - 1)
+                        }
+                    }
+                }
             }
         }
     }
