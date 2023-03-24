@@ -19,7 +19,7 @@
 - 챗봇
 
 챗봇 기능을 추가하여 사용자가 원하는 정보를 자연어 쿼리를 통해 더욱 간편하게 검색할 수 있도록 한다.
-
+<br><br>
 ### 2. Abstract
 
 Finding information about stocks is sometimes cumbersome. We create an application for people who are interested in stocks and eager to find information easily. The functions provided in the application are as follows.
@@ -35,9 +35,9 @@ After calculating the trend of soaring stocks for a year on a 30, 60, and 90 day
 - Chatbot
 
 A chatbot function is added to make it easier for users to search for desired information through natural language queries.
-
+<br><br>
 ### 3. 소개영상
-
+<br><br>
 ### 4. 팀 소개
 
 | 이름 | 학번 | 역할 |
@@ -45,7 +45,7 @@ A chatbot function is added to make it easier for users to search for desired in
 | 장한영 | ****1696 | 팀장, 백엔드, 데이터분석 |
 | 홍기훈 | ****3178 | 프론트엔드  |
 | 서현재 | ****1632 | 데이터분석, 챗봇 |
-
+<br><br>
 ### 5. 사용법
-
+<br><br>
 ### 6. 기타
