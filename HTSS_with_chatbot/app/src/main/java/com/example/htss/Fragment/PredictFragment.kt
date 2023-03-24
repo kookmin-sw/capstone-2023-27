@@ -80,16 +80,16 @@ class PredictFragment : Fragment(), View.OnClickListener {
                 selectedPosition = position
                 when(selectedPosition){
                     0 -> {
-                        getTrendData(5)
-                        getTrendPriceChart(5)
-                    }
-                    1-> {
-                        getTrendData(15)
-                        getTrendPriceChart(15)
-                    }
-                    2->{
                         getTrendData(30)
                         getTrendPriceChart(30)
+                    }
+                    1-> {
+                        getTrendData(60)
+                        getTrendPriceChart(60)
+                    }
+                    2->{
+                        getTrendData(90)
+                        getTrendPriceChart(90)
                     }
                 }
             }
