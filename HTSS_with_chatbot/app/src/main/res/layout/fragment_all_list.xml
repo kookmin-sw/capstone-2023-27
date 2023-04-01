@@ -23,7 +23,7 @@
             android:padding="5dp"
             android:gravity="center"
             android:textColor="@color/black"
-            android:fontFamily="@font/one_mobile_pop"
+            android:fontFamily="@font/spoqahansansneo_bold"
             android:id="@+id/sector"/>
         <TextView
             android:layout_width="0dp"
@@ -34,7 +34,7 @@
             android:textSize="27sp"
 
             android:gravity="center"
-            android:fontFamily="@font/one_mobile_pop"
+            android:fontFamily="@font/spoqahansansneo_bold"
             android:textColor="@color/black"
             android:id="@+id/theme"/>
     </LinearLayout>

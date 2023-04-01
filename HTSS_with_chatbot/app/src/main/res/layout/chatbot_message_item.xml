@@ -13,12 +13,12 @@
         android:layout_marginRight="10dp"
         android:layout_marginLeft="3dp"
         android:background="@drawable/chatbot_send_box"
-        android:backgroundTint="@android:color/darker_gray"
+        android:backgroundTint="#C2D2EF"
         android:padding="10dp"
         android:text="샘플 메시지입니다"
         android:textColor="@color/black"
         android:textSize="14sp"
-        android:fontFamily="@font/one_mobile_pop" />
+        android:fontFamily="@font/spoqahansansneo_bold" />
 
     <LinearLayout
         android:id="@+id/chatbot_message_block"
@@ -45,12 +45,12 @@
             android:layout_marginRight="3dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/chatbot_receive_box"
-            android:backgroundTint="@color/gray"
+            android:backgroundTint="@color/brown"
             android:padding="10dp"
             android:text="샘플 봇 메시지입니다"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:fontFamily="@font/one_mobile_pop" />
+            android:fontFamily="@font/spoqahansansneo_bold" />
     </LinearLayout>
 
 

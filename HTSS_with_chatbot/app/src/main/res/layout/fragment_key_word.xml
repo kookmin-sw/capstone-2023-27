@@ -67,8 +67,8 @@
                     android:textColorHint="@color/hmmm"
                     android:hint="검색어를 입력하세요."
                     android:imeOptions="actionDone"
-                    android:textSize="8pt"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:textSize="7pt"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     />
 
                 <ImageButton
@@ -112,7 +112,7 @@
                     android:text="키워드"
                     android:textColor="@color/black"
                     android:textSize="8pt"
-                    android:fontFamily="@font/one_mobile_pop" />
+                    android:fontFamily="@font/spoqahansansneo_bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -122,7 +122,7 @@
                     android:text="와(과) 관련된 업종"
                     android:textColor="@color/hmmm"
                     android:textSize="8pt"
-                    android:fontFamily="@font/one_mobile_pop" />
+                    android:fontFamily="@font/spoaqhansansneo_regular" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -140,14 +140,14 @@
                 android:gravity="center"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
-                android:fontFamily="@font/one_mobile_pop"
+                android:textSize="7pt"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:textColor="@color/black"
                 android:text="펼치기"
                  />
 
             <TextView
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:id="@+id/category_close_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
                 android:textColor="@color/black"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:visibility="gone" />
             <TextView
                 android:id="@+id/category_no_btn"
@@ -167,12 +167,12 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_corner2"
                 android:gravity="center"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:text="키워드와 관련된 업종이 없습니다"
                 android:textColor="@color/black"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:visibility="gone" />
 
         </LinearLayout>
@@ -200,7 +200,7 @@
                     android:text="키워드"
                     android:textColor="@color/black"
                     android:textSize="8pt"
-                    android:fontFamily="@font/one_mobile_pop" />
+                    android:fontFamily="@font/spoqahansansneo_bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -210,7 +210,7 @@
                     android:text="와(과) 관련된 테마"
                     android:textColor="@color/hmmm"
                     android:textSize="8pt"
-                    android:fontFamily="@font/one_mobile_pop" />
+                    android:fontFamily="@font/spoaqhansansneo_regular" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -228,10 +228,10 @@
                 android:gravity="center"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:textColor="@color/black"
                 android:text="펼치기"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                  />
 
             <TextView
@@ -241,11 +241,11 @@
                 android:background="@drawable/rounded_corner2"
                 android:gravity="center"
                 android:text="접기"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:textColor="@color/black"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:visibility="gone" />
             <TextView
                 android:id="@+id/theme_no_btn"
@@ -254,11 +254,11 @@
                 android:background="@drawable/rounded_corner2"
                 android:gravity="center"
                 android:text="키워드와 관련된 테마가 없습니다"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:textColor="@color/black"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:visibility="gone" />
 
         </LinearLayout>
@@ -286,7 +286,7 @@
                     android:text="키워드"
                     android:textSize="8pt"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/one_mobile_pop" />
+                    android:fontFamily="@font/spoqahansansneo_bold" />
                 <TextView
 
                     android:layout_width="wrap_content"
@@ -297,7 +297,7 @@
                     android:textSize="8pt"
                     android:textColor="@color/hmmm"
 
-                    android:fontFamily="@font/one_mobile_pop" />
+                    android:fontFamily="@font/spoaqhansansneo_regular" />
             </LinearLayout>
 
             <LinearLayout
@@ -313,7 +313,7 @@
                     android:textSize="6pt"
                     android:textColor="@color/black"
                     android:gravity="center"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:background="@drawable/layout_left_stroke"
                     android:layout_weight="4" />
                 <TextView
@@ -322,7 +322,7 @@
                     android:text="현재가"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="6pt"
@@ -338,7 +338,7 @@
                     android:textSize="6pt"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textColor="@color/black"
                     android:layout_weight="1.5"/>
                 <TextView
@@ -350,7 +350,7 @@
                     android:textColor="@color/black"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="6pt"
                     android:layout_weight="1.5"/>
             </LinearLayout>
@@ -369,10 +369,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_corner2"
                 android:gravity="center"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:textColor="@color/black"
                 android:text="펼치기"
                  />
@@ -384,11 +384,11 @@
                 android:background="@drawable/rounded_corner2"
                 android:gravity="center"
                 android:text="접기"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:textColor="@color/black"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:visibility="gone" />
 
             <TextView
@@ -398,11 +398,11 @@
                 android:background="@drawable/rounded_corner2"
                 android:gravity="center"
                 android:text="키워드와 같이 언급된 주식이 없습니다"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:textColor="@color/black"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:visibility="gone" />
 
         </LinearLayout>
@@ -428,7 +428,7 @@
                     android:textColor="@color/black"
                     android:text="키워드"
                     android:textSize="8pt"
-                    android:fontFamily="@font/one_mobile_pop" />
+                    android:fontFamily="@font/spoqahansansneo_bold" />
                 <TextView
 
                     android:layout_width="wrap_content"
@@ -437,7 +437,7 @@
                     android:text="이(가) 포함된 뉴스"
                     android:textSize="8pt"
                     android:textColor="@color/hmmm"
-                    android:fontFamily="@font/one_mobile_pop" />
+                    android:fontFamily="@font/spoqahansansneo_bold" />
             </LinearLayout>
 
 
@@ -454,12 +454,12 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_corner2"
                 android:gravity="center"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:textColor="@color/black"
                 android:text="펼치기"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp" />
+                android:textSize="7pt" />
 
             <TextView
                 android:id="@+id/news_close_btn"
@@ -469,10 +469,10 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:text="접기"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:visibility="gone" />
 
             <TextView
@@ -483,10 +483,10 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:text="키워드가 포함된 뉴스가 없습니다"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:visibility="gone" />
 
         </LinearLayout>

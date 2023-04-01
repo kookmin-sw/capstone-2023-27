@@ -70,12 +70,12 @@
                     android:layout_marginTop="4dp"
                     android:singleLine="true"
                     android:background="@null"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:hint="검색어를 입력하세요."
                     android:textColor="@color/black"
                     android:textColorHint="@color/hmmm"
                     android:imeOptions="actionDone"
-                    android:textSize="8pt"
+                    android:textSize="7pt"
                     />
                 <ImageButton
                     android:id="@+id/search_btn"
@@ -107,7 +107,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:text="관심 키워드"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -133,12 +133,12 @@
                     android:singleLine="true"
                     android:background="@drawable/layout_stroke"
                     android:backgroundTint="@null"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:hint="추가하고 싶은 키워드를 입력하세요."
                     android:textColor="@color/black"
                     android:textColorHint="@color/hmmm"
                     android:imeOptions="actionDone"
-                    android:textSize="8pt"/>
+                    android:textSize="7pt"/>
                 <ImageButton
                     android:id="@+id/plus"
                     android:layout_width="wrap_content"
@@ -189,7 +189,7 @@
                         android:text="코스피"
                         android:gravity="center"
                         android:layout_marginBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_marginLeft="6dp"
                         android:textSize="20sp"/>
@@ -202,7 +202,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:gravity="center"
                             android:textColor="@color/red"
                             android:layout_marginLeft="6dp"
@@ -215,7 +215,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:gravity="center"
                             android:textColor="@color/blue"
                             android:layout_marginLeft="6dp"
@@ -245,7 +245,7 @@
                                 android:gravity="center"
                                 android:paddingLeft="15dp"
                                 android:src="@drawable/baseline_arrow_drop_up_24"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 tools:ignore="MissingConstraints"
                                 android:visibility="gone"
                                 />
@@ -259,7 +259,7 @@
                                 android:gravity="center"
                                 android:paddingLeft="15dp"
                                 android:src="@drawable/baseline_arrow_drop_down_24"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 tools:ignore="MissingConstraints"
                                 android:visibility="gone"
                                 />
@@ -275,7 +275,7 @@
                                 android:text=""
                                 app:layout_constraintTop_toTopOf="parent"
                                 android:textColor="@color/red"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 tools:ignore="MissingConstraints" />
 
                             <TextView
@@ -290,7 +290,7 @@
                                 android:text=""
                                 app:layout_constraintTop_toTopOf="parent"
                                 android:textColor="@color/blue"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 android:visibility="visible"
                                 tools:ignore="MissingConstraints" />
                             <TextView
@@ -320,7 +320,7 @@
                                 android:textSize="12sp"
                                 android:padding="5dp"
                                 android:textColor="@color/red"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 android:text=""
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 tools:ignore="MissingConstraints" />
@@ -334,7 +334,7 @@
                                 app:layout_constraintLeft_toRightOf="@id/blank3"
                                 android:textSize="12sp"
                                 android:textColor="@color/blue"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 android:text=""
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 tools:ignore="MissingConstraints"
@@ -364,7 +364,7 @@
                         android:layout_height="wrap_content"
                         android:text="코스닥"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_marginLeft="6dp"
                         android:layout_marginBottom="5dp"
@@ -378,7 +378,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:gravity="center"
                             android:textColor="@color/red"
                             android:layout_marginLeft="6dp"
@@ -391,7 +391,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:gravity="center"
                             android:textColor="@color/blue"
                             android:layout_marginLeft="6dp"
@@ -418,7 +418,7 @@
                                 android:gravity="center"
                                 android:paddingLeft="15dp"
                                 android:src="@drawable/baseline_arrow_drop_up_24"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 tools:ignore="MissingConstraints"
                                 android:visibility="gone"
                                 />
@@ -432,7 +432,7 @@
                                 android:gravity="right|center"
                                 android:paddingLeft="15dp"
                                 android:src="@drawable/baseline_arrow_drop_down_24"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 tools:ignore="MissingConstraints"
                                 android:visibility="gone"
                                 />
@@ -448,7 +448,7 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 android:textSize="12sp"
                                 android:textColor="@color/red"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 android:visibility="visible"
                                 tools:ignore="MissingConstraints" />
 
@@ -464,7 +464,7 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 android:textSize="12sp"
                                 android:textColor="@color/blue"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 android:visibility="visible"
                                 tools:ignore="MissingConstraints" />
 
@@ -493,7 +493,7 @@
                                 app:layout_constraintLeft_toRightOf="@id/blank4"
                                 android:textSize="12sp"
                                 android:textColor="@color/red"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 android:text=""
                                 android:padding="5dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -509,7 +509,7 @@
                                 android:textSize="12sp"
                                 android:textColor="@color/blue"
                                 android:padding="5dp"
-                                android:fontFamily="@font/one_mobile_pop"
+                                android:fontFamily="@font/spoqahansansneo_bold"
                                 android:text=""
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 tools:ignore="MissingConstraints"
@@ -538,7 +538,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="100dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:text="업종상위 Top3"
                     android:textColor="@color/black"
                     android:textSize="20sp"
@@ -563,7 +563,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
                     android:clickable="true"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:text="더보기"
                     android:textColor="@color/black"
                     android:textSize="15dp"
@@ -602,7 +602,7 @@
                     android:layout_marginTop="100dp"
                     android:text="테마상위 Top3"
                     android:textSize="20sp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/black"
                     tools:ignore="MissingConstraints" />
@@ -628,7 +628,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="5dp"
                     android:textSize="15dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:layout_marginRight="15dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -659,7 +659,7 @@
                     android:layout_marginTop="100dp"
                     android:text="종목 상승률 순위"
                     android:textSize="20sp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/black"
                     tools:ignore="MissingConstraints" />
@@ -685,7 +685,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="5dp"
                     android:textSize="15dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:layout_marginRight="15dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -717,7 +717,7 @@
                     android:layout_marginTop="100dp"
                     android:text="주요뉴스"
                     android:textSize="20sp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/black"
                     tools:ignore="MissingConstraints" />
@@ -738,10 +738,10 @@
                 android:text="펼치기"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:textColor="@color/black"
                 android:textAlignment="center"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:clickable="true"
                 android:background="@drawable/rounded_corner2"/>
 
@@ -750,10 +750,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="접기"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:textAlignment="center"
                 android:visibility="gone"
                 android:clickable="true"
