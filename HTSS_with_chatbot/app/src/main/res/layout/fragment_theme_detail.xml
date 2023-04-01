@@ -46,7 +46,7 @@
                     android:text="쿠팡 관련주"
                     android:textColor="@color/black"
                     android:textSize="10pt"
-                    android:fontFamily="@font/one_mobile_pop" />
+                    android:fontFamily="@font/spoqahansansneo_bold" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                         android:text="+10%"
                         android:textColor="@color/red"
                         android:textSize="8pt"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +74,7 @@
                         android:textColor="@color/blue"
                         android:textSize="8pt"
                         android:visibility="gone"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -94,7 +94,7 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="종목명"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textColor="@color/black"
                     android:textSize="7pt" />
 
@@ -105,7 +105,7 @@
                     android:background="@drawable/layout_middle_stroke"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:text="현재가"
                     android:textColor="@color/black"
                     android:textSize="7pt" />
@@ -119,7 +119,7 @@
                     android:padding="10dp"
                     android:text="전일대비"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="7pt" />
             </LinearLayout>
 
@@ -137,9 +137,9 @@
                 android:gravity="center"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:text="펼치기"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:textColor="@color/black"
                 />
 
@@ -150,12 +150,12 @@
                 android:background="@drawable/rounded_corner2"
                 android:gravity="center"
 
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:text="접기"
                 android:textColor="@color/black"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:visibility="gone" />
 
             <TextView
@@ -165,12 +165,12 @@
                 android:background="@drawable/rounded_corner2"
                 android:gravity="center"
 
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:text="테마와 관련된 종목이 없습니다"
                 android:textColor="@color/black"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:visibility="gone" />
 
         </LinearLayout>
@@ -197,7 +197,7 @@
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:text="쿠팡 관련주"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="10pt"
                      />
 
@@ -208,7 +208,7 @@
                     android:text="이(가)포함된 뉴스"
                     android:textColor="@color/gray"
                     android:textSize="10pt"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     />
             </LinearLayout>
 
@@ -226,10 +226,10 @@
                 android:gravity="center"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:textColor="@color/black"
                 android:text="펼치기"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 />
             <TextView
                 android:id="@+id/theme_include_news_close_btn"
@@ -239,9 +239,9 @@
                 android:gravity="center"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:text="접기"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:textColor="@color/black"
                 android:visibility="gone"/>
 
@@ -253,9 +253,9 @@
                 android:gravity="center"
                 android:layout_marginTop="3dp"
                 android:padding="5dp"
-                android:textSize="18dp"
+                android:textSize="7pt"
                 android:text="테마가 포함된 뉴스가 없습니다"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoaqhansansneo_regular"
                 android:textColor="@color/black"
                 android:visibility="gone"/>
         </LinearLayout>

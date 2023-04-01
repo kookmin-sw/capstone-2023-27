@@ -22,7 +22,7 @@
         android:textColor="@color/black"
         android:textAlignment="center"
         android:textSize="13sp"
-        android:fontFamily="@font/one_mobile_pop" />
+        android:fontFamily="@font/spoqahansansneo_bold" />
 
     <TextView
         android:id="@+id/stock_raise_name"
@@ -33,7 +33,7 @@
         android:layout_marginStart="3dp"
         android:text="샌즈랩"
         android:textColor="@color/black"
-        android:fontFamily="@font/one_mobile_pop"
+        android:fontFamily="@font/spoqahansansneo_bold"
         android:textSize="15sp" />
     <TextView
         android:id="@+id/stock_raise_price"
@@ -44,7 +44,7 @@
         android:layout_marginStart="3dp"
         android:text="9200"
         android:textColor="@color/black"
-        android:fontFamily="@font/one_mobile_pop"
+        android:fontFamily="@font/spoqahansansneo_bold"
 
         android:textSize="13sp" />
 
@@ -55,6 +55,7 @@
         android:layout_height="match_parent"
         android:text="-0.5%"
         android:textStyle="bold"
+        android:fontFamily="spoqahansansneo_bold"
         android:textColor="@color/blue"
         android:gravity="right|center"
         android:textSize="13sp" />
@@ -69,7 +70,7 @@
         android:textColor="@color/red"
         android:gravity="right|center"
         android:textSize="13sp"
-        android:fontFamily="@font/one_mobile_pop"
+        android:fontFamily="@font/spoqahansansneo_bold"
         android:visibility="gone" />
 
 <!--    <TextView-->

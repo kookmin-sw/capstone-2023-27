@@ -20,16 +20,16 @@
         android:padding="10dp"
         android:text="챗봇"
         android:textSize="20sp"
-        android:background="@color/hwangto"
+        android:background="#E0E3F1"
         android:id="@+id/dark_divider"
-        android:fontFamily="@font/one_mobile_pop" />
+        android:fontFamily="@font/spoqahansansneo_bold" />
 
     <LinearLayout
         android:id="@+id/chatbot_layout_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/gray"
+        android:background="#E0E3F1"
         android:orientation="horizontal">
 
         <EditText
@@ -41,9 +41,10 @@
             android:layout_weight=".5"
             android:backgroundTint="@color/black"
             android:hint="메시지를 입력하세요..."
+            android:textSize="7pt"
             android:padding="10dp"
             android:singleLine="true"
-            android:fontFamily="@font/one_mobile_pop" />
+            android:fontFamily="@font/spoaqhansansneo_regular" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/send_btn"
@@ -52,10 +53,10 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@drawable/round_send_button"
-            android:backgroundTint="@android:color/darker_gray"
+            android:backgroundTint="@color/white"
             android:text="전송"
-            android:textColor="@android:color/white"
-            android:fontFamily="@font/one_mobile_pop" />
+            android:textColor="@color/black"
+            android:fontFamily="@font/spoqahansansneo_bold" />
 
     </LinearLayout>
 

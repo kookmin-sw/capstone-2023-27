@@ -16,7 +16,7 @@
         android:background="@drawable/rounded_corner"
         android:gravity="center"
         android:text="1"
-        android:fontFamily="@font/one_mobile_pop"
+        android:fontFamily="@font/spoqahansansneo_bold"
         android:textColor="@color/black"
         android:textAlignment="center"
         android:textSize="13sp"
@@ -31,7 +31,7 @@
         android:layout_marginStart="5dp"
         android:text="삼성전자"
         android:textColor="@color/black"
-        android:fontFamily="@font/one_mobile_pop"
+        android:fontFamily="@font/spoqahansansneo_bold"
         android:textSize="13sp" />
     <TextView
         android:id="@+id/trend_similar_ticker"
@@ -42,7 +42,7 @@
         android:layout_marginStart="3dp"
         android:text="9200"
         android:textColor="@color/black"
-        android:fontFamily="@font/one_mobile_pop"
+        android:fontFamily="@font/spoqahansansneo_bold"
         android:textSize="13sp" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:textColor="@color/black"
         android:layout_marginRight="5dp"
         android:text="30일"
-        android:fontFamily="@font/one_mobile_pop"
+        android:fontFamily="@font/spoqahansansneo_bold"
         android:textSize="13sp" />
 
 

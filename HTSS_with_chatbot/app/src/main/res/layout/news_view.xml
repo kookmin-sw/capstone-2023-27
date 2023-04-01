@@ -24,7 +24,7 @@
                 android:text= "관련 종목코드 : "
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoqahansansneo_bold"
                 android:textSize="14sp"/>
             <TextView
                 android:id="@+id/ticker"
@@ -34,12 +34,12 @@
                 android:text= "00100"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoqahansansneo_bold"
                 android:textSize="14sp"/>
             <ImageView
                 android:id="@+id/ticker_button"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:fontFamily="@font/one_mobile_pop"
+            android:fontFamily="@font/spoqahansansneo_bold"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text= "금리인상 중단 기대감…환율, 1230원 하향이탈 주목..."
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
 
                 android:gravity="left"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoqahansansneo_bold"
                 android:textColor="@color/red"
                 android:text= "뉴데일리"
 
@@ -80,7 +80,7 @@
                 android:gravity="left"
                 android:textColor="@color/black"
                 android:text= "2023-02-17"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoqahansansneo_bold"
                 android:textSize="12sp"/>
         </LinearLayout>
     </LinearLayout>

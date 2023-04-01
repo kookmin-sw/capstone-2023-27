@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/one_mobile_pop"
+                android:fontFamily="@font/spoqahansansneo_bold"
                 android:gravity="left"
                 android:paddingLeft="7dp"
                 android:layout_weight="8"
@@ -65,7 +65,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:gravity="left"
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
@@ -82,7 +82,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@drawable/layout_stroke"
@@ -101,7 +101,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mean : "
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
@@ -110,7 +110,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -131,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginTop="100dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:text="추세와 유사한 종목"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -188,7 +188,7 @@
                         android:textSize="6pt"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:background="@drawable/layout_left_stroke"
                         android:layout_weight="1.2" />
                     <TextView
@@ -197,7 +197,7 @@
                         android:text="종목명"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="6pt"
@@ -213,7 +213,7 @@
                         android:textSize="6pt"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_weight="2.3"/>
                     <TextView
@@ -225,7 +225,7 @@
                         android:textColor="@color/black"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textSize="6pt"
                         android:layout_weight="1.5"/>
                 </LinearLayout>
@@ -246,9 +246,9 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textSize="7pt"
                     android:text="추세와 유사한 종목이 없습니다"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
             </LinearLayout>
@@ -278,7 +278,7 @@
                     android:layout_height="wrap_content"
                     android:text="추천 추세그래프 "
                     android:gravity="left"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
                 <TextView
@@ -289,7 +289,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@drawable/layout_stroke"
@@ -308,7 +308,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mean : "
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
@@ -317,7 +317,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -330,7 +330,7 @@
                             android:layout_height="wrap_content"
                             android:text="Count : "
                             android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                         <TextView
@@ -338,7 +338,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -374,7 +374,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginTop="100dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:text="추세와 유사한 종목"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -395,7 +395,7 @@
                         android:textSize="6pt"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:background="@drawable/layout_left_stroke"
                         android:layout_weight="1.2" />
                     <TextView
@@ -404,7 +404,7 @@
                         android:text="종목명"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="6pt"
@@ -420,7 +420,7 @@
                         android:textSize="6pt"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_weight="2.3"/>
                     <TextView
@@ -432,7 +432,7 @@
                         android:textColor="@color/black"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textSize="6pt"
                         android:layout_weight="1.5"/>
                 </LinearLayout>
@@ -453,9 +453,9 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textSize="7pt"
                     android:text="추세와 유사한 종목이 없습니다"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
             </LinearLayout>
@@ -484,7 +484,7 @@
                     android:layout_height="wrap_content"
                     android:text="추천 추세그래프 "
                     android:gravity="left"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
                 <TextView
@@ -495,7 +495,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@drawable/layout_stroke"
@@ -514,7 +514,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mean : "
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
@@ -523,7 +523,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -536,7 +536,7 @@
                             android:layout_height="wrap_content"
                             android:text="Count : "
                             android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                         <TextView
@@ -544,7 +544,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -579,7 +579,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginTop="100dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:text="추세와 유사한 종목"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -600,7 +600,7 @@
                         android:textSize="6pt"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:background="@drawable/layout_left_stroke"
                         android:layout_weight="1.2" />
                     <TextView
@@ -609,7 +609,7 @@
                         android:text="종목명"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="6pt"
@@ -625,7 +625,7 @@
                         android:textSize="6pt"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_weight="2.3"/>
                     <TextView
@@ -637,7 +637,7 @@
                         android:textColor="@color/black"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textSize="6pt"
                         android:layout_weight="1.5"/>
                 </LinearLayout>
@@ -658,9 +658,9 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textSize="7pt"
                     android:text="추세와 유사한 종목이 없습니다"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
             </LinearLayout>
@@ -688,7 +688,7 @@
                     android:layout_height="wrap_content"
                     android:text="추천 추세그래프 "
                     android:gravity="left"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
                 <TextView
@@ -699,7 +699,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@drawable/layout_stroke"
@@ -718,7 +718,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mean : "
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
@@ -727,7 +727,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -740,7 +740,7 @@
                             android:layout_height="wrap_content"
                             android:text="Count : "
                             android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                         <TextView
@@ -748,7 +748,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -783,7 +783,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginTop="100dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:text="추세와 유사한 종목"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -804,7 +804,7 @@
                         android:textSize="6pt"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:background="@drawable/layout_left_stroke"
                         android:layout_weight="1.2" />
                     <TextView
@@ -813,7 +813,7 @@
                         android:text="종목명"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="6pt"
@@ -829,7 +829,7 @@
                         android:textSize="6pt"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_weight="2.3"/>
                     <TextView
@@ -841,7 +841,7 @@
                         android:textColor="@color/black"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textSize="6pt"
                         android:layout_weight="1.5"/>
                 </LinearLayout>
@@ -862,9 +862,9 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textSize="7pt"
                     android:text="추세와 유사한 종목이 없습니다"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
             </LinearLayout>
@@ -891,7 +891,7 @@
                     android:layout_height="wrap_content"
                     android:text="추천 추세그래프 "
                     android:gravity="left"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
                 <TextView
@@ -902,7 +902,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@drawable/layout_stroke"
@@ -921,7 +921,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mean : "
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
@@ -930,7 +930,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -943,7 +943,7 @@
                             android:layout_height="wrap_content"
                             android:text="Count : "
                             android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                         <TextView
@@ -951,7 +951,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -986,7 +986,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginTop="100dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:text="추세와 유사한 종목"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -1007,7 +1007,7 @@
                         android:textSize="6pt"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:background="@drawable/layout_left_stroke"
                         android:layout_weight="1.2" />
                     <TextView
@@ -1016,7 +1016,7 @@
                         android:text="종목명"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="6pt"
@@ -1032,7 +1032,7 @@
                         android:textSize="6pt"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_weight="2.3"/>
                     <TextView
@@ -1044,7 +1044,7 @@
                         android:textColor="@color/black"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textSize="6pt"
                         android:layout_weight="1.5"/>
                 </LinearLayout>
@@ -1065,9 +1065,9 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textSize="7pt"
                     android:text="추세와 유사한 종목이 없습니다"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
             </LinearLayout>
@@ -1094,7 +1094,7 @@
                     android:layout_height="wrap_content"
                     android:text="추천 추세그래프 "
                     android:gravity="left"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
                 <TextView
@@ -1105,7 +1105,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@drawable/layout_stroke"
@@ -1124,7 +1124,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mean : "
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
@@ -1133,7 +1133,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -1146,7 +1146,7 @@
                             android:layout_height="wrap_content"
                             android:text="Count : "
                             android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                         <TextView
@@ -1154,7 +1154,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -1189,7 +1189,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginTop="100dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:text="추세와 유사한 종목"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -1210,7 +1210,7 @@
                         android:textSize="6pt"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:background="@drawable/layout_left_stroke"
                         android:layout_weight="1.2" />
                     <TextView
@@ -1219,7 +1219,7 @@
                         android:text="종목명"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="6pt"
@@ -1235,7 +1235,7 @@
                         android:textSize="6pt"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_weight="2.3"/>
                     <TextView
@@ -1247,7 +1247,7 @@
                         android:textColor="@color/black"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textSize="6pt"
                         android:layout_weight="1.5"/>
                 </LinearLayout>
@@ -1268,9 +1268,9 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textSize="7pt"
                     android:text="추세와 유사한 종목이 없습니다"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
             </LinearLayout>
@@ -1297,7 +1297,7 @@
                     android:layout_height="wrap_content"
                     android:text="추천 추세그래프 "
                     android:gravity="left"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
                 <TextView
@@ -1308,7 +1308,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@drawable/layout_stroke"
@@ -1327,7 +1327,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mean : "
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
@@ -1336,7 +1336,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -1349,7 +1349,7 @@
                             android:layout_height="wrap_content"
                             android:text="Count : "
                             android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                         <TextView
@@ -1357,7 +1357,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -1392,7 +1392,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginTop="100dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:text="추세와 유사한 종목"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -1413,7 +1413,7 @@
                         android:textSize="6pt"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:background="@drawable/layout_left_stroke"
                         android:layout_weight="1.2" />
                     <TextView
@@ -1422,7 +1422,7 @@
                         android:text="종목명"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="6pt"
@@ -1438,7 +1438,7 @@
                         android:textSize="6pt"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_weight="2.3"/>
                     <TextView
@@ -1450,7 +1450,7 @@
                         android:textColor="@color/black"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textSize="6pt"
                         android:layout_weight="1.5"/>
                 </LinearLayout>
@@ -1471,9 +1471,9 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textSize="7pt"
                     android:text="추세와 유사한 종목이 없습니다"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
             </LinearLayout>
@@ -1500,7 +1500,7 @@
                     android:layout_height="wrap_content"
                     android:text="추천 추세그래프 "
                     android:gravity="left"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
                 <TextView
@@ -1511,7 +1511,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@drawable/layout_stroke"
@@ -1530,7 +1530,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mean : "
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
@@ -1539,7 +1539,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -1552,7 +1552,7 @@
                             android:layout_height="wrap_content"
                             android:text="Count : "
                             android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                         <TextView
@@ -1560,7 +1560,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -1595,7 +1595,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginTop="100dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:text="추세와 유사한 종목"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -1616,7 +1616,7 @@
                         android:textSize="6pt"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:background="@drawable/layout_left_stroke"
                         android:layout_weight="1.2" />
                     <TextView
@@ -1625,7 +1625,7 @@
                         android:text="종목명"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="6pt"
@@ -1641,7 +1641,7 @@
                         android:textSize="6pt"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_weight="2.3"/>
                     <TextView
@@ -1653,7 +1653,7 @@
                         android:textColor="@color/black"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textSize="6pt"
                         android:layout_weight="1.5"/>
                 </LinearLayout>
@@ -1674,9 +1674,9 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textSize="7pt"
                     android:text="추세와 유사한 종목이 없습니다"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
             </LinearLayout>
@@ -1703,7 +1703,7 @@
                     android:layout_height="wrap_content"
                     android:text="추천 추세그래프 "
                     android:gravity="left"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
                 <TextView
@@ -1714,7 +1714,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@drawable/layout_stroke"
@@ -1733,7 +1733,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mean : "
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
@@ -1742,7 +1742,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -1755,7 +1755,7 @@
                             android:layout_height="wrap_content"
                             android:text="Count : "
                             android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                         <TextView
@@ -1763,7 +1763,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -1798,7 +1798,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginTop="100dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:text="추세와 유사한 종목"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -1819,7 +1819,7 @@
                         android:textSize="6pt"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:background="@drawable/layout_left_stroke"
                         android:layout_weight="1.2" />
                     <TextView
@@ -1828,7 +1828,7 @@
                         android:text="종목명"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="6pt"
@@ -1844,7 +1844,7 @@
                         android:textSize="6pt"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textColor="@color/black"
                         android:layout_weight="2.3"/>
                     <TextView
@@ -1856,7 +1856,7 @@
                         android:textColor="@color/black"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textSize="6pt"
                         android:layout_weight="1.5"/>
                 </LinearLayout>
@@ -1877,9 +1877,9 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textSize="7pt"
                     android:text="추세와 유사한 종목이 없습니다"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
             </LinearLayout>
@@ -1907,7 +1907,7 @@
                     android:layout_height="wrap_content"
                     android:text="추천 추세그래프 "
                     android:gravity="left"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
                 <TextView
@@ -1918,7 +1918,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoqahansansneo_bold"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:background="@drawable/layout_stroke"
@@ -1937,7 +1937,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Mean : "
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:layout_marginLeft="5dp"
                             android:textColor="@color/black"/>
@@ -1946,7 +1946,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -1959,7 +1959,7 @@
                             android:layout_height="wrap_content"
                             android:text="Count : "
                             android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                         <TextView
@@ -1967,7 +1967,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:fontFamily="@font/one_mobile_pop"
+                            android:fontFamily="@font/spoqahansansneo_bold"
                             android:textSize="15sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
@@ -2002,7 +2002,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="1dp"
                         android:layout_marginTop="100dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:text="추세와 유사한 종목"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -2023,7 +2023,7 @@
                         android:textSize="6pt"
                         android:textColor="@color/black"
                         android:gravity="center"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:background="@drawable/layout_left_stroke"
                         android:layout_weight="1.2" />
                     <TextView
@@ -2032,7 +2032,7 @@
                         android:text="종목명"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="6pt"
@@ -2060,7 +2060,7 @@
                         android:textColor="@color/black"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
-                        android:fontFamily="@font/one_mobile_pop"
+                        android:fontFamily="@font/spoqahansansneo_bold"
                         android:textSize="6pt"
                         android:layout_weight="1.5"/>
                 </LinearLayout>
@@ -2081,9 +2081,9 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:textSize="7pt"
                     android:text="추세와 유사한 종목이 없습니다"
-                    android:fontFamily="@font/one_mobile_pop"
+                    android:fontFamily="@font/spoaqhansansneo_regular"
                     android:textColor="@color/black"
                     android:visibility="visible"/>
             </LinearLayout>
