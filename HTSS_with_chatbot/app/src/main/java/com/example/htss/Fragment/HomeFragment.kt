@@ -695,7 +695,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.see_more1 -> {
                 val bundle = Bundle()
                 Log.d("argument", "goodgood")
-                bundle.putString("focus", "good")
+                bundle.putString("focus", "thue")
                 replaceFragment(AllListFragment(), bundle)
             }
             R.id.see_more2 -> {
