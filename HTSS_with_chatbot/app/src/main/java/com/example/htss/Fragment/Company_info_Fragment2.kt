@@ -36,7 +36,7 @@ class Company_info_Fragment2 : Fragment() {
 
 
         StockTicker = arguments?.getString("stock_ticker").toString()
-        Info2 = arguments?.getString("focuss").toString()
+        Info2 = arguments?.getString("Focuss").toString()
         if(Info2 == "huu"){
             view.invest.isFocusableInTouchMode = true
             view.invest.requestFocus()

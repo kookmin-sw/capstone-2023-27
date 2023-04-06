@@ -53,12 +53,12 @@ class AllListFragment : Fragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when(p0?.id) {
             R.id.sector -> {
-                view.sector.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmm))
+                view.sector.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 view.theme.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
                 replaceFragment(SectorListFragment())
             }
             R.id.theme -> {
-                view.theme.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmm))
+                view.theme.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
                 view.sector.setTextColor(ContextCompat.getColor(requireContext(), R.color.hmmm))
                 replaceFragment(ThemeListFragment())
             }
