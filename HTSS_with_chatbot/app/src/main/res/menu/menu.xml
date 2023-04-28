@@ -8,10 +8,10 @@
 
 
 
-    <item
-        android:id="@+id/predictFragment"
-        android:icon="@drawable/baseline_insights_24"
-        android:title="차트 분석"/>
+<!--    <item-->
+<!--        android:id="@+id/predictFragment"-->
+<!--        android:icon="@drawable/baseline_insights_24"-->
+<!--        android:title="차트 분석"/>-->
 
 
 

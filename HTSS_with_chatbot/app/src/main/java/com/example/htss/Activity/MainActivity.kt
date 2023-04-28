@@ -46,11 +46,11 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     Log.d("framgent", "home")
                 }
 
-            R.id.predictFragment -> {
-                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, PredictFragment::class.java.name)
-                replaceFragment(fragment)
-                Log.d("framgent","predict")
-            }
+//            R.id.predictFragment -> {
+//                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, PredictFragment::class.java.name)
+//                replaceFragment(fragment)
+//                Log.d("framgent","predict")
+//            }
             R.id.chatbotFragment -> {
                 val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, ChatbotFragment::class.java.name)
                 replaceFragment(fragment)
