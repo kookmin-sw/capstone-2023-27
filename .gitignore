@@ -2,7 +2,7 @@ config.py
 csvFile/
 .DS_Store
 .idea
-
+__pycache__/
 
 # springboot ignore
 application.properties
