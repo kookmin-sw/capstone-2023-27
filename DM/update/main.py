@@ -78,7 +78,7 @@ class Update():
 
         def datetime_date(d):
             return datetime.strptime(d, '%Y%m%d')
-
+        # start_date = str_day(start_datetime - timedelta(days=1100))
         start_date = str_day(start_datetime + timedelta(days=1))
         print(start_date)
         end_date = str_day(datetime.now())
@@ -94,14 +94,14 @@ class Update():
             tmp_df["날짜"] = day
             df = pd.concat([df, tmp_df])
         df["등락률"] = round(df["등락률"].astype('float'), 3)
-        df = df[["티커", "날짜", "종가", "등락률"]]
+        df = df[["티커", "날짜", "시가", "고가", "저가", "종가", "거래량", "거래대금", "등락률"]]
         tickers = df["티커"].to_list()
         tmp_li = []
         for ticker in (tickers):
             name = stock.get_market_ticker_name(ticker)
             tmp_li.append(name)
         df["company_name"] = tmp_li
-        df.columns = ["ticker", "date", "end_price", "rate", "company_name"]
+        df.columns = ["ticker", "date","start_price","high_price","low_price", "end_price","share_volume","trade_volume", "rate", "company_name"]
         df.to_sql(name='stock_price', con=self.engine, if_exists='append', index=False)
         self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=datetime.now()))
 
