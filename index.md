@@ -1,19 +1,52 @@
+# HTSS (How To Search Stock)
+
 ## 2023 캡스톤 27팀
+
+![https://ibb.co/G0vpf4m](https://i.ibb.co/vHxqC69/HTSS-logo.png)
 
 ### 1. 프로젝트 소개
 
-### HTSS(How To Search Stock)
+주식에 대한 정보를 찾는 것은 때로는 번거롭고 귀찮은 일이다. 우리는 주식에 관심이 있으나 정보를 찾는 것이 귀찮은 사람들을 위한 어플리케이션을 제작하고자 한다. 크게 제공되는 기능은 아래와 같다.
 
-주식에 대한 정보를 찾는 것이 번거롭고 귀찮은 사람들을 위한 어플리케이션
+- 주식 정보 제공
 
-주가, 가격, 뉴스, 관련 키워드 등을 한번에 검색할 수 있고 챗봇을 통해 편리하게 검색이 가능하게 하려한다.
+상승률이 높은 종목이 무엇인지, 업종 및 테마 별로 상승률이 높은 종목이 무엇인지를 알려준다. 그리고 종목과 관련된 뉴스를 감정분석과 함께 제공하여 다각화된 정보를 제공한다. 또한 키워드를 검색하여 그 키워드와 관련된 업종, 테마, 키워드와 관련된 종목, 키워드 관련 뉴스 등 자신이 흥미있어하는 키워드에 대한 다양한 주식 관련 정보를 제공해준다.  
 
+- 차트 분석
+
+1년간의 급등 종목의 추세를 30, 60, 90일 단위로 구한 뒤, 시계열 클러스터링을 통해 최근 높은 상승률 추세를 띄는 종목을 보여준다.
+
+- 챗봇
+
+챗봇 기능을 추가하여 사용자가 원하는 정보를 자연어 쿼리를 통해 더욱 간편하게 검색할 수 있도록 한다.
+<br><br>
 ### 2. Abstract
 
-### 3. 소개영상
+Finding information about stocks is sometimes cumbersome. We create an application for people who are interested in stocks and eager to find information easily. The functions provided in the application are as follows.
 
+- Stock information
+
+It tells you what stocks have a high rate of increase and what stocks have a high rate of increase by industry and theme. In addition, news related to stocks is provided along with sentimental analysis to provide diversified information. It also searches for keywords and provides various stock-related information on keywords that you are interested in, such as industries related to the keyword, themes, stocks related to the keyword, and news related to the keyword.
+
+- Chart Analysis
+
+After calculating the trend of soaring stocks for a year on a 30, 60, and 90 day basis, it shows stocks with a high recent upward trend through time series clustering.
+
+- Chatbot
+
+A chatbot function is added to make it easier for users to search for desired information through natural language queries.
+<br><br>
+### 3. 소개영상
+<br><br>
 ### 4. 팀 소개
 
-### 5. 사용법
+| 이름 | 학번 | 역할 |
+| --- | --- | --- |
+| 장한영 | ****1696 | 팀장, 백엔드, 데이터분석 |
+| 홍기훈 | ****3178 | 프론트엔드  |
+| 서현재 | ****1632 | 데이터분석, 챗봇 |
 
+<br><br>
+### 5. 사용법
+<br><br>
 ### 6. 기타
