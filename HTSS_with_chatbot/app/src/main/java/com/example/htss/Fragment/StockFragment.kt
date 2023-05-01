@@ -2,9 +2,11 @@ package com.example.htss.Fragment
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.util.Size
 import android.util.TypedValue
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
@@ -16,7 +18,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,11 +29,10 @@ import com.example.htss.Retrofit.Model.*
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentStockBinding
 import com.github.mikephil.charting.components.LimitLine
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.EntryXComparator
-import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_stock.*
 import kotlinx.android.synthetic.main.fragment_stock.view.*
@@ -66,7 +66,6 @@ class StockFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
 
 
-
     ): View? {
 
         view = FragmentStockBinding.inflate(inflater, container, false)
@@ -87,6 +86,7 @@ class StockFragment : Fragment(), View.OnClickListener {
                 }
                 return v
             }
+
             override fun getCount(): Int {
                 //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
                 return super.getCount() - 1
@@ -101,9 +101,15 @@ class StockFragment : Fragment(), View.OnClickListener {
 
 //스피너 선택시 나오는 화면
         view.searchSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 selectedPosition = position
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {
                 Log.d("MyTag", "onNothingSelected")
             }
@@ -156,10 +162,12 @@ class StockFragment : Fragment(), View.OnClickListener {
                     }
                 }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {
                 Log.d("MyTag", "onNothingSelected")
             }
         }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         StockTicker = arguments?.getString("stock_ticker").toString()
         StockName = arguments?.getString("stock_name").toString()
@@ -167,8 +175,8 @@ class StockFragment : Fragment(), View.OnClickListener {
 
         val bundle = Bundle()
         bundle.putString("stock_ticker", StockTicker)
-        when(first){
-            "company_info" -> replaceFragment2(Company_info_Fragment1(),bundle)
+        when (first) {
+            "company_info" -> replaceFragment2(Company_info_Fragment1(), bundle)
         }
 
 //
@@ -187,13 +195,13 @@ class StockFragment : Fragment(), View.OnClickListener {
             parentFragmentManager.popBackStack()
         }
 
-        StockNewsListAdapter.setItemClickListener(object : MainNewsAdapter.OnItemClickListener{
+        StockNewsListAdapter.setItemClickListener(object : MainNewsAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(StockNewsList[position].rink)))
             }
         })
 
-        StockNewsListAdapter.setLinkClickListener(object : MainNewsAdapter.OnLinkClickListener{
+        StockNewsListAdapter.setLinkClickListener(object : MainNewsAdapter.OnLinkClickListener {
             override fun onClick(v: View, position: Int) {
                 getStockNameByTicker(StockNewsList[position].ticker)
             }
@@ -217,25 +225,28 @@ class StockFragment : Fragment(), View.OnClickListener {
         return view.root
     }
 
-    fun getCompanyInfo(ticker: String){
+    fun getCompanyInfo(ticker: String) {
         retrofit.getCompanyInfo(ticker).enqueue(object : Callback<CompanyInfoListItem> {
             override fun onResponse(
                 call: Call<CompanyInfoListItem>,
                 response: Response<CompanyInfoListItem>
             ) {
-                if(response.code()==200) {
-                    if(response.body() != null )
+                if (response.code() == 200) {
+                    if (response.body() != null)
                         addcompanyInfo(response.body()!!)
                     Log.d("stock/info/API호출!!!!!!", response.raw().toString())
                 } else {
-                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
+
             override fun onFailure(call: Call<CompanyInfoListItem>, t: Throwable) {
                 Log.d("API호출3333", t.message.toString())
             }
         })
     }
+
     private fun addcompanyInfo(body: CompanyInfoListItem) {
         view.stockName.text = body.company_name
         view.stockName2.text = body.company_name
@@ -243,19 +254,19 @@ class StockFragment : Fragment(), View.OnClickListener {
     }
 
 
-
-    fun getStockNowPrice(ticker: String){
+    fun getStockNowPrice(ticker: String) {
         retrofit.getStockNowPrice(ticker).enqueue(object : Callback<StockNowPriceListItem> {
             override fun onResponse(
                 call: Call<StockNowPriceListItem>,
                 response: Response<StockNowPriceListItem>
             ) {
-                if(response.code()==200) {
-                    if(response.body()!=null)
+                if (response.code() == 200) {
+                    if (response.body() != null)
                         addStockNowPrice(response.body()!!)
                     Log.d("stock/now-price/API호출", response.raw().toString())
                 } else {
-                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
@@ -264,110 +275,139 @@ class StockFragment : Fragment(), View.OnClickListener {
             }
         })
     }
+
     private fun addStockNowPrice(body: StockNowPriceListItem) {
         view.ticker.text = StockTicker
         view.stockCurrent.text = dec.format(body.end_price).toString()
-        if(body.rate >= 0.0){
-            view.stockPercent.apply{
-                setTextColor(ContextCompat.getColor(requireContext(),R.color.red))
-                text = "+"+body.rate.toString()+"%"
+        if (body.rate >= 0.0) {
+            view.stockPercent.apply {
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
+                text = "+" + body.rate.toString() + "%"
             }
         } else {
-            view.stockPercent.apply{
-                setTextColor(ContextCompat.getColor(requireContext(),R.color.blue))
-                text = body.rate.toString()+"%"
+            view.stockPercent.apply {
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+                text = body.rate.toString() + "%"
             }
         }
     }
 
 
-    fun getTickerByStockName(name: String){
-        retrofit.getTickerByStockName(name).enqueue(object: Callback<String>{
+    fun getTickerByStockName(name: String) {
+        retrofit.getTickerByStockName(name).enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                if(response.code() == 200){
-                    if(!response.body().isNullOrBlank()){
+                if (response.code() == 200) {
+                    if (!response.body().isNullOrBlank()) {
                         val bundle = Bundle()
                         bundle.putString("stock_ticker", response.body())
                         bundle.putString("stock_name", name)
                         replaceFragment(StockFragment(), bundle)
                     } else {
-                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "일치하는 종목이 없습니다.", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                } else Toast.makeText(
+                    requireContext(),
+                    "오류가 발생하였습니다.\n다시 시도해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
 
             }
+
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
     }
 
-    fun getStockNameByTicker(ticker: String){
-        retrofit.getStockNameByTicker(ticker).enqueue(object: Callback<String>{
+    fun getStockNameByTicker(ticker: String) {
+        retrofit.getStockNameByTicker(ticker).enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                if(response.code() == 200){
-                    if(!response.body().isNullOrBlank()){
+                if (response.code() == 200) {
+                    if (!response.body().isNullOrBlank()) {
                         val bundle = Bundle()
                         bundle.putString("stock_ticker", ticker)
                         bundle.putString("stock_name", response.body())
-                        Log.d("hmmmddd",response.body().toString())
+                        Log.d("hmmmddd", response.body().toString())
                         replaceFragment(StockFragment(), bundle)
                     } else {
-                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "일치하는 종목이 없습니다.", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                } else Toast.makeText(
+                    requireContext(),
+                    "오류가 발생하였습니다.\n다시 시도해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
 
             }
+
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(requireContext(),"일치하는 종목이 없습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "일치하는 종목이 없습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT)
+                    .show()
             }
 
         })
     }
 
 
-    fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int){
-        retrofit. getSectorThemeKeywordIncludeNews(keyword,num).enqueue(object : Callback<KeywordIncludeNewsList> {
-            override fun onResponse(
-                call: Call<KeywordIncludeNewsList>,
-                response: Response<KeywordIncludeNewsList>
-            ) {
-                if(response.code()==200) {
-                    addSectorthemeIncludeNewsList(response.body())
-                    Log.d("stock/news/like/ API호출", response.raw().toString())
-                } else {
-                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+    fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int) {
+        retrofit.getSectorThemeKeywordIncludeNews(keyword, num)
+            .enqueue(object : Callback<KeywordIncludeNewsList> {
+                override fun onResponse(
+                    call: Call<KeywordIncludeNewsList>,
+                    response: Response<KeywordIncludeNewsList>
+                ) {
+                    if (response.code() == 200) {
+                        addSectorthemeIncludeNewsList(response.body())
+                        Log.d("stock/news/like/ API호출", response.raw().toString())
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "오류가 발생했습니다.\n다시 시도해주세요",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
-            override fun onFailure(call: Call<KeywordIncludeNewsList>, t: Throwable) {
-                Log.d("API호출2", t.message.toString())
-            }
-        })
-    }
-    private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
-        StockNewsList.clear()
-        if(body.isNullOrEmpty()){
 
-        }
-        else{
-            for(item in body){
-                StockNewsList.add(NewsModel(item.ticker,item.provider,item.date,item.rink,item.title,item.sentiment))
+                override fun onFailure(call: Call<KeywordIncludeNewsList>, t: Throwable) {
+                    Log.d("API호출2", t.message.toString())
+                }
+            })
+    }
+
+    private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?) {
+        StockNewsList.clear()
+        if (body.isNullOrEmpty()) {
+
+        } else {
+            for (item in body) {
+                StockNewsList.add(
+                    NewsModel(
+                        item.ticker,
+                        item.provider,
+                        item.date,
+                        item.rink,
+                        item.title,
+                        item.sentiment
+                    )
+                )
             }
         }
         StockNewsListAdapter.notifyDataSetChanged()
-        if(StockNewsList.size in 1..2){
+        if (StockNewsList.size in 1..2) {
             view.newsOpenBtn.visibility = View.GONE
-        }
-        else if(StockNewsList.size == 0){
+        } else if (StockNewsList.size == 0) {
             view.newsOpenBtn.visibility = View.GONE
             view.newsStockNoBtn.visibility = View.VISIBLE
         }
     }
+
     fun softkeyboardHide() {
         val imm = ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
         imm!!.hideSoftInputFromWindow(view.stockKeywordEdit.windowToken, 0)
     }
-
 
 
     override fun onClick(p0: View?) {
@@ -452,13 +492,15 @@ class StockFragment : Fragment(), View.OnClickListener {
             .addToBackStack(null)
             .commit()
     }
-    private fun replaceFragment2(fragment: Fragment,bundle: Bundle) {
+
+    private fun replaceFragment2(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle
         parentFragmentManager
             .beginTransaction()
             .replace(R.id.company_frame_layout, fragment)
             .commit()
     }
+
     //dp 값을 px 값으로 변환해 주는 함수
     private fun dipToPixels(dipValue: Float): Float {
         return TypedValue.applyDimension(
@@ -467,6 +509,7 @@ class StockFragment : Fragment(), View.OnClickListener {
             resources.displayMetrics
         )
     }
+
     // 엔터치면 키보드 내리기
     private fun setListenerToEditText() {
         view.stockKeywordEdit.setOnKeyListener { view, keyCode, event ->
@@ -487,24 +530,27 @@ class StockFragment : Fragment(), View.OnClickListener {
             false
         }
     }
+
     ////////////////////////////
     private fun showToastMessage(msg: String?) {
         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
     }
-    fun getStockPrice(ticker: String, num: Int){
-        retrofit.getStockPrice(ticker,num).enqueue(object : Callback<StockPriceList> {
+
+    fun getStockPrice(ticker: String, num: Int) {
+        retrofit.getStockPrice(ticker, num).enqueue(object : Callback<StockPriceList> {
             override fun onResponse(
                 call: Call<StockPriceList>,
                 response: Response<StockPriceList>
             ) {
-                if(response.code()==200) {
-                    if(response.body()!=null) {
+                if (response.code() == 200) {
+                    if (response.body() != null) {
                         var result = getStockData(response.body()!!)
                         drawStockChart(result)
                     }
                     Log.d("stock/price/API호출", response.raw().toString())
                 } else {
-                    Toast.makeText(requireContext(),"오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "오류가 발생했습니다.\n다시 시도해주세요", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
@@ -513,110 +559,184 @@ class StockFragment : Fragment(), View.OnClickListener {
             }
         })
     }
-    fun drawStockChart(item: MutableList<StockChartModel>){
-        Log.d("야아이야야아아아아", item.toString())
-        // 평균값 구하기
-        var average = 0F
 
-        for( stock in item) {
-            average += stock.price.toFloat()
+    fun drawStockChart(item: MutableList<StockChartModel>) {
+        val entries = ArrayList<CandleEntry>()
+        for (csStock in item) {
+            entries.add(
+                CandleEntry(
+                    csStock.createdAt.time.toFloat(),
+                    csStock.price_high.toFloat(),
+                    csStock.price_low.toFloat(),
+                    csStock.price_start.toFloat(),
+                    csStock.price_end.toFloat()
+                )
+            )
         }
-        average /= item.size
+        val dataSet = CandleDataSet(entries, "").apply {
+            // 심지 부분
+            shadowColor = Color.RED
+            shadowWidth = 1F
 
-        // 그래프에 들어갈 데이터 준비
-        val entries = ArrayList<Entry>()
-        val colors = Stack<Int>()
-        for (stock in item) {
-            if (stock.price >= average) {
-                if (colors.isNotEmpty() && colors.peek() == Color.BLUE) {
-                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
-                    colors.add(Color.TRANSPARENT)
-                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
-                    colors.add(Color.RED)
-                }
-                entries.add(Entry(stock.createdAt.time.toFloat(), stock.price.toFloat()))
-                colors.add(Color.RED)
-            } else {
-                if (colors.isNotEmpty() && colors.peek() == Color.RED) {
-                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
-                    colors.add(Color.TRANSPARENT)
-                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
-                    colors.add(Color.BLUE)
-                }
-                entries.add(Entry(stock.createdAt.time.toFloat(), stock.price.toFloat()))
-                colors.add(Color.BLUE)
-            }
-            Collections.sort(entries, EntryXComparator())
-        }
+            // 음봄
+            decreasingColor = Color.WHITE
+            decreasingPaintStyle = Paint.Style.FILL
+            // 양봉
+            increasingColor =  Color.BLACK
+            increasingPaintStyle = Paint.Style.FILL
 
-        val dataSet = LineDataSet(entries, "").apply {
-            setDrawCircles(false)
-            color = Color.RED
+//            neutralColor = Color.DKGRAY
+            setDrawValues(false)
+            // 터치시 노란 선 제거
             highLightColor = Color.TRANSPARENT
-            valueTextSize = 0F
-            lineWidth = 1.5F
         }
 
-        val lineData = LineData(dataSet)
-        view.chart.run {
-            data = lineData
-            description.isEnabled = false // 하단 Description Label 제거함
-            invalidate() // refresh
+        view.chart.axisLeft.run {
+            setDrawAxisLine(false)
+            setDrawGridLines(false)
+            textColor = Color.TRANSPARENT
         }
 
-        val averageLine = LimitLine(average).apply {
-            lineWidth = 1F
-            enableDashedLine(4F, 10F, 10F)
-            lineColor = Color.DKGRAY
+        view.chart.axisRight.run {
+            setDrawAxisLine(true)
+            setDrawGridLines(true)
+            textColor = Color.BLACK
+        }
+
+        // X 축
+        view.chart.xAxis.run {
+            textColor = Color.TRANSPARENT
+            textSize = 0.5f
+            setDrawAxisLine(false)
+            setDrawGridLines(false)
+            setAvoidFirstLastClipping(true)
         }
 
         // 범례
-        view.chart.legend.apply {
-            isEnabled = false // 사용하지 않음
+        view.chart.legend.run {
+            isEnabled = false
         }
-        // Y 축
-        view.chart.axisLeft.apply {
-            // 라벨, 축라인, 그리드 사용하지 않음
-            setDrawLabels(false)
-            setDrawAxisLine(false)
-            setDrawGridLines(false)
 
-            // 한계선 추가
-            removeAllLimitLines()
-            addLimitLine(averageLine)
-        }
-        view.chart.axisRight.apply {
-            // 우측 Y축은 사용함
-            isEnabled = true
-        }
-        // X 축
-        view.chart.xAxis.apply {
-            // x축 값은 투명으로
-            textColor = Color.TRANSPARENT
-            // 축라인, 그리드 사용하지 않음
-            setDrawAxisLine(false)
-            setDrawGridLines(false)
+        view.chart.apply {
+            this.data = CandleData(dataSet)
+            description.isEnabled = false
+            isHighlightPerDragEnabled = true
+            requestDisallowInterceptTouchEvent(true)
+            invalidate()
         }
     }
+
+//    fun drawStockChart(item: MutableList<StockChartModel>){
+//        Log.d("야아이야야아아아아", item.toString())
+//        // 평균값 구하기
+//        var average = 0F
+//
+//        for( stock in item) {
+//            average += stock.price.toFloat()
+//        }
+//        average /= item.size
+//
+//        // 그래프에 들어갈 데이터 준비
+//        val entries = ArrayList<Entry>()
+//        val colors = Stack<Int>()
+//        for (stock in item) {
+//            if (stock.price >= average) {
+//                if (colors.isNotEmpty() && colors.peek() == Color.BLUE) {
+//                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
+//                    colors.add(Color.TRANSPARENT)
+//                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
+//                    colors.add(Color.RED)
+//                }
+//                entries.add(Entry(stock.createdAt.time.toFloat(), stock.price.toFloat()))
+//                colors.add(Color.RED)
+//            } else {
+//                if (colors.isNotEmpty() && colors.peek() == Color.RED) {
+//                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
+//                    colors.add(Color.TRANSPARENT)
+//                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
+//                    colors.add(Color.BLUE)
+//                }
+//                entries.add(Entry(stock.createdAt.time.toFloat(), stock.price.toFloat()))
+//                colors.add(Color.BLUE)
+//            }
+//            Collections.sort(entries, EntryXComparator())
+//        }
+//
+//        val dataSet = LineDataSet(entries, "").apply {
+//            setDrawCircles(false)
+//            color = Color.RED
+//            highLightColor = Color.TRANSPARENT
+//            valueTextSize = 0F
+//            lineWidth = 1.5F
+//        }
+//
+//        val lineData = LineData(dataSet)
+//        view.chart.run {
+//            data = lineData
+//            description.isEnabled = false // 하단 Description Label 제거함
+//            invalidate() // refresh
+//        }
+//
+//        val averageLine = LimitLine(average).apply {
+//            lineWidth = 1F
+//            enableDashedLine(4F, 10F, 10F)
+//            lineColor = Color.DKGRAY
+//        }
+//
+//        // 범례
+//        view.chart.legend.apply {
+//            isEnabled = false // 사용하지 않음
+//        }
+//        // Y 축
+//        view.chart.axisLeft.apply {
+//            // 라벨, 축라인, 그리드 사용하지 않음
+//            setDrawLabels(false)
+//            setDrawAxisLine(false)
+//            setDrawGridLines(false)
+//
+//            // 한계선 추가
+//            removeAllLimitLines()
+//            addLimitLine(averageLine)
+//        }
+//        view.chart.axisRight.apply {
+//            // 우측 Y축은 사용함
+//            isEnabled = true
+//        }
+//        // X 축
+//        view.chart.xAxis.apply {
+//            // x축 값은 투명으로
+//            textColor = Color.TRANSPARENT
+//            // 축라인, 그리드 사용하지 않음
+//            setDrawAxisLine(false)
+//            setDrawGridLines(false)
+//        }
+//    }
 
 
     // 주식차트 데이터 가져오기
     private fun getStockData(body: StockPriceList): MutableList<StockChartModel> {
         var result = mutableListOf<StockChartModel>()
 
-        if(body.isNullOrEmpty()){
+        if (body.isNullOrEmpty()) {
 
-        }
-        else{
-            for(item in body) {
-                result.add((StockChartModel(item.date, item.end_price.toLong())))
+        } else {
+            for (item in body) {
+                result.add(
+                    (StockChartModel(
+                        item.date,
+                        item.high_price.toLong(),
+                        item.low_price.toLong(),
+                        item.start_price.toLong(),
+                        item.end_price.toLong()
+                    ))
+                )
             }
 //            Log.d("StockPrice", StockPrice.toString())
         }
 
         result.sortBy { it.createdAt }
-        Log.d("StockPrice22",result.toString())
+        Log.d("StockPrice22", result.toString())
         return result
     }
-
 }
+
