@@ -11,7 +11,7 @@ class RetrofitClient {
     companion object {
 
         private final val baseUrl: String =
-            "http:/3.37.89.191:8080/"
+            "http:/52.79.228.153:8080/"
 
         // 작업의 요청을 가로챈 후 특정 작업을 하기위한 인터셉터 선언
         val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
