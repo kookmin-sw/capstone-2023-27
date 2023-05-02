@@ -98,6 +98,8 @@ class Update():
             tmp_li.append(name)
         df["company_name"] = tmp_li
         df.columns = ["ticker", "date","start_price","high_price","low_price", "end_price","share_volume","trade_volume", "rate", "company_name"]
+
+
         df.to_sql(name='stock_price', con=self.engine, if_exists='append', index=False)
         self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=datetime.now()))
 

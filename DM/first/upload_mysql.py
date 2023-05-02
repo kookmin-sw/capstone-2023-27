@@ -31,12 +31,12 @@ class UploadMysql():
         df.to_sql(name='news', con=self.engine, if_exists='append', index=False)
 
     def upload_price(self):
-        df = pd.read_csv("csvFile/stock_price2.csv",dtype=str)
-        df.columns = ["ticker", "date", "end_price", "rate"]
-        df.drop(df[(df['date'] == "20221004")].index, inplace=True)
-        df2 =pd.read_csv("csvFile/company.csv", dtype=str)
-        df = pd.merge(left=df, right=df2, how="inner", on="ticker")
+        df = pd.read_csv("csvFile/result_df.csv",index_col=0)
+        df2 = pd.read_csv("csvFile/level_df.csv",index_col=0)
+        df2 = df2.drop_duplicates(subset = ["ticker"])
+
         df.to_sql(name='stock_price', con=self.engine, if_exists='append', index=False)
+        df2.to_sql(name='dow_table', con=self.engine, if_exists='append', index=False)
 
     def upload_sector(self):
         df = pd.read_csv("csvFile/sector.csv", dtype=str,index_col=0)
@@ -65,11 +65,11 @@ class UploadMysql():
 
 if __name__ == "__main__":
     a= UploadMysql()
-    a.upload_news()
-    a.upload_search_noun()
-    a.upload_news()
+    # a.upload_news()
+    # a.upload_search_noun()
+    # a.upload_news()
     a.upload_price()
-    a.upload_sector()
-    a.upload_thema()
-    a.upload_date()
-    a.upload_company_info()
+    # a.upload_sector()
+    # a.upload_thema()
+    # a.upload_date()
+    # a.upload_company_info()
