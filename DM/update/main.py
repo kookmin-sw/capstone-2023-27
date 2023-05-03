@@ -14,7 +14,6 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipe
 import torch
 import torch.nn as nn
 
-
 class Update():
 
     def __init__(self):
@@ -65,6 +64,7 @@ class Update():
 
     # 하루에 한번 장 마감 후 종가,등락률 등등 크롤링해서 전처리
     def update_price(self):
+
         a = self.engine.execute("select day_date from time_table")
         for i in a:
             start_datetime = i.day_date
@@ -75,7 +75,7 @@ class Update():
         def datetime_date(d):
             return datetime.strptime(d, '%Y%m%d')
         # start_date = str_day(start_datetime - timedelta(days=1100))
-        start_date = str_day(start_datetime + timedelta(days=1))
+        start_date = str_day(start_datetime - timedelta(days=1))
         print(start_date)
         end_date = str_day(datetime.now())
 
@@ -98,11 +98,112 @@ class Update():
             tmp_li.append(name)
         df["company_name"] = tmp_li
         df.columns = ["ticker", "date","start_price","high_price","low_price", "end_price","share_volume","trade_volume", "rate", "company_name"]
+        # print(df)
+        for day in day_list:
+            d_df = df[df["date"]==day]
+            dtday= datetime.strptime(day, '%Y%m%d')
+            stock_li = []
+            lev_li =[]
+            level_df = pd.read_sql("select * from dow_table", self.engine)
+            for ti in tqdm(d_df['ticker'].unique().tolist()):
+
+                # high_low(S,HH,LH), trend(상승,하락)를 추가해야됨
+                add_row = d_df[d_df['ticker'] == ti ].iloc[0].tolist()
+                end_price0 = add_row[5]
+                try:
+                    ticker, end_price1, end_price2, n, ud, date, low, high = level_df[level_df['ticker'] == ti].iloc[0].tolist()
+                except:
+                    # 해당 티커 level_table에 없을때
+                    ticker, end_price1, end_price2, n, ud, date, low, high  = [ti,end_price0,end_price0,0,"상승",None,end_price0,end_price0]
 
 
-        df.to_sql(name='stock_price', con=self.engine, if_exists='append', index=False)
-        self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=datetime.now()))
+                condition = (end_price0 < end_price1 and end_price1 > end_price2) or (end_price0 > end_price1 and end_price1 < end_price2)
 
+
+                # high_low 구하기 전날보다 오늘 종가가 높으면 H 낮으면 L
+                label = "S"
+                trend = ud
+                l_date =date
+                change_p = end_price0 - end_price1
+                if condition:
+                    if change_p <= 0 :
+                            # 현재 저점이 이전 저저점보다 높을 경우 -> HL
+                        if low < end_price0:
+                            label = 'HL'
+                            # 현재 저점이 이전 저점보다 낮을 경우 -> LL
+                        elif low >= end_price0:
+                            label = 'LL'
+
+                    if change_p > 0 :
+                            # 현재 저점이 이전 저저점보다 높을 경우 -> HL
+                        if high < end_price0:
+                            label = 'LH'
+                            # 현재 저점이 이전 저점보다 낮을 경우 -> LL
+                        elif high >= end_price0:
+                            label = 'HH'
+
+
+                    if n== 0:
+                        if label == "LL" or label == "HH":
+                            n += 1
+                            l_date = dtday
+                        else:
+                            n = 0
+                    elif n== 1:
+                        n += 1
+                    elif n== 2:
+                        if ud == "상승":
+                            if label == "LH":
+                                n += 1
+                            else:
+                                l_date = None
+                                n = 0
+                        else:
+                            if label == "HL":
+                                n += 1
+                            else:
+                                n = 0
+                                l_date = None
+                    # 추세 전환시 lv 1의 날짜부터 오늘까지의 추세를 변경하고 lv은 1로 지정
+                    elif n == 3:
+                        # 상승 -> 하락 추세로 전환
+                        if label == 'LL' and ud == '상승':
+                            # date ~ 전날까지의 trend를 하락으로 변경
+                            self.engine.execute(
+                               "update stock_price set trend = '하락' where ticker ='{tik}' & date >='{d}'".format(d=date,tik=ticker))
+
+                            trend = "하락"
+                            l_date = dtday
+                            n = 1
+                        # 하락 -> 상승 추세로 전환
+                        elif label == 'HH' and ud == '하락':
+                            # date ~ 전날까지의 trend를 상승으로 변경
+                            self.engine.execute(
+                               "update stock_price set trend = '상승' where ticker ='{tik}' &  date >='{d}'".format(d=date,tik=ticker))
+                            trend = "상승"
+                            l_date = dtday
+                            n = 1
+                        else:
+                            l_date = None
+                            n = 0
+
+                    if condition:
+                        if change_p > 0 :
+                            high = end_price0
+                        else:
+                            low = end_price0
+
+
+                add_row.extend([label,trend])
+                level_row = [ticker,end_price0,end_price1,n,trend,l_date,low,high]
+                stock_li.append(add_row)
+                lev_li.append(level_row)
+
+            stock_df = pd.DataFrame(stock_li,columns=["ticker", "date","start_price","high_price","low_price", "end_price","share_volume","trade_volume", "rate", "company_name","high_low","trend"])
+            lev_df = pd.DataFrame(lev_li,columns=['ticker', 'm1_end_price', 'm2_end_price', 'lv', 'trend', "date", "low", "high"])
+            stock_df.to_sql(name='stock_price', con=self.engine, if_exists='append', index=False)
+            lev_df.to_sql(name='dow_table', con=self.engine, if_exists='replace', index=False)
+            self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=dtday))
         print("end stock_price")
 
     # 뉴스 크롤링
@@ -497,7 +598,7 @@ class Update():
 
 
 # crontab을 이용해서 주기별로 코드를 실행
-a = Update()
+# a = Update()
 # a.update_now_price()
 # 1일 주기
 # a.update_price()
