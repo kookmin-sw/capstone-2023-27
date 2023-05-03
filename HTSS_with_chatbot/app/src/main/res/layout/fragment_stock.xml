@@ -189,7 +189,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
-            <com.github.mikephil.charting.charts.LineChart
+            <com.github.mikephil.charting.charts.CandleStickChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"/>
