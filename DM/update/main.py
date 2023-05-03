@@ -205,7 +205,7 @@ class Update():
             lev_df.to_sql(name='dow_table', con=self.engine, if_exists='replace', index=False)
             self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=dtday))
         print("end stock_price")
-
+    #끝
     # 뉴스 크롤링
     def update_news(self):
 
