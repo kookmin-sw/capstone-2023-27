@@ -33,8 +33,8 @@ class UploadMysql():
         df.to_sql(name='news', con=self.engine, if_exists='append', index=False)
 
     def upload_price(self):
-        df = pd.read_csv("csvFile/result_df.csv",index_col=0)
-        df2 = pd.read_csv("csvFile/level_df.csv",index_col=0)
+        df = pd.read_csv("csvFile/result_df.csv",index_col=0,dtype={"ticker":str})
+        df2 = pd.read_csv("csvFile/level_df.csv",index_col=0,dtype={"ticker":str})
         df2 = df2.drop_duplicates(subset = ["ticker"])
 
         df.to_sql(name='stock_price', con=self.engine, if_exists='append', index=False)
@@ -66,10 +66,10 @@ class UploadMysql():
 
 
     def tmp_fuc(self):
-        self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=datetime.now()- timedelta(days=3)))
+        # self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=datetime.now()- timedelta(days=3)))
 
-        # df = pd.read_sql("select * from stock_price", self.engine)
-        # df.to_csv("csvFile/test.csv")
+        df = pd.read_sql("select * from stock_price", self.engine)
+        df.to_csv("csvFile/test.csv")
         # def tmp_fuc():
         #     print(level_df["date"])
 
@@ -80,7 +80,7 @@ if __name__ == "__main__":
     # a.upload_news()
     # a.upload_search_noun()
     # a.upload_news()
-    a.upload_price()
+    # a.upload_price()
     # a.upload_sector()
     # a.upload_thema()
     # a.upload_date()
