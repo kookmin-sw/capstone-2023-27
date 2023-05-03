@@ -177,7 +177,7 @@ def analyze_trend(tmp_df, ticker):
                 # print('!!! DEC starts')
                 # print(recent_seq)
     tmp_df.drop('변화량', axis=1,inplace = True)
-    return tmp_df
+    return tmp_df,prev_low, prev_high
 
 # 유지 제거 -> '변화'칼럼의 모든 값들을 '유지'대신 '상승' 또는 '하락'으로 변경
 def remove_yuji(tmp_df):
@@ -205,8 +205,7 @@ def get_level_and_trend(tmp_df):
     li = tmp_df.loc[tmp_df["marker"] == True, "high_low"][-3:].values.tolist()
     ud = tmp_df.iloc[-1, -1]
     date_li = tmp_df.loc[tmp_df["marker"] == True, "date"][-3:].values.tolist()
-    date = ""
-
+    date = None
     # Level과 상승/하락 판정
     n = 0
     while len(li) != 0:
@@ -226,14 +225,14 @@ def get_level_and_trend(tmp_df):
                 if tmp == "LH":
                     n += 1
                 else:
-                    date = ""
+                    date = None
                     n = 0
             else:
                 if tmp == "HL":
                     n += 1
                 else:
                     n = 0
-                    date = ""
+                    date = None
         elif n== 3:
             if ud == "상승":
                 if tmp == "LL":
@@ -242,7 +241,7 @@ def get_level_and_trend(tmp_df):
                     date = dat
                 else:
                     n = 0
-                    date = ""
+                    date = None
             else:
                 if tmp == "HH":
                     n = 1
@@ -250,7 +249,7 @@ def get_level_and_trend(tmp_df):
                     date = dat
                 else:
                     n = 0
-                    date = ""
+                    date = None
 
     return ticker, end_price1, end_price2, n, ud, date
 
@@ -265,20 +264,22 @@ def first_dow():
     level_list = []
     for ticker in tqdm(ticker_list):
         tdf = df[df["ticker"] == ticker].copy()
-        tm_df = analyze_trend(tdf, ticker)
+        tm_df,prev_low, prev_high = analyze_trend(tdf, ticker)
         tm_df = remove_yuji(tm_df.copy())
         result_df = pd.concat([result_df, tm_df])
         try:
             ticker, end_price1, end_price2, n, ud, date = get_level_and_trend(tm_df)
-            level_list.append([ticker, end_price1, end_price2, n, ud, date])
+            level_list.append([ticker, end_price1, end_price2, n, ud, date,prev_low, prev_high])
         except:
             continue
 
-    level_df = pd.DataFrame(level_list, columns=['ticker', 'm1_end_price', 'm2_end_price', 'lv', 'trend',"date"])
-    result_df.to_csv("result_df.csv")
-    level_df.to_csv("level_df.csv")
+    level_df = pd.DataFrame(level_list, columns=['ticker', 'm1_end_price', 'm2_end_price', 'lv', 'trend',"date","low","high"])
+    result_df.drop('marker', axis=1,inplace = True)
+    result_df.to_csv("csvFile/result_df.csv")
+    level_df.to_csv("csvFile/level_df.csv")
 
 if __name__ == "__main__":
+
     first_dow()
 
     # title_description_change_noun()

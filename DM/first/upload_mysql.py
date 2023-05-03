@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import pymysql
 import sqlalchemy.dialects.mysql
 from sqlalchemy import create_engine
@@ -63,8 +65,18 @@ class UploadMysql():
         df.to_sql(name='company_info_table', con=self.engine, if_exists='append', index=False)
 
 
+    def tmp_fuc(self):
+        self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=datetime.now()- timedelta(days=3)))
+
+        # df = pd.read_sql("select * from stock_price", self.engine)
+        # df.to_csv("csvFile/test.csv")
+        # def tmp_fuc():
+        #     print(level_df["date"])
+
+
 if __name__ == "__main__":
     a= UploadMysql()
+    a.tmp_fuc()
     # a.upload_news()
     # a.upload_search_noun()
     # a.upload_news()
