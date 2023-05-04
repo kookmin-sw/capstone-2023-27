@@ -4,8 +4,8 @@ import java.util.*
 
 data class StockChartModel(
     var createdAt: Date,
-    var price_high: Long,
-    var price_low: Long,
-    var price_start: Long,
-    var price_end: Long
+    var price_high: Float,
+    var price_low: Float,
+    var price_start: Float,
+    var price_end: Float
 )

@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.util.Size
 import android.util.TypedValue
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
@@ -28,19 +27,12 @@ import com.example.htss.R
 import com.example.htss.Retrofit.Model.*
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentStockBinding
-import com.github.mikephil.charting.components.LimitLine
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.utils.EntryXComparator
-import kotlinx.android.synthetic.main.fragment_home.view.*
-import kotlinx.android.synthetic.main.fragment_stock.*
 import kotlinx.android.synthetic.main.fragment_stock.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.DecimalFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 class StockFragment : Fragment(), View.OnClickListener {
@@ -119,19 +111,9 @@ class StockFragment : Fragment(), View.OnClickListener {
         val myAdapter2 = object : ArrayAdapter<String>(requireContext(), R.layout.chart_spinner) {
             override fun getView(position2: Int, convertView: View?, parent: ViewGroup): View {
                 val v2 = super.getView(position2, convertView, parent)
-//                if (position2 == count) {
-//                    //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
-//                    (v2.findViewById<View>(R.id.chartItemSpinner) as TextView).text = ""
-//                    //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
-//                    (v2.findViewById<View>(R.id.chartItemSpinner) as TextView).hint = getItem(count)
-//                }
+
                 return v2
             }
-
-//            override fun getCount(): Int {
-//                //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
-//                return super.getCount() - 1
-//            }
         }
         myAdapter2.addAll(items2.toMutableList())
         view.chartSpinner.adapter = myAdapter2
@@ -149,15 +131,18 @@ class StockFragment : Fragment(), View.OnClickListener {
                 Log.d("position", selectedPosition2.toString())
                 when (selectedPosition2) {
                     0 -> {
-                        getStockPrice(StockTicker, 90)
+                        getStockPrice(StockTicker, 30)
                     }
                     1 -> {
-                        getStockPrice(StockTicker, 180)
+                        getStockPrice(StockTicker, 90)
                     }
                     2 -> {
-                        getStockPrice(StockTicker, 365)
+                        getStockPrice(StockTicker, 180)
                     }
                     3 -> {
+                        getStockPrice(StockTicker, 365)
+                    }
+                    4 -> {
                         getStockPrice(StockTicker, 730)
                     }
                 }
@@ -220,6 +205,7 @@ class StockFragment : Fragment(), View.OnClickListener {
         setListenerToEditText()
         getStockNowPrice(StockTicker)
         getCompanyInfo(StockTicker)
+//        drawStockChart22()
 //        getStockPrice(StockTicker,100)
 
         return view.root
@@ -562,30 +548,32 @@ class StockFragment : Fragment(), View.OnClickListener {
 
     fun drawStockChart(item: MutableList<StockChartModel>) {
         val entries = ArrayList<CandleEntry>()
+        var num = 0
         for (csStock in item) {
             entries.add(
                 CandleEntry(
-                    csStock.createdAt.time.toFloat(),
-                    csStock.price_high.toFloat(),
-                    csStock.price_low.toFloat(),
-                    csStock.price_start.toFloat(),
-                    csStock.price_end.toFloat()
+                    num.toFloat(),
+                    csStock.price_high,
+                    csStock.price_low,
+                    csStock.price_start,
+                    csStock.price_end
                 )
             )
+            num += 1
         }
         val dataSet = CandleDataSet(entries, "").apply {
             // 심지 부분
-            shadowColor = Color.RED
-            shadowWidth = 1F
+            shadowColor = Color.GRAY
+            shadowWidth = 0.8F
 
-            // 음봄
-            decreasingColor = Color.WHITE
+            // 음봉
+            decreasingColor = Color.BLUE
             decreasingPaintStyle = Paint.Style.FILL
             // 양봉
-            increasingColor =  Color.BLACK
+            increasingColor =  Color.RED
             increasingPaintStyle = Paint.Style.FILL
 
-//            neutralColor = Color.DKGRAY
+            neutralColor = Color.DKGRAY
             setDrawValues(false)
             // 터치시 노란 선 제거
             highLightColor = Color.TRANSPARENT
@@ -601,6 +589,7 @@ class StockFragment : Fragment(), View.OnClickListener {
             setDrawAxisLine(true)
             setDrawGridLines(true)
             textColor = Color.BLACK
+            textSize = 0.5f
         }
 
         // X 축
@@ -608,7 +597,7 @@ class StockFragment : Fragment(), View.OnClickListener {
             textColor = Color.TRANSPARENT
             textSize = 0.5f
             setDrawAxisLine(false)
-            setDrawGridLines(false)
+            setDrawGridLines(true)
             setAvoidFirstLastClipping(true)
         }
 
@@ -626,92 +615,6 @@ class StockFragment : Fragment(), View.OnClickListener {
         }
     }
 
-//    fun drawStockChart(item: MutableList<StockChartModel>){
-//        Log.d("야아이야야아아아아", item.toString())
-//        // 평균값 구하기
-//        var average = 0F
-//
-//        for( stock in item) {
-//            average += stock.price.toFloat()
-//        }
-//        average /= item.size
-//
-//        // 그래프에 들어갈 데이터 준비
-//        val entries = ArrayList<Entry>()
-//        val colors = Stack<Int>()
-//        for (stock in item) {
-//            if (stock.price >= average) {
-//                if (colors.isNotEmpty() && colors.peek() == Color.BLUE) {
-//                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
-//                    colors.add(Color.TRANSPARENT)
-//                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
-//                    colors.add(Color.RED)
-//                }
-//                entries.add(Entry(stock.createdAt.time.toFloat(), stock.price.toFloat()))
-//                colors.add(Color.RED)
-//            } else {
-//                if (colors.isNotEmpty() && colors.peek() == Color.RED) {
-//                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
-//                    colors.add(Color.TRANSPARENT)
-//                    entries.add(Entry(stock.createdAt.time.toFloat(), average))
-//                    colors.add(Color.BLUE)
-//                }
-//                entries.add(Entry(stock.createdAt.time.toFloat(), stock.price.toFloat()))
-//                colors.add(Color.BLUE)
-//            }
-//            Collections.sort(entries, EntryXComparator())
-//        }
-//
-//        val dataSet = LineDataSet(entries, "").apply {
-//            setDrawCircles(false)
-//            color = Color.RED
-//            highLightColor = Color.TRANSPARENT
-//            valueTextSize = 0F
-//            lineWidth = 1.5F
-//        }
-//
-//        val lineData = LineData(dataSet)
-//        view.chart.run {
-//            data = lineData
-//            description.isEnabled = false // 하단 Description Label 제거함
-//            invalidate() // refresh
-//        }
-//
-//        val averageLine = LimitLine(average).apply {
-//            lineWidth = 1F
-//            enableDashedLine(4F, 10F, 10F)
-//            lineColor = Color.DKGRAY
-//        }
-//
-//        // 범례
-//        view.chart.legend.apply {
-//            isEnabled = false // 사용하지 않음
-//        }
-//        // Y 축
-//        view.chart.axisLeft.apply {
-//            // 라벨, 축라인, 그리드 사용하지 않음
-//            setDrawLabels(false)
-//            setDrawAxisLine(false)
-//            setDrawGridLines(false)
-//
-//            // 한계선 추가
-//            removeAllLimitLines()
-//            addLimitLine(averageLine)
-//        }
-//        view.chart.axisRight.apply {
-//            // 우측 Y축은 사용함
-//            isEnabled = true
-//        }
-//        // X 축
-//        view.chart.xAxis.apply {
-//            // x축 값은 투명으로
-//            textColor = Color.TRANSPARENT
-//            // 축라인, 그리드 사용하지 않음
-//            setDrawAxisLine(false)
-//            setDrawGridLines(false)
-//        }
-//    }
-
 
     // 주식차트 데이터 가져오기
     private fun getStockData(body: StockPriceList): MutableList<StockChartModel> {
@@ -724,10 +627,10 @@ class StockFragment : Fragment(), View.OnClickListener {
                 result.add(
                     (StockChartModel(
                         item.date,
-                        item.high_price.toLong(),
-                        item.low_price.toLong(),
-                        item.start_price.toLong(),
-                        item.end_price.toLong()
+                        item.high_price.toFloat(),
+                        item.low_price.toFloat(),
+                        item.start_price.toFloat(),
+                        item.end_price.toFloat()
                     ))
                 )
             }
@@ -738,5 +641,6 @@ class StockFragment : Fragment(), View.OnClickListener {
         Log.d("StockPrice22", result.toString())
         return result
     }
+
 }
 
