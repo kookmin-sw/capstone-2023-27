@@ -4,7 +4,7 @@ from tqdm import tqdm
 from pykrx import stock
 import matplotlib.pyplot as plt
 import re
-
+import numpy as np
 pd.options.display.max_rows = 100
 pd.options.display.max_columns = 20
 
@@ -108,7 +108,179 @@ def best_rise_rate_keyword(day):
     df["change_rate"] = df["change_rate"].round(3)
     df.to_csv("csvFile/best_rise_rate_keyword.csv", index=False, mode="w")
 
+# 추세 분석 함수, HH, LL, HL, LH 판별 및 상승/하락 판별별
+def analyze_trend(tmp_df, ticker):
+    tmp_df['변화량'] = tmp_df['end_price'].diff()
+    growth = tmp_df['변화량'] > 0
+    tmp_df['marker'] = growth.diff().shift(-1)
+    # 고점, 저점, 유지 부분을 각각 'H', 'L', 'S' 로 구분
+    tmp_df['high_low'] = np.where(tmp_df['marker'] == False, 'S', (np.where(tmp_df['변화량'] > 0, 'H', 'L')))
+    tmp_df['trend'] = '유지'
+    tmp_df.reset_index(inplace=True)
+    tmp_df.drop('index', axis=1, inplace=True)
+
+    prev_low, prev_high = -1, -1
+    sequence = []
+    rise_seq_list = [['LL', 'LH', 'HL', 'HH'], ['LL', 'HH', 'HL', 'HH']]
+    dec_seq_list = [['HH', 'HL', 'LH', 'LL'], ['HH', 'LL', 'LH', 'LL']]
+    prev_idx = []
+
+    for idx, row in enumerate(tmp_df.itertuples()):
+        # print(row)
+        label = ''
+        trend = ''
+        if row[-2] == 'L':
+            current_low = row[5]
+            # print(f'Current low: {current_low}, Previous low: {prev_low}')
+            # 첫 Low 일 경우, LL로 판정
+            if prev_low == -1:
+                label = 'LL'
+            # 현재 저점이 이전 저저점보다 높을 경우 -> HL
+            elif prev_low < current_low:
+                label = 'HL'
+            # 현재 저점이 이전 저점보다 낮을 경우 -> LL
+            elif prev_low >= current_low:
+                label = 'LL'
+            tmp_df.at[idx, 'high_low'] = label
+            prev_low = current_low
+            sequence.append(label)
+            prev_idx.append(idx)
+            # print(f'--> {label}')
+
+        if row[-2] == 'H':
+            current_high = row[5]
+            # print(f'Current high: {current_high}, Previous high: {prev_high}')
+            # 첫 High 일 경우, HH로 판정
+            if prev_high == -1:
+                label = 'HH'
+            # 현재 고점이 이전 고점보다 낮을 경우 -> LH
+            elif prev_high > current_high:
+                label = 'LH'
+            # 현재 고점이 이전 고점보다 높을 경우 -> HH
+            elif prev_high <= current_high:
+                label = 'HH'
+            tmp_df.at[idx, 'high_low'] = label
+            prev_high = current_high
+            sequence.append(label)
+            prev_idx.append(idx)
+            # print(f'--> {label}')
+
+        if len(sequence) >= 4 and row[-3] == True:
+            # 최근 4개의 상태를 체크
+            recent_seq = sequence[-4:]
+            if recent_seq in rise_seq_list:
+                tmp_df.at[prev_idx[-4], 'trend'] = '상승'
+                # print('!!! RISE starts')
+                # print(recent_seq)
+            elif recent_seq in dec_seq_list:
+                tmp_df.at[prev_idx[-4], 'trend'] = '하락'
+                # print('!!! DEC starts')
+                # print(recent_seq)
+    tmp_df.drop('변화량', axis=1,inplace = True)
+    return tmp_df,prev_low, prev_high
+
+# 유지 제거 -> '변화'칼럼의 모든 값들을 '유지'대신 '상승' 또는 '하락'으로 변경
+def remove_yuji(tmp_df):
+    tmp_df.loc[tmp_df["trend"] == "유지","trend"] = None
+    tmp_df.fillna(method='ffill',inplace= True)
+    # 변화 칼럼이 모두 '유지'인 경우
+    if tmp_df['trend'].isnull().sum() == tmp_df.shape[0]:
+        return tmp_df
+    # 변화 칼럼 중 None이 존재하는 경우
+    if tmp_df['trend'].isnull().sum():
+        first_not_none_id = tmp_df[tmp_df["trend"].isnull()].index[-1]+1
+        if tmp_df.iloc[first_not_none_id,-1] == "상승":
+            tmp_df.fillna("하락",inplace= True)
+        else:
+            tmp_df.fillna("상승",inplace= True)
+    tmp_df.iloc[-1,-3] = None
+    return tmp_df
+
+
+# 각 ticker별로 전날까지의 level을 측정정
+def get_level_and_trend(tmp_df):
+    ticker = tmp_df.iloc[-1, 0]
+    end_price1 = tmp_df.iloc[-1, 5]
+    end_price2 = tmp_df.iloc[-2, 5]
+    li = tmp_df.loc[tmp_df["marker"] == True, "high_low"][-3:].values.tolist()
+    ud = tmp_df.iloc[-1, -1]
+    date_li = tmp_df.loc[tmp_df["marker"] == True, "date"][-3:].values.tolist()
+    date = None
+    # Level과 상승/하락 판정
+    n = 0
+    while len(li) != 0:
+        tmp = li.pop(0)
+        dat = date_li.pop(0)
+
+        if n== 0:
+            if tmp == "LL" or tmp == "HH":
+                n += 1
+                date = dat
+            else:
+                n = 0
+        elif n== 1:
+            n += 1
+        elif n== 2:
+            if ud == "상승":
+                if tmp == "LH":
+                    n += 1
+                else:
+                    date = None
+                    n = 0
+            else:
+                if tmp == "HL":
+                    n += 1
+                else:
+                    n = 0
+                    date = None
+        elif n== 3:
+            if ud == "상승":
+                if tmp == "LL":
+                    n = 1
+                    ud = "하락"
+                    date = dat
+                else:
+                    n = 0
+                    date = None
+            else:
+                if tmp == "HH":
+                    n = 1
+                    ud = "상승"
+                    date = dat
+                else:
+                    n = 0
+                    date = None
+
+    return ticker, end_price1, end_price2, n, ud, date
+
+
+def first_dow():
+    df = pd.read_csv("csvFile/stock.csv", index_col=0,dtype={"ticker":str})
+    columns_li = df.columns.tolist()
+    columns_li.extend(["marker","high_low","trend"])
+    # Columns: [ticker, date, start_price, high_price, low_price, end_price, share_volume, trade_volume, rate, company_name, marker, high_low, trend]
+    result_df = pd.DataFrame(columns=columns_li)
+    ticker_list = df['ticker'].unique().tolist()
+    level_list = []
+    for ticker in tqdm(ticker_list):
+        tdf = df[df["ticker"] == ticker].copy()
+        tm_df,prev_low, prev_high = analyze_trend(tdf, ticker)
+        tm_df = remove_yuji(tm_df.copy())
+        result_df = pd.concat([result_df, tm_df])
+        try:
+            ticker, end_price1, end_price2, n, ud, date = get_level_and_trend(tm_df)
+            level_list.append([ticker, end_price1, end_price2, n, ud, date,prev_low, prev_high])
+        except:
+            continue
+
+    level_df = pd.DataFrame(level_list, columns=['ticker', 'm1_end_price', 'm2_end_price', 'lv', 'trend',"date","low","high"])
+    result_df.drop('marker', axis=1,inplace = True)
+    result_df.to_csv("csvFile/result_df.csv")
+    level_df.to_csv("csvFile/level_df.csv")
 
 if __name__ == "__main__":
-    title_description_change_noun()
-    news_description()
+
+    first_dow()
+
+    # title_description_change_noun()
+    # news_description()
