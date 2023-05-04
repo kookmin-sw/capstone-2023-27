@@ -189,10 +189,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
+<!--            <com.github.mikephil.charting.charts.LineChart-->
+<!--                android:id="@+id/chart"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="450dp"/>-->
             <com.github.mikephil.charting.charts.CandleStickChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"/>
+                android:layout_height="450dp"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/goodbad"
