@@ -18,5 +18,7 @@ public class DatePriceDto {
     private Date date;
     private float rate;
     private String company_name;
+    private String high_low;
+    private String trend;
 
 }
