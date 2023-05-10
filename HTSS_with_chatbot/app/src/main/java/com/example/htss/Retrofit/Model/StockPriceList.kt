@@ -16,5 +16,7 @@ data class StockPriceListItem(
     val trade_volume: Int,
     val date: Date,
     val rate: Float,
-    val company_name: String
+    val company_name: String,
+    val high_low: String,
+    val trend: String
 )
