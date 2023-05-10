@@ -1,9 +1,11 @@
 package com.example.htss.Fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -17,6 +19,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,12 +30,19 @@ import com.example.htss.R
 import com.example.htss.Retrofit.Model.*
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentStockBinding
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import kotlinx.android.synthetic.main.fragment_stock.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class StockFragment : Fragment(), View.OnClickListener {
@@ -134,15 +144,18 @@ class StockFragment : Fragment(), View.OnClickListener {
                         getStockPrice(StockTicker, 30)
                     }
                     1 -> {
-                        getStockPrice(StockTicker, 90)
+                        getStockPrice(StockTicker, 60)
                     }
                     2 -> {
-                        getStockPrice(StockTicker, 180)
+                        getStockPrice(StockTicker, 90)
                     }
                     3 -> {
-                        getStockPrice(StockTicker, 365)
+                        getStockPrice(StockTicker, 180)
                     }
                     4 -> {
+                        getStockPrice(StockTicker, 365)
+                    }
+                    5 -> {
                         getStockPrice(StockTicker, 730)
                     }
                 }
@@ -524,6 +537,7 @@ class StockFragment : Fragment(), View.OnClickListener {
 
     fun getStockPrice(ticker: String, num: Int) {
         retrofit.getStockPrice(ticker, num).enqueue(object : Callback<StockPriceList> {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(
                 call: Call<StockPriceList>,
                 response: Response<StockPriceList>
@@ -546,10 +560,21 @@ class StockFragment : Fragment(), View.OnClickListener {
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun drawStockChart(item: MutableList<StockChartModel>) {
         val entries = ArrayList<CandleEntry>()
+        val saveDate = ArrayList<String>()
+
         var num = 0
         for (csStock in item) {
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val simpleDate: String = simpleDateFormat.format(csStock.createdAt)
+
+            saveDate.add(
+                simpleDate
+            )
+            Log.d("saveDate", saveDate.toString())
+
             entries.add(
                 CandleEntry(
                     num.toFloat(),
@@ -561,6 +586,7 @@ class StockFragment : Fragment(), View.OnClickListener {
             )
             num += 1
         }
+        Log.d("엔트리데이터", entries.toString())
         val dataSet = CandleDataSet(entries, "").apply {
             // 심지 부분
             shadowColor = Color.GRAY
@@ -594,8 +620,11 @@ class StockFragment : Fragment(), View.OnClickListener {
 
         // X 축
         view.chart.xAxis.run {
-            textColor = Color.TRANSPARENT
-            textSize = 0.5f
+            textColor = Color.BLACK
+            textSize = 0.2f
+            valueFormatter = MyXAxisFormatter(saveDate)
+            position = XAxis.XAxisPosition.BOTTOM
+            setDrawLabels(true)
             setDrawAxisLine(false)
             setDrawGridLines(true)
             setAvoidFirstLastClipping(true)
@@ -607,7 +636,9 @@ class StockFragment : Fragment(), View.OnClickListener {
         }
 
         view.chart.apply {
-            this.data = CandleData(dataSet)
+            val combinedData = CombinedData()
+            combinedData.setData(CandleData(dataSet))
+            this.data = combinedData
             description.isEnabled = false
             isHighlightPerDragEnabled = true
             requestDisallowInterceptTouchEvent(true)
@@ -630,7 +661,8 @@ class StockFragment : Fragment(), View.OnClickListener {
                         item.high_price.toFloat(),
                         item.low_price.toFloat(),
                         item.start_price.toFloat(),
-                        item.end_price.toFloat()
+                        item.end_price.toFloat(),
+                        item.trend
                     ))
                 )
             }
@@ -642,5 +674,12 @@ class StockFragment : Fragment(), View.OnClickListener {
         return result
     }
 
-}
+    inner class MyXAxisFormatter(saveDate: ArrayList<String>) : ValueFormatter() {
+        private val stockdate = saveDate
+            override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                return stockdate.getOrNull(value.toInt()) ?: value.toString()
+            }
+        }
+    }
+
 
