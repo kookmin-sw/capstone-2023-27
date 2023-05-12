@@ -63,7 +63,7 @@ class ChatbotFragment: Fragment() {
             delay(1000)
             withContext(Dispatchers.Main) {
                 val baseUrl: String =
-                    "http:/3.37.89.191:8080/"
+                    "http:/52.79.228.153:8080/"
                 val requestUrl = baseUrl + "chatbot/ask?question=" + message
                 val responseFetcher = ChatbotResponse(requestUrl)
                 val timeStamp = System.currentTimeMillis()
