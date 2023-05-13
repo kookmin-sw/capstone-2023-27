@@ -218,8 +218,6 @@ class StockFragment : Fragment(), View.OnClickListener {
         setListenerToEditText()
         getStockNowPrice(StockTicker)
         getCompanyInfo(StockTicker)
-//        drawStockChart22()
-//        getStockPrice(StockTicker,100)
 
         return view.root
     }
@@ -546,6 +544,7 @@ class StockFragment : Fragment(), View.OnClickListener {
                     if (response.body() != null) {
                         var result = getStockData(response.body()!!)
                         drawChart(result)
+                        getStockTrendData(response.body()!!)
                     }
                     Log.d("stock/price/API호출", response.raw().toString())
                 } else {
@@ -628,20 +627,11 @@ class StockFragment : Fragment(), View.OnClickListener {
             highLightColor = Color.TRANSPARENT
         }
 
-        val LineDataSet = LineDataSet(entries2, "").apply {
-            setDrawCircles(false)
-            setMode(LineDataSet.Mode.HORIZONTAL_BEZIER)
-
-            color = Color.rgb(219, 17, 179)
-            highLightColor = Color.TRANSPARENT
-            valueTextSize = 0f
-            lineWidth = 1.0f
-        }
-
         view.chart.axisLeft.run {
             setDrawAxisLine(false)
             setDrawGridLines(false)
             textColor = Color.TRANSPARENT
+            textSize = 0.1f
         }
 
         view.chart.axisRight.run {
@@ -705,12 +695,41 @@ class StockFragment : Fragment(), View.OnClickListener {
                     ))
                 )
             }
-//            Log.d("StockPrice", StockPrice.toString())
         }
-
         result.sortBy { it.createdAt }
         Log.d("StockPrice22", result.toString())
         return result
+    }
+    private fun getStockTrendData(body: StockPriceList){
+        var increase_num = 0
+        var decrease_num = 0
+        if (body.isNullOrEmpty()) {
+
+        } else {
+            if (body[0].trend == "상승") {
+                for (i in 0..730) {
+                    if (body[i].trend == "상승") {
+                        increase_num += 1
+                    } else if (body[i].trend == "하락") {
+                        break
+                    }
+                }
+                view.trendCount.text = increase_num.toString()
+                view.upTrend.visibility = View.VISIBLE
+                view.downTrend.visibility = View.GONE
+            } else if (body[0].trend == "하락") {
+                for (i in 0..730) {
+                    if (body[i].trend == "하락") {
+                        decrease_num += 1
+                    } else if (body[i].trend == "상승") {
+                        break
+                    }
+                }
+                view.trendCount.text = decrease_num.toString()
+                view.downTrend.visibility = View.VISIBLE
+                view.upTrend.visibility = View.GONE
+            }
+        }
     }
 
     inner class MyXAxisFormatter(saveDate: ArrayList<String>) : ValueFormatter() {
@@ -725,11 +744,9 @@ class StockFragment : Fragment(), View.OnClickListener {
 
         var price = ""
         override fun refreshContent(e: Entry?, highlight: Highlight?) {
+
             if(e is CandleEntry){
-                textView.text = "시가 : ${e.open}\n" +
-                        "종가 : ${e.close}\n" +
-                        "고가 : ${e.high}\n " +
-                        "저가 : ${e.low}\n "
+                textView.text = " 시가 : ${e.open}\n"+" 종가 : ${e.close}\n"+" 고가 : ${e.high}\n "+"저가 : ${e.low}\n "
             }
 //            textView = open
 //            if (e != null) {

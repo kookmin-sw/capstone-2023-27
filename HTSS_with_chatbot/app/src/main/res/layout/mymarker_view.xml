@@ -5,12 +5,12 @@
     android:layout_height="wrap_content"
     android:background="#999999"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/marker"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:textColor="@android:color/white" />
 
 </LinearLayout>
