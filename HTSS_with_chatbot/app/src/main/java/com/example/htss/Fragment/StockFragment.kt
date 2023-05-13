@@ -83,25 +83,14 @@ class StockFragment : Fragment(), View.OnClickListener {
         val myAapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val v = super.getView(position, convertView, parent)
-                if (position == count) {
-                    //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
-                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).text = ""
-                    //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
-                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).hint = getItem(count)
-                }
-                return v
-            }
 
-            override fun getCount(): Int {
-                //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
-                return super.getCount() - 1
+                return v
             }
         }
 
         myAapter.addAll(items.toMutableList())
-        myAapter.add("항목선택")
         view.searchSpinner.adapter = myAapter
-        view.searchSpinner.setSelection(myAapter.count)
+        view.searchSpinner.setSelection(0)
         view.searchSpinner.dropDownVerticalOffset = dipToPixels(35f).toInt()
 
 //스피너 선택시 나오는 화면
@@ -706,8 +695,9 @@ class StockFragment : Fragment(), View.OnClickListener {
         if (body.isNullOrEmpty()) {
 
         } else {
+            Log.d("size", body.size.toString())
             if (body[0].trend == "상승") {
-                for (i in 0..730) {
+                for (i in 0 until body.size) {
                     if (body[i].trend == "상승") {
                         increase_num += 1
                     } else if (body[i].trend == "하락") {
