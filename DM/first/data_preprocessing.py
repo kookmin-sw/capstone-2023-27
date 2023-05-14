@@ -255,7 +255,7 @@ def get_level_and_trend(tmp_df):
 
 
 def first_dow():
-    df = pd.read_csv("csvFile/stock.csv", index_col=0,dtype={"ticker":str})
+    df = pd.read_csv("csvFile/stock.csv", dtype={"ticker":str})
     columns_li = df.columns.tolist()
     columns_li.extend(["marker","high_low","trend"])
     # Columns: [ticker, date, start_price, high_price, low_price, end_price, share_volume, trade_volume, rate, company_name, marker, high_low, trend]

@@ -169,8 +169,8 @@ class Update():
                         # 상승 -> 하락 추세로 전환
                         if label == 'LL' and ud == '상승':
                             # date ~ 전날까지의 trend를 하락으로 변경
-                            self.engine.execute(
-                               "update stock_price set trend = '하락' where ticker ='{tik}' & date >='{d}'".format(d=date,tik=ticker))
+                            # self.engine.execute(
+                            #    "update stock_price set trend = '하락' where ticker ='{tik}' & date >='{d}'".format(d=date,tik=ticker))
 
                             trend = "하락"
                             l_date = dtday
@@ -178,8 +178,8 @@ class Update():
                         # 하락 -> 상승 추세로 전환
                         elif label == 'HH' and ud == '하락':
                             # date ~ 전날까지의 trend를 상승으로 변경
-                            self.engine.execute(
-                               "update stock_price set trend = '상승' where ticker ='{tik}' &  date >='{d}'".format(d=date,tik=ticker))
+                            # self.engine.execute(
+                            #    "update stock_price set trend = '상승' where ticker ='{tik}' &  date >='{d}'".format(d=date,tik=ticker))
                             trend = "상승"
                             l_date = dtday
                             n = 1

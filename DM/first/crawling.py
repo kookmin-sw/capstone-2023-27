@@ -115,12 +115,19 @@ def crawling_ticker_name():
 # 주가 크롤링
 def crawling_stock_price():
     df = pd.DataFrame(columns=["티커", "시가", "고가", "저가", "종가", "거래량", "거래대금", "등락률", "날짜"])
-    tmpDays = stock.get_market_ohlcv("20200101", "20221004", "005930")
+    # 1년 이상을 못가져옴
+    today = "20230514"
+    d_li = ["20200101","20210101","20220101","20230101",today]
+    tmpDays = []
 
+    for i in range(len(d_li)-1):
+        ddf = stock.get_market_ohlcv(d_li[i], d_li[i+1], "005930")
+        tmpDays.extend(ddf.index.to_list())
+    tmpDays = list(set(tmpDays))
     def str_day(d):
         return d.strftime('%Y%m%d')
 
-    days = list(map(str_day, tmpDays.index.to_list()))
+    days = list(map(str_day, tmpDays))
 
     for day in tqdm(days):
         tmp_df = stock.get_market_ohlcv(day, market="KOSPI")
@@ -129,8 +136,13 @@ def crawling_stock_price():
         tmp_df["날짜"] = day
         df = pd.concat([df, tmp_df])
     df["등락률"] = round(df["등락률"].astype('float'), 3)
-    df = df[["티커", "날짜", "종가", "등락률"]]
-    df.to_csv("csvFile/stock_price2.csv", mode='w', index=False)
+    tickers = set(df["티커"].to_list())
+    name_li = [[ticker,stock.get_market_ticker_name(ticker)] for ticker in tickers]
+    df2 = pd.DataFrame(name_li,columns=["티커","종목명"])
+    df = pd.merge(left=df,right=df2,how="inner",on="티커")
+    df = df[["티커","날짜", "시가", "고가", "저가", "종가", "거래량", "거래대금", "등락률","종목명"]]
+    df.columns = ["ticker", "date","start_price","high_price","low_price", "end_price","share_volume","trade_volume", "rate", "company_name"]
+    df.to_csv("csvFile/stock.csv", mode='w', index=False)
 
 
 # 티커로 검색한 네이버 증권 뉴스 크롤링해오기
@@ -281,14 +293,14 @@ def err_crawling_news_main():
     result = asyncio.run(main())
 
 if __name__ == "__main__":
-    crawling_thema()
-    crawling_sectors()
-    crawling_company_info()
-    crawling_ticker_name()
+    # crawling_thema()
+    # crawling_sectors()
+    # crawling_company_info()
+    # crawling_ticker_name()
     crawling_stock_price()
-    crawling_news_keyword2()
-    crawling_news_main()
-    err_crawling_news_main()
+    # crawling_news_keyword2()
+    # crawling_news_main()
+    # err_crawling_news_main()
 
 
 
