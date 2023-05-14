@@ -7,5 +7,6 @@ data class StockChartModel(
     var price_high: Float,
     var price_low: Float,
     var price_start: Float,
-    var price_end: Float
+    var price_end: Float,
+    var trend : String
 )

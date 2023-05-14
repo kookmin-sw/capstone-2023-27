@@ -10,7 +10,7 @@
     </string-array>
 
     <string-array name="chart_array">
-        <item>30일</item>
+        <item>60일</item>
         <item>90일</item>
         <item>180일</item>
         <item>1년</item>

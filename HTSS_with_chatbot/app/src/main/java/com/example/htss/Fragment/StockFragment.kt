@@ -1,9 +1,11 @@
 package com.example.htss.Fragment
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -17,6 +19,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,12 +30,22 @@ import com.example.htss.R
 import com.example.htss.Retrofit.Model.*
 import com.example.htss.Retrofit.RetrofitClient
 import com.example.htss.databinding.FragmentStockBinding
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.MarkerView
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.utils.MPPointF
+import kotlinx.android.synthetic.main.fragment_stock.*
 import kotlinx.android.synthetic.main.fragment_stock.view.*
+import kotlinx.android.synthetic.main.mymarker_view.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.collections.ArrayList
 
 class StockFragment : Fragment(), View.OnClickListener {
@@ -70,25 +83,14 @@ class StockFragment : Fragment(), View.OnClickListener {
         val myAapter = object : ArrayAdapter<String>(requireContext(), R.layout.item_spinner) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val v = super.getView(position, convertView, parent)
-                if (position == count) {
-                    //마지막 포지션의 textView 를 힌트 용으로 사용합니다.
-                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).text = ""
-                    //아이템의 마지막 값을 불러와 hint로 추가해 줍니다.
-                    (v.findViewById<View>(R.id.tvItemSpinner) as TextView).hint = getItem(count)
-                }
-                return v
-            }
 
-            override fun getCount(): Int {
-                //마지막 아이템은 힌트용으로만 사용하기 때문에 getCount에 1을 빼줍니다.
-                return super.getCount() - 1
+                return v
             }
         }
 
         myAapter.addAll(items.toMutableList())
-        myAapter.add("항목선택")
         view.searchSpinner.adapter = myAapter
-        view.searchSpinner.setSelection(myAapter.count)
+        view.searchSpinner.setSelection(0)
         view.searchSpinner.dropDownVerticalOffset = dipToPixels(35f).toInt()
 
 //스피너 선택시 나오는 화면
@@ -131,7 +133,7 @@ class StockFragment : Fragment(), View.OnClickListener {
                 Log.d("position", selectedPosition2.toString())
                 when (selectedPosition2) {
                     0 -> {
-                        getStockPrice(StockTicker, 30)
+                        getStockPrice(StockTicker, 60)
                     }
                     1 -> {
                         getStockPrice(StockTicker, 90)
@@ -205,8 +207,6 @@ class StockFragment : Fragment(), View.OnClickListener {
         setListenerToEditText()
         getStockNowPrice(StockTicker)
         getCompanyInfo(StockTicker)
-//        drawStockChart22()
-//        getStockPrice(StockTicker,100)
 
         return view.root
     }
@@ -524,6 +524,7 @@ class StockFragment : Fragment(), View.OnClickListener {
 
     fun getStockPrice(ticker: String, num: Int) {
         retrofit.getStockPrice(ticker, num).enqueue(object : Callback<StockPriceList> {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(
                 call: Call<StockPriceList>,
                 response: Response<StockPriceList>
@@ -531,7 +532,8 @@ class StockFragment : Fragment(), View.OnClickListener {
                 if (response.code() == 200) {
                     if (response.body() != null) {
                         var result = getStockData(response.body()!!)
-                        drawStockChart(result)
+                        drawChart(result)
+                        getStockTrendData(response.body()!!)
                     }
                     Log.d("stock/price/API호출", response.raw().toString())
                 } else {
@@ -546,21 +548,56 @@ class StockFragment : Fragment(), View.OnClickListener {
         })
     }
 
-    fun drawStockChart(item: MutableList<StockChartModel>) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun drawChart(item: MutableList<StockChartModel>) {
         val entries = ArrayList<CandleEntry>()
-        var num = 0
+        val entries2 = ArrayList<Entry>()
+        val saveDate = ArrayList<String>()
+
+        var trend_x = 0
+        var candle_x = 0
         for (csStock in item) {
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val simpleDate: String = simpleDateFormat.format(csStock.createdAt)
+            saveDate.add(
+                simpleDate
+            )
+            Log.d("saveDate", saveDate.toString())
+
             entries.add(
                 CandleEntry(
-                    num.toFloat(),
+                    candle_x.toFloat(),
                     csStock.price_high,
                     csStock.price_low,
                     csStock.price_start,
                     csStock.price_end
                 )
             )
-            num += 1
+            candle_x += 1
+
+            if(csStock.trend == "상승") {
+                var num2 = 4000
+                entries2.add(
+                    Entry(
+                        trend_x.toFloat(),
+                        num2.toFloat()
+                    )
+                )
+            }
+            else if(csStock.trend == "하락"){
+                var num2 = 800
+                entries2.add(
+                    Entry(
+                        trend_x.toFloat(),
+                        num2.toFloat()
+                    )
+                )
+            }
+            trend_x += 1
+
         }
+        Log.d("캔들 엔트리데이터", entries.toString())
+        Log.d("꺾은선 엔트리데이터", entries2.toString())
         val dataSet = CandleDataSet(entries, "").apply {
             // 심지 부분
             shadowColor = Color.GRAY
@@ -583,6 +620,7 @@ class StockFragment : Fragment(), View.OnClickListener {
             setDrawAxisLine(false)
             setDrawGridLines(false)
             textColor = Color.TRANSPARENT
+            textSize = 0.1f
         }
 
         view.chart.axisRight.run {
@@ -594,8 +632,11 @@ class StockFragment : Fragment(), View.OnClickListener {
 
         // X 축
         view.chart.xAxis.run {
-            textColor = Color.TRANSPARENT
-            textSize = 0.5f
+            textColor = Color.BLACK
+            textSize = 0.2f
+            valueFormatter = MyXAxisFormatter(saveDate)
+            position = XAxis.XAxisPosition.BOTTOM
+            setDrawLabels(true)
             setDrawAxisLine(false)
             setDrawGridLines(true)
             setAvoidFirstLastClipping(true)
@@ -607,12 +648,20 @@ class StockFragment : Fragment(), View.OnClickListener {
         }
 
         view.chart.apply {
-            this.data = CandleData(dataSet)
+            val combinedData = CombinedData()
+            combinedData.setData(CandleData(dataSet))
+//            val lineData = LineData(LineDataSet)
+//            combinedData.setData(lineData)
+            this.data = combinedData
+
             description.isEnabled = false
             isHighlightPerDragEnabled = true
             requestDisallowInterceptTouchEvent(true)
             invalidate()
         }
+
+        val marker = MyMarkerViewcontext(this.requireContext(),R.layout.mymarker_view)
+        chart!!.marker = marker
     }
 
 
@@ -630,17 +679,95 @@ class StockFragment : Fragment(), View.OnClickListener {
                         item.high_price.toFloat(),
                         item.low_price.toFloat(),
                         item.start_price.toFloat(),
-                        item.end_price.toFloat()
+                        item.end_price.toFloat(),
+                        item.trend
                     ))
                 )
             }
-//            Log.d("StockPrice", StockPrice.toString())
         }
-
         result.sortBy { it.createdAt }
         Log.d("StockPrice22", result.toString())
         return result
     }
+    private fun getStockTrendData(body: StockPriceList){
+        var increase_num = 0
+        var decrease_num = 0
+        if (body.isNullOrEmpty()) {
 
+        } else {
+            Log.d("size", body.size.toString())
+            if (body[0].trend == "상승") {
+                for (i in 0 until body.size) {
+                    if (body[i].trend == "상승") {
+                        increase_num += 1
+                    } else if (body[i].trend == "하락") {
+                        break
+                    }
+                }
+                view.trendCount.text = increase_num.toString()
+                view.upTrend.visibility = View.VISIBLE
+                view.downTrend.visibility = View.GONE
+            } else if (body[0].trend == "하락") {
+                for (i in 0..730) {
+                    if (body[i].trend == "하락") {
+                        decrease_num += 1
+                    } else if (body[i].trend == "상승") {
+                        break
+                    }
+                }
+                view.trendCount.text = decrease_num.toString()
+                view.downTrend.visibility = View.VISIBLE
+                view.upTrend.visibility = View.GONE
+            }
+        }
+    }
+
+    inner class MyXAxisFormatter(saveDate: ArrayList<String>) : ValueFormatter() {
+        private val stockdate = saveDate
+            override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                return stockdate.getOrNull(value.toInt()) ?: value.toString()
+            }
+        }
+
+    inner class MyMarkerViewcontext(context: Context, layoutResource: Int) : MarkerView(context, layoutResource){
+        private var textView: TextView = findViewById(R.id.marker)
+
+        var price = ""
+        override fun refreshContent(e: Entry?, highlight: Highlight?) {
+
+            if(e is CandleEntry){
+                textView.text = " 시가 : ${e.open}\n"+" 종가 : ${e.close}\n"+" 고가 : ${e.high}\n "+"저가 : ${e.low}\n "
+            }
+//            textView = open
+//            if (e != null) {
+//                if (highlight != null) {
+//                    Log.d("Entry_data",
+//                        e.x.toString() + "|" + e.y.toString() + "|" + highlight.x.toString() + "|" + highlight.y.toString() + "|" + highlight.axis.toString() + "|" + highlight.dataIndex.toString() + "|" + highlight.dataSetIndex.toString())
+//                }
+//            }
+//            if (e != null) {
+//                price = makeCommaNumber(e.y)
+//            }
+//            Log.d("markerkerker",price.toString())
+////            textView.text = "${price} 원"
+//            textView.text = price
+            super.refreshContent(e, highlight)
+        }
+//        fun makeCommaNumber(input: Float): String {
+////            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+////            val simpleDate: String = simpleDateFormat.format(input)
+//            val formatter = DecimalFormat("###,###")
+////        println(input.length)
+//            price = formatter.format(input.toLong())
+//
+//            return price
+//        }
+        override fun getOffset(): MPPointF {
+            return MPPointF(-(width / 2f), -height.toFloat() - 20f)
+        }
+    }
 }
+
+
+
 
