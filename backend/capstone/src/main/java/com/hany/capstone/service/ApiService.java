@@ -60,7 +60,21 @@ public class ApiService {
         return apiMapper.stockTicker(company_name);
     }
     public List<DatePriceDto> stockPrice(String ticker, int num){
-        return apiMapper.stockPrice(ticker,num);
+        List<DatePriceDto> li = apiMapper.stockPrice(ticker,num);
+        for(DatePriceDto dto:li){
+            int endp = dto.getEnd_price();
+            if (dto.getStart_price() == 0){
+                dto.setStart_price(endp);
+            }
+            if (dto.getHigh_price() == 0){
+                dto.setHigh_price(endp);
+            }
+            if (dto.getLow_price() == 0){
+                dto.setLow_price(endp);
+            }
+        }
+
+        return li;
     }
     public NowPriceDto stockNowPrice(String ticker){
         return apiMapper.stockNowPrice(ticker);

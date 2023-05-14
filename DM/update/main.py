@@ -75,7 +75,7 @@ class Update():
         def datetime_date(d):
             return datetime.strptime(d, '%Y%m%d')
         # start_date = str_day(start_datetime - timedelta(days=1100))
-        start_date = str_day(start_datetime - timedelta(days=1))
+        start_date = str_day(start_datetime + timedelta(days=1))
         print(start_date)
         end_date = str_day(datetime.now())
 
