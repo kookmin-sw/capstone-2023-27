@@ -19,6 +19,10 @@ public class ChatBotController {
     @Autowired
     private ApiService apiService;
 
+    public String formatValue(String nameOrTicker, String terms, String value) {
+        return String.format("%s의 %s은(는) %s입니다.", nameOrTicker, terms, value);
+    }
+
     @RequestMapping(value = "/ask")
     public String chatBotApi(@RequestParam String question){
 
@@ -31,7 +35,7 @@ public class ChatBotController {
         }
         String [] word = question.split(" ");
         String result = "99";
-
+        String help_msg = "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
 
         boolean flag = false;
         for ( int key : dic.keySet() ){
@@ -70,7 +74,7 @@ public class ChatBotController {
                 return meaning.getMeaning();
             }
             else{
-                return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                return help_msg;
             }
         }
         // 검색한 업종의 종목들
@@ -80,12 +84,12 @@ public class ChatBotController {
             if (ListPriceDto != null) {
                 String company_name = "";
                 for (PriceDto price : ListPriceDto) {
-                    company_name += price.getCompany_name() + " ";
+                    company_name += (price.getCompany_name() + "\n");
                 }
-                return company_name;
+                return String.format("%s와 연관된 종목입니다.\n%s", sector, company_name);
             }
             else{
-                return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                return help_msg;
             }
         }
         // 검색한 테마의 종목들
@@ -95,11 +99,11 @@ public class ChatBotController {
             String company_name= "";
             if (ListPriceDto != null) {
                 for(PriceDto price:ListPriceDto){
-                    company_name+=price.getCompany_name()+" ";
+                    company_name += (price.getCompany_name()+"\n");
                 }
-                return company_name;            }
+                return String.format("%s와 연관된 종목입니다.\n%s", thema, company_name);            }
             else{
-                return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                return help_msg;
             }
 
         }
@@ -110,12 +114,12 @@ public class ChatBotController {
             String company_name = "";
             if (ListNounDto != null) {
                 for (NounDto nd : ListNounDto) {
-                    company_name += nd.getCompany_name() + " ";
+                    company_name += (nd.getCompany_name() + "\n");
                 }
-                return company_name;
+                return String.format("%s와 연관된 종목입니다.\n%s", keyword, company_name);
             }
             else{
-                return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                return help_msg;
             }
         }
         //최근 키워드 관련 뉴스
@@ -125,15 +129,15 @@ public class ChatBotController {
             String rinks = "";
             if (news != null) {
                 for (NewsDto nd : news) {
-                    rinks += nd.getRink() + "\n";
+                    rinks += nd.getTitle()+ "\n" + nd.getRink() + "\n";
                 }
                 return rinks;
             }
             else{
-                return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                return help_msg;
             }
         }
-
+        // 현재 주가
         else if(result.equals("5")){
             String nameOrTicker = word[0];
             String ticker = "";
@@ -141,7 +145,7 @@ public class ChatBotController {
             if(nameOrTicker.matches("[0-9]+")==false){
                 ticker= apiService.stockTicker(nameOrTicker);
                 if(ticker==null){
-                    return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                    return help_msg;
                 }
             }
             else{
@@ -149,13 +153,14 @@ public class ChatBotController {
             }
             NowPriceDto nowPrice = apiService.stockNowPrice(ticker);
             if( nowPrice !=null){
-                return Integer.toString(nowPrice.getEnd_price());
+                String price = Integer.toString(nowPrice.getEnd_price());
+                return String.format("%s의 현재 주가는 %s원 입니다.", nameOrTicker, price);
             }
             else{
-                return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                return help_msg;
             }
         }
-
+        // 현재 등락률 -> 수정 필요
         else if(result.equals("6")){
             String nameOrTicker = word[0];
             String ticker = "";
@@ -163,7 +168,7 @@ public class ChatBotController {
             if(nameOrTicker.matches("[0-9]+")==false){
                 ticker= apiService.stockTicker(nameOrTicker);
                 if(ticker==null){
-                    return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                    return help_msg;
                 }
             }
             else{
@@ -171,41 +176,45 @@ public class ChatBotController {
             }
             NowPriceDto nowRate = apiService.stockNowPrice(ticker);
             if( nowRate !=null){
-                return Integer.toString(nowRate.getEnd_price());
+                String rate = Float.toString(nowRate.getRate());
+                return String.format("%s의 현재 등락률은 %s 입니다.", nameOrTicker, rate);
             }
             else{
-                return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                return help_msg;
             }
         }
+        // 코스피 지수
         else if(result.equals("7")) {
             MarketIndexDto mi = apiService.StockMarketId("코스피");
             if (mi ==null){
-                return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                return help_msg;
             }
-            return  "value : "+mi.getNow_value() +" change_value : "+mi.getChange_value()+" change_rate : "+mi.getChange_rate();
+            return  "[KOSPI]\n지수: "+mi.getNow_value() +"\n변동값: "+mi.getChange_value()+"\n변동률: "+mi.getChange_rate();
         }
+        // 코스닥 지수
         else if(result.equals("8")) {
             MarketIndexDto mi = apiService.StockMarketId("코스닥");
             if (mi ==null){
-                return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                return help_msg;
             }
-            return  "value : "+mi.getNow_value() +" change_value: "+mi.getChange_value()+" change_rate : "+mi.getChange_value();
+            return  "[KOSDAQ]\n지수: "+mi.getNow_value() +"\n변동값: "+mi.getChange_value()+"\n변동률: "+mi.getChange_rate();
         }
         //챗봇 도우미
         else if(result.equals("9")) {
-            String str = "주식 용어 검색 ex) per{주식 용어} 뜻\n" +
-                    "종목별 기업 정보 ex) 삼성전자{종목명,ticker} per{기업개요,기업가치,per,eps,추정per,추정eps,pbr,dvr} \n" +
-                    "키워드 관련 뉴스 ex) 반도체{키워드} 관련 뉴스\n" +
-                    "키워드 관련 종목 ex) 반도체{키워드} 관련 종목\n" +
-                    "종목별 현재 주가 ex) 삼성전자{종목명,ticker} 현재 주가\n" +
-                    "종목별 현재 등락률 ex) 삼성전자{종목명,ticker} 현재 등락률\n" +
-                    "코스피 코스닥 지수 ex) {코스피 or 코스닥} 지수\n" +
-                    "테마 포함 종목 ex) 전기차 테마 종목\n" +
-                    "업종 포함 종목 ex) 제약 업종 종목";
+            String str = "아래와 같이 입력해보세요.\n" +
+                    "- 주식 용어 검색 \n" + "ex) per{기업개요,기업가치,per,eps,추정per,추정eps,pbr,dvr} 뜻\n\n"+
+                    "종목별 기업 정보\n" + "ex) 삼성전자 per{기업개요,기업가치,per,eps,추정per,추정eps,pbr,dvr}\n\n"+
+                    "키워드 관련 뉴스\n" +"ex) 반도체 관련 뉴스\n\n"+
+                    "키워드 관련 종목\n" +"ex) 반도체 관련 종목\n\n"+
+                    "종목별 현재 주가\n" +"ex) 삼성전자 현재 주가\n\n"+
+                    "종목별 현재 등락률 \n" +"ex) 005930 현재 등락률\n\n"+
+                    "코스피 코스닥 지수\n" +"ex) 코수파 지수\n\n"+
+                    "테마 포함 종목 \n" +"ex) 전기차 테마 종목\n\n"+
+                    "업종 포함 종목\n"+"ex) 제약 업종 종목";
             return str;
         }
         else if(result.equals("99")){
-            return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+            return help_msg;
 
         }
         else{
@@ -215,7 +224,7 @@ public class ChatBotController {
             if(nameOrTicker.matches("[0-9]+")==false){
                 ticker= apiService.stockTicker(nameOrTicker);
                 if (ticker ==null){
-                    return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                    return help_msg;
                 }
             }
             else{
@@ -223,34 +232,36 @@ public class ChatBotController {
             }
             CompanyInfoDto info = apiService.stockInfo(ticker);
             if (info ==null){
-                return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+                return help_msg;
             }
             String terms = result;
+            String value = "";
             if(terms =="기업개요"){
-                return  info.getCompany_info();
+                value = info.getCompany_info();
             }
             else if(terms=="기업가치"){
-                return  Integer.toString(info.getMarket_cap());
+                value = Integer.toString(info.getMarket_cap())+"(백만원)";
             }
             else if(terms=="per"){
-                return  Float.toString(info.getPer());
+                value = Float.toString(info.getPer());
             }
             else if(terms=="eps"){
-                return Integer.toString(info.getEps());
+                value = Integer.toString(info.getEps());
             }
             else if(terms=="추정per"){
-                return Float.toString(info.getEst_per());
+                value = Float.toString(info.getEst_per());
             }
             else if(terms=="추정eps"){
-                return  Integer.toString(info.getEst_eps());
+                value = Integer.toString(info.getEst_eps());
             }
             else if(terms=="pbr"){
-                return  Float.toString(info.getPbr());
+                value = Float.toString(info.getPbr());
             }
             else if(terms=="dvr"){
-                return  Float.toString(info.getDvr());
+                value = Float.toString(info.getDvr());
             }
+            return formatValue(nameOrTicker, terms, value);
         }
-        return "질문을 이해 못하겠어요. 사용법 .help를 입력하세요";
+//        return help_msg;
     }
 }
