@@ -5,8 +5,7 @@ from pykrx import stock
 import matplotlib.pyplot as plt
 import re
 import numpy as np
-pd.options.display.max_rows = 100
-pd.options.display.max_columns = 20
+pd.set_option('display.max_rows', 1000)
 
 
 # 제목과 본문에서 명사만 뽑아서 명사 : ticker 쌍 저장
@@ -121,8 +120,8 @@ def analyze_trend(tmp_df, ticker):
 
     prev_low, prev_high = -1, -1
     sequence = []
-    rise_seq_list = [['LL', 'LH', 'HL', 'HH'], ['LL', 'HH', 'HL', 'HH']]
-    dec_seq_list = [['HH', 'HL', 'LH', 'LL'], ['HH', 'LL', 'LH', 'LL']]
+    rise_seq_list = [['HH', 'HL', 'LH', 'LL'], ['HH', 'LL', 'LH', 'LL']]
+    dec_seq_list = [['LL', 'LH', 'HL', 'HH'], ['LL', 'HH', 'HL', 'HH']]
     prev_idx = []
 
     for idx, row in enumerate(tmp_df.itertuples()):
@@ -211,7 +210,6 @@ def get_level_and_trend(tmp_df):
     while len(li) != 0:
         tmp = li.pop(0)
         dat = date_li.pop(0)
-
         if n== 0:
             if tmp == "LL" or tmp == "HH":
                 n += 1
@@ -251,11 +249,27 @@ def get_level_and_trend(tmp_df):
                     n = 0
                     date = None
 
-    return ticker, end_price1, end_price2, n, ud, date
+    count = 0
+    if ud == "상승":
+        count +=1
+    elif ud == "하락":
+        count -=1
+    for i in range(1,tmp_df.shape[0]):
+        iud = tmp_df.iloc[-i, -1]
+        if iud != ud:
+            break
+        else:
+            if iud == "상승":
+                count +=1
+            else:
+                count -=1
+
+    return ticker, end_price1, end_price2, n, ud, date,count
 
 
 def first_dow():
     df = pd.read_csv("csvFile/stock.csv", dtype={"ticker":str})
+    df = df.sort_values(by=['ticker', 'date'])
     columns_li = df.columns.tolist()
     columns_li.extend(["marker","high_low","trend"])
     # Columns: [ticker, date, start_price, high_price, low_price, end_price, share_volume, trade_volume, rate, company_name, marker, high_low, trend]
@@ -268,12 +282,12 @@ def first_dow():
         tm_df = remove_yuji(tm_df.copy())
         result_df = pd.concat([result_df, tm_df])
         try:
-            ticker, end_price1, end_price2, n, ud, date = get_level_and_trend(tm_df)
-            level_list.append([ticker, end_price1, end_price2, n, ud, date,prev_low, prev_high])
+            ticker, end_price1, end_price2, n, ud, date,count = get_level_and_trend(tm_df)
+            level_list.append([ticker, end_price1, end_price2, n, ud, date,prev_low, prev_high,count])
         except:
             continue
 
-    level_df = pd.DataFrame(level_list, columns=['ticker', 'm1_end_price', 'm2_end_price', 'lv', 'trend',"date","low","high"])
+    level_df = pd.DataFrame(level_list, columns=['ticker', 'm1_end_price', 'm2_end_price', 'lv', 'trend',"date","low","high","count"])
     result_df.drop('marker', axis=1,inplace = True)
     result_df.to_csv("csvFile/result_df.csv")
     level_df.to_csv("csvFile/level_df.csv")

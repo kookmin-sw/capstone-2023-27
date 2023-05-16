@@ -111,15 +111,15 @@ class Update():
                 add_row = d_df[d_df['ticker'] == ti ].iloc[0].tolist()
                 end_price0 = add_row[5]
                 try:
-                    ticker, end_price1, end_price2, n, ud, date, low, high = level_df[level_df['ticker'] == ti].iloc[0].tolist()
+                    ticker, end_price1, end_price2, n, ud, date, low, high, count = level_df[level_df['ticker'] == ti].iloc[0].tolist()
                 except:
                     # 해당 티커 level_table에 없을때
-                    ticker, end_price1, end_price2, n, ud, date, low, high  = [ti,end_price0,end_price0,0,"상승",None,end_price0,end_price0]
+                    ticker, end_price1, end_price2, n, ud, date, low, high, count = [ti,end_price0,end_price0,0,"상승",None,end_price0,end_price0,0]
 
 
                 condition = (end_price0 < end_price1 and end_price1 > end_price2) or (end_price0 > end_price1 and end_price1 < end_price2)
-
-
+                # 추세 유지 기간
+                count +=1
                 # high_low 구하기 전날보다 오늘 종가가 높으면 H 낮으면 L
                 label = "S"
                 trend = ud
@@ -175,6 +175,7 @@ class Update():
                             trend = "하락"
                             l_date = dtday
                             n = 1
+                            count = 1
                         # 하락 -> 상승 추세로 전환
                         elif label == 'HH' and ud == '하락':
                             # date ~ 전날까지의 trend를 상승으로 변경
@@ -183,10 +184,10 @@ class Update():
                             trend = "상승"
                             l_date = dtday
                             n = 1
+                            count = 1
                         else:
                             l_date = None
                             n = 0
-
                     if condition:
                         if change_p > 0 :
                             high = end_price0
@@ -195,12 +196,12 @@ class Update():
 
 
                 add_row.extend([label,trend])
-                level_row = [ticker,end_price0,end_price1,n,trend,l_date,low,high]
+                level_row = [ticker,end_price0,end_price1,n,trend,l_date,low,high,count]
                 stock_li.append(add_row)
                 lev_li.append(level_row)
 
             stock_df = pd.DataFrame(stock_li,columns=["ticker", "date","start_price","high_price","low_price", "end_price","share_volume","trade_volume", "rate", "company_name","high_low","trend"])
-            lev_df = pd.DataFrame(lev_li,columns=['ticker', 'm1_end_price', 'm2_end_price', 'lv', 'trend', "date", "low", "high"])
+            lev_df = pd.DataFrame(lev_li,columns=['ticker', 'm1_end_price', 'm2_end_price', 'lv', 'trend', "date", "low", "high","count"])
             stock_df.to_sql(name='stock_price', con=self.engine, if_exists='append', index=False)
             lev_df.to_sql(name='dow_table', con=self.engine, if_exists='replace', index=False)
             self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=dtday))
