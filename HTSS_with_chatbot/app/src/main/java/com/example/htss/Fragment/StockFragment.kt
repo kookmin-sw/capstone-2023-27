@@ -708,7 +708,7 @@ class StockFragment : Fragment(), View.OnClickListener {
                 view.upTrend.visibility = View.VISIBLE
                 view.downTrend.visibility = View.GONE
             } else if (body[0].trend == "하락") {
-                for (i in 0..730) {
+                for (i in 0 until body.size) {
                     if (body[i].trend == "하락") {
                         decrease_num += 1
                     } else if (body[i].trend == "상승") {
