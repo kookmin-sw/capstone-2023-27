@@ -120,8 +120,8 @@ def analyze_trend(tmp_df, ticker):
 
     prev_low, prev_high = -1, -1
     sequence = []
-    rise_seq_list = [['HH', 'HL', 'LH', 'LL'], ['HH', 'LL', 'LH', 'LL']]
-    dec_seq_list = [['LL', 'LH', 'HL', 'HH'], ['LL', 'HH', 'HL', 'HH']]
+    rise_seq_list = [['LL', 'LH', 'HL', 'HH'], ['LL', 'HH', 'HL', 'HH']]
+    dec_seq_list =[['HH', 'HL', 'LH', 'LL'], ['HH', 'LL', 'LH', 'LL']]
     prev_idx = []
 
     for idx, row in enumerate(tmp_df.itertuples()):
