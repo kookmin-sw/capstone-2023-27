@@ -554,7 +554,6 @@ class StockFragment : Fragment(), View.OnClickListener {
         val entries2 = ArrayList<Entry>()
         val saveDate = ArrayList<String>()
 
-        var trend_x = 0
         var candle_x = 0
         for (csStock in item) {
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -574,27 +573,6 @@ class StockFragment : Fragment(), View.OnClickListener {
                 )
             )
             candle_x += 1
-
-            if(csStock.trend == "상승") {
-                var num2 = 4000
-                entries2.add(
-                    Entry(
-                        trend_x.toFloat(),
-                        num2.toFloat()
-                    )
-                )
-            }
-            else if(csStock.trend == "하락"){
-                var num2 = 800
-                entries2.add(
-                    Entry(
-                        trend_x.toFloat(),
-                        num2.toFloat()
-                    )
-                )
-            }
-            trend_x += 1
-
         }
         Log.d("캔들 엔트리데이터", entries.toString())
         Log.d("꺾은선 엔트리데이터", entries2.toString())
@@ -616,11 +594,12 @@ class StockFragment : Fragment(), View.OnClickListener {
             highLightColor = Color.TRANSPARENT
         }
 
+
         view.chart.axisLeft.run {
-            setDrawAxisLine(false)
-            setDrawGridLines(false)
-            textColor = Color.TRANSPARENT
-            textSize = 0.1f
+//            setDrawAxisLine(false)
+//            setDrawGridLines(false)
+//            setDrawLabels(false)
+            isEnabled = false
         }
 
         view.chart.axisRight.run {
@@ -637,7 +616,7 @@ class StockFragment : Fragment(), View.OnClickListener {
             valueFormatter = MyXAxisFormatter(saveDate)
             position = XAxis.XAxisPosition.BOTTOM
             setDrawLabels(true)
-            setDrawAxisLine(false)
+            setDrawAxisLine(true)
             setDrawGridLines(true)
             setAvoidFirstLastClipping(true)
         }
@@ -648,19 +627,15 @@ class StockFragment : Fragment(), View.OnClickListener {
         }
 
         view.chart.apply {
-            val combinedData = CombinedData()
-            combinedData.setData(CandleData(dataSet))
-//            val lineData = LineData(LineDataSet)
-//            combinedData.setData(lineData)
-            this.data = combinedData
-
+            data = CandleData(dataSet)
             description.isEnabled = false
             isHighlightPerDragEnabled = true
+            isDragEnabled = true
             requestDisallowInterceptTouchEvent(true)
             invalidate()
         }
 
-        val marker = MyMarkerViewcontext(this.requireContext(),R.layout.mymarker_view)
+        val marker = MyMarkerViewcontext(this.requireContext(),R.layout.mymarker_view,saveDate)
         chart!!.marker = marker
     }
 
@@ -729,39 +704,17 @@ class StockFragment : Fragment(), View.OnClickListener {
             }
         }
 
-    inner class MyMarkerViewcontext(context: Context, layoutResource: Int) : MarkerView(context, layoutResource){
+    inner class MyMarkerViewcontext(context: Context, layoutResource: Int, saveDate: ArrayList<String>) : MarkerView(context, layoutResource) {
         private var textView: TextView = findViewById(R.id.marker)
-
-        var price = ""
+        private val stockdate = saveDate
         override fun refreshContent(e: Entry?, highlight: Highlight?) {
 
             if(e is CandleEntry){
-                textView.text = " 시가 : ${e.open}\n"+" 종가 : ${e.close}\n"+" 고가 : ${e.high}\n "+"저가 : ${e.low}\n "
+                textView.text = " 날짜 : ${stockdate[e.x.toInt()]}\n"+" 종가 : ${e.close.toInt()}\n"+" 시가 : ${e.open.toInt()}\n"+" 고가 : ${e.high.toInt()}\n "+"저가 : ${e.low.toInt()} "
             }
-//            textView = open
-//            if (e != null) {
-//                if (highlight != null) {
-//                    Log.d("Entry_data",
-//                        e.x.toString() + "|" + e.y.toString() + "|" + highlight.x.toString() + "|" + highlight.y.toString() + "|" + highlight.axis.toString() + "|" + highlight.dataIndex.toString() + "|" + highlight.dataSetIndex.toString())
-//                }
-//            }
-//            if (e != null) {
-//                price = makeCommaNumber(e.y)
-//            }
-//            Log.d("markerkerker",price.toString())
-////            textView.text = "${price} 원"
-//            textView.text = price
             super.refreshContent(e, highlight)
         }
-//        fun makeCommaNumber(input: Float): String {
-////            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-////            val simpleDate: String = simpleDateFormat.format(input)
-//            val formatter = DecimalFormat("###,###")
-////        println(input.length)
-//            price = formatter.format(input.toLong())
-//
-//            return price
-//        }
+
         override fun getOffset(): MPPointF {
             return MPPointF(-(width / 2f), -height.toFloat() - 20f)
         }
