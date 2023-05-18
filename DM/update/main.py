@@ -599,10 +599,10 @@ class Update():
 
 
 # crontab을 이용해서 주기별로 코드를 실행
-# a = Update()
+a = Update()
 # a.update_now_price()
 # 1일 주기
-# a.update_price()
+a.update_price()
 # 1시간 주기
 # a.update_news()
 # 1주일 주기
