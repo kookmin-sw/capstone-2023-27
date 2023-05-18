@@ -710,7 +710,7 @@ class StockFragment : Fragment(), View.OnClickListener {
         override fun refreshContent(e: Entry?, highlight: Highlight?) {
 
             if(e is CandleEntry){
-                textView.text = " 날짜 : ${stockdate[e.x.toInt()]}\n"+" 종가 : ${e.close.toInt()}\n"+" 시가 : ${e.open.toInt()}\n"+" 고가 : ${e.high.toInt()}\n "+"저가 : ${e.low.toInt()} "
+                textView.text = " ${stockdate[e.x.toInt()]}\n\n"+" 종가 : ${e.close.toInt()}\n"+" 시가 : ${e.open.toInt()}\n"+" 고가 : ${e.high.toInt()}\n "+"저가 : ${e.low.toInt()} "
             }
             super.refreshContent(e, highlight)
         }
