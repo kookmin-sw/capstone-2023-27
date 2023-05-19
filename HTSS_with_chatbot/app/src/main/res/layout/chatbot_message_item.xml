@@ -18,7 +18,9 @@
         android:text="샘플 메시지입니다"
         android:textColor="@color/black"
         android:textSize="14sp"
-        android:fontFamily="@font/spoqahansansneo_bold" />
+        android:fontFamily="@font/spoqahansansneo_bold"
+        android:linksClickable="true"
+        android:autoLink="web" />
 
     <LinearLayout
         android:id="@+id/chatbot_message_block"
@@ -50,7 +52,9 @@
             android:text="샘플 봇 메시지입니다"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:fontFamily="@font/spoqahansansneo_bold" />
+            android:fontFamily="@font/spoqahansansneo_bold"
+            android:linksClickable="true"
+            android:autoLink="web" />
     </LinearLayout>
 
 
