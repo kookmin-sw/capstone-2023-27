@@ -20,7 +20,7 @@
 
 시스템 구성도 
 
-> <img alt="스크린샷 2023-05-19 오후 3 35 22" width="800" src="https://user-images.githubusercontent.com/28581494/239457383-abf7b783-5aea-41a7-a2d6-0063d069528e.png">
+> <img alt="스크린샷 2023-05-19 오후 3 35 22" width="500" src="https://user-images.githubusercontent.com/28581494/239457383-abf7b783-5aea-41a7-a2d6-0063d069528e.png">
 
 
 
