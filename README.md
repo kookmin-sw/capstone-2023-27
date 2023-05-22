@@ -1,4 +1,4 @@
-## HTSS (How To Search Stock)
+# HTSS (How To Search Stock)
 
 ### 1. 프로젝트 소개
 
