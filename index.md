@@ -6,33 +6,49 @@
 
 ### 1. 프로젝트 소개
 
-주식에 대한 정보를 찾는 것은 때로는 번거롭고 귀찮은 일이다. 우리는 주식에 관심이 있으나 정보를 찾는 것이 귀찮은 사람들을 위한 어플리케이션을 제작하고자 한다. 크게 제공되는 기능은 아래와 같다.
+현대인들의 주식에 대한 관심은 날이 갈수록 상승하고 있다. 하지만 바쁜 현대인들이 실시간으로 쏟아져 나오는 주식 관련 정보를 습득하고 바쁜 일상 속에서 정보를 찾기 위한 시간을 내는 것은 쉬운일이 아니다. 우리는 주식에 관심이 있으나 정보를 찾는 것이 귀찮은 사람들을 위해 주식 정보 검색 시간을 줄이고 편의성을 높여주는 어플리케이션 HTSS을 제작하고자 한다. HTSS에서 크게 제공되는 기능은 아래와 같다.
 
 - 주식 정보 제공
 
-상승률이 높은 종목이 무엇인지, 업종 및 테마 별로 상승률이 높은 종목이 무엇인지를 알려준다. 그리고 종목과 관련된 뉴스를 감정분석과 함께 제공하여 다각화된 정보를 제공한다. 또한 키워드를 검색하여 그 키워드와 관련된 업종, 테마, 키워드와 관련된 종목, 키워드 관련 뉴스 등 자신이 흥미있어하는 키워드에 대한 다양한 주식 관련 정보를 제공해준다.  
+  
+  주가, 상승률 기준 상위 업종 및 테마, 종목 상승률 순위, 차트 등 기본적인 주식 정보를 제공한다.  
+  종목과 관련된 뉴스를 감정분석 결과와 함께 제공하여 뉴스가 호재인지 악재인지 직관적으로 판별한다.  
+  다우이론을 기반으로 주식 가격의 변동을 이용하여 각 주식별로 상승/하락 추세인지를 파악하고 추세가 몇일간 유지되었는지 보여준다.
+  
+- 키워드 검색
+
+  키워드를 검색하여 그 키워드와 관련된 업종, 테마, 키워드와 관련된 종목, 키워드가 포함된 뉴스를 한번에 보여준다.  
+  관심 키워드 등록 기능으로 손쉽게 키워드를 관리하고 한번에 키워드 검색 결과를 얻을 수 있다.
 
 - 챗봇
 
-챗봇 기능을 추가하여 사용자가 원하는 정보를 자연어 쿼리를 통해 더욱 간편하게 검색할 수 있도록 한다.
+  챗봇 기능을 추가하여 사용자가 원하는 정보를 자연어 쿼리를 통해 더욱 간편하게 검색할 수 있도록 한다.   
+  현재 주가 및 등락률, 키워드 관련 뉴스, 테마 및 업종 포함 종목등 빠르게 유용한 주식 정보를 얻는데 도움을 줄 수 있다. 
 <br><br>
 ### 2. Abstract
 
-Finding information about stocks is sometimes cumbersome. We create an application for people who are interested in stocks and eager to find information easily. The functions provided in the application are as follows.
+Modern people's interest in stocks is rising day by day. However, it is not easy for busy modern people to acquire real-time stock-related information and take time to find information in their busy daily lives. For those who are interested in stocks but are lazy to find information, we would like to create an application called HTSS that reduces stock information retrieval time and increases convenience. The functions that are provided in HTSS are as follows.
 
-- Stock information
+- Provide stock information
 
-It tells you what stocks have a high rate of increase and what stocks have a high rate of increase by industry and theme. In addition, news related to stocks is provided along with sentimental analysis to provide diversified information. It also searches for keywords and provides various stock-related information on keywords that you are interested in, such as industries related to the keyword, themes, stocks related to the keyword, and news related to the keyword.
+  
+  It provides basic stock information such as stock prices, top industries and themes based on growth rates, stock growth rankings, and charts.  
+  News related to stocks is provided with emotional analysis results to intuitively determine whether the news is good or bad.  
+  Based on the Dow theory, it uses fluctuations in stock prices to determine whether each stock is on an upward/downward trend and shows how many days the trend has been maintained.
+  
+- Keyword Search
 
-- Chart Analysis
-
-After calculating the trend of soaring stocks for a year on a 30, 60, and 90 day basis, it shows stocks with a high recent upward trend through time series clustering.
+  Search for keywords and show the industry related to the keyword, themes, stocks related to the keyword, and news containing the keywords at once.  
+  Keyword registration function of interest allows you to easily manage keywords and obtain keyword search results at once.
 
 - Chatbot
 
-A chatbot function is added to make it easier for users to search for desired information through natural language queries.
+  A chatbot function is added to make it easier for users to search for desired information through natural language queries.   
+  It can help you quickly obtain useful stock information such as current stock prices and fluctuation rates, keyword-related news, themes, and stocks including industries.
 <br><br>
 ### 3. 소개영상
+
+추가 예정
 <br><br>
 ### 4. 팀 소개
 
@@ -41,8 +57,9 @@ A chatbot function is added to make it easier for users to search for desired in
 | 장한영 | ****1696 | 팀장, 백엔드, 데이터분석 |
 | 홍기훈 | ****3178 | 프론트엔드  |
 | 서현재 | ****1632 | 데이터분석, 챗봇 |
-
 <br><br>
 ### 5. 사용법
+
+안드로이드 기기에서 어플리케이션을 다운로드하여 간편하게 이용할 수 있다.  
+추후 플레이스토어에 배포 후 지속적인 유지보수를 진행할 예정이다.
 <br><br>
-### 6. 기타
