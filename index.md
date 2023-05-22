@@ -57,6 +57,7 @@ Modern people's interest in stocks is rising day by day. However, it is not easy
 | 장한영 | ****1696 | 팀장, 백엔드, 데이터분석 |
 | 홍기훈 | ****3178 | 프론트엔드  |
 | 서현재 | ****1632 | 데이터분석, 챗봇 |
+
 <br><br>
 ### 5. 사용법
 
