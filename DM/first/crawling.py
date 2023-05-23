@@ -293,14 +293,14 @@ def err_crawling_news_main():
     result = asyncio.run(main())
 
 if __name__ == "__main__":
-    # crawling_thema()
-    # crawling_sectors()
-    # crawling_company_info()
-    # crawling_ticker_name()
+    crawling_thema()
+    crawling_sectors()
+    crawling_company_info()
+    crawling_ticker_name()
     crawling_stock_price()
-    # crawling_news_keyword2()
-    # crawling_news_main()
-    # err_crawling_news_main()
+    crawling_news_keyword2()
+    crawling_news_main()
+    err_crawling_news_main()
 
 
 

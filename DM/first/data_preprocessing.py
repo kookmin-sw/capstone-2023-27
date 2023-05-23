@@ -198,6 +198,7 @@ def remove_yuji(tmp_df):
 
 # 각 ticker별로 전날까지의 level을 측정정
 def get_level_and_trend(tmp_df):
+    print(tmp_df)
     ticker = tmp_df.iloc[-1, 0]
     end_price1 = tmp_df.iloc[-1, 5]
     end_price2 = tmp_df.iloc[-2, 5]
@@ -293,8 +294,7 @@ def first_dow():
     level_df.to_csv("csvFile/level_df.csv")
 
 if __name__ == "__main__":
-
+    title_description_change_noun()
+    news_description()
     first_dow()
 
-    # title_description_change_noun()
-    # news_description()

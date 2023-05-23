@@ -1,11 +1,17 @@
+import re
 from datetime import datetime, timedelta
 
 import pymysql
 import sqlalchemy.dialects.mysql
+from konlpy.tag import Mecab
 from sqlalchemy import create_engine
 import pandas as pd
+from tqdm import tqdm
+
 import config
 from time import time
+
+
 pd.options.display.max_rows = 100
 pd.options.display.max_columns = 20
 
@@ -63,26 +69,66 @@ class UploadMysql():
     def upload_company_info(self):
         df = pd.read_csv("csvFile/company_info.csv", dtype=str, index_col=0)
         df = df.drop_duplicates(subset=['ticker'], keep='last')
+        p
         df.to_sql(name='company_info_table', con=self.engine, if_exists='append', index=False)
 
 
-    def tmp_fuc(self):
-        # self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=datetime.now()- timedelta(days=3)))
+    def news_change_search_noun(self):
+        df = pd.read_csv("csvFile/tttts.csv",dtype=str,index_col=0)
+        df["noun"]= df["noun"].str.lower()
+        df = df.drop_duplicates(subset=['ticker', 'noun'], keep='last')
+        # print(df[(df["ticker"]=="005380") & (df["noun"]=="SK")])
+        df.to_sql(name='search_noun', con=self.engine, if_exists='append', index=False)
 
-        df = pd.read_sql("select * from stock_price", self.engine)
-        df.to_csv("csvFile/test.csv")
-        # def tmp_fuc():
-        #     print(level_df["date"])
+        # self.engine.execute("update time_table set day_date = '{now}' limit 1".format(now=datetime.now()- timedelta(days=3)))
+        # df = pd.read_sql("select * from news", self.engine)
+        # company_df = pd.read_sql("select distinct ticker,company_name from stock_price", self.engine)
+        #
+        # mecab = Mecab()
+        # ticker_noun_list = []
+        # # 명사 추출
+        # def noun_extraction(title):
+        #     noun_list = mecab.nouns(title)
+        #     # 추출한 명사중 한글자인 것들은 제외 - 제대로된 명사인 경우가 적다
+        #     noun_list = [noun for noun in noun_list if len(noun) != 1]
+        #     return noun_list
+        #
+        # for row in tqdm(df.itertuples(), total=df.shape[0]):
+        #
+        #     text = getattr(row, 'title') + " " + getattr(row, 'description')
+        #     # 이걸 list로 할까 set으로 해서 중복을 없앨까 고민 한 뉴스당 여러번 포함된 키워드 제외할까 고민
+        #     noun_list = list(set(noun_extraction(text)))
+        #     # 영어,숫자 및 공백 제거.
+        #     eng_noun_list = re.sub('[^a-zA-Z]', ' ', text).strip()
+        #     # 다중공백 치환
+        #     eng_noun_list = re.sub(' +', ' ', eng_noun_list).split(" ")
+        #     eng_noun_list = [noun.lower() for noun in eng_noun_list if len(noun) != 1 and len(noun) < 15]
+        #     noun_list = noun_list + list(set(eng_noun_list))
+        #     for none in noun_list:
+        #         ticker_noun_list.append([getattr(row, 'ticker'), none])
+        #
+        # noun_df = pd.DataFrame(ticker_noun_list, columns=["ticker", "noun"])
+        # noun_df["count"] = 1
+        # # 중복된 ticker : noun 쌍을 카운트해줌
+        # noun_df = noun_df.groupby(["ticker", "noun"])["count"].sum().reset_index().sort_values("count", ascending=False)
+        # rm_id = noun_df[noun_df["count"] == 1].index
+        # noun_df.drop(rm_id, inplace=True)
+        # noun_df = pd.merge(left=noun_df, right=company_df, how="inner", on="ticker")
+        # noun_df.dropna(axis=0,inplace=True)
+        # noun_df = noun_df.drop_duplicates(subset=["noun", "ticker"])
+        # noun_df.to_csv("csvFile/tttts.csv")
+        # noun_df.to_sql(name='search_noun', con=self.engine, if_exists='append', index=False)
 
 
 if __name__ == "__main__":
     a= UploadMysql()
-    # a.tmp_fuc()
-    # a.upload_news()
-    # a.upload_search_noun()
-    # a.upload_news()
+    # a.news_change_search_noun()
+
+    a.upload_news()
+    a.upload_search_noun()
+    a.upload_news()
     a.upload_price()
-    # a.upload_sector()
-    # a.upload_thema()
-    # a.upload_date()
-    # a.upload_company_info()
+    a.upload_sector()
+    a.upload_thema()
+    a.upload_date()
+    a.upload_company_info()
