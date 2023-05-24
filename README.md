@@ -10,7 +10,7 @@
   종목과 관련된 뉴스를 감정분석 결과와 함께 제공하여 뉴스가 호재인지 악재인지 직관적으로 판별한다.  
   다우이론을 기반으로 주식 가격의 변동을 이용하여 각 주식별로 상승/하락 추세인지를 파악하고 추세가 몇일간 유지되었는지 보여준다.
   
-  <img width="683" alt="스크린샷 2023-05-24 오후 2 55 57" src="https://github.com/kookmin-sw/capstone-2023-27/assets/28581494/c6cb494f-04ef-4011-871a-6469beef979c">
+<img width="683" alt="스크린샷 2023-05-24 오후 2 55 57" src="https://github.com/kookmin-sw/capstone-2023-27/assets/28581494/c6cb494f-04ef-4011-871a-6469beef979c">
   
 - 키워드 검색
 
@@ -29,7 +29,7 @@
 ---
 #### 시스템 구성도 
 
-> <img alt="스크린샷 2023-05-19 오후 3 35 22" width="800" src="https://user-images.githubusercontent.com/28581494/239457383-abf7b783-5aea-41a7-a2d6-0063d069528e.png">
+<img alt="스크린샷 2023-05-19 오후 3 35 22" width="800" src="https://user-images.githubusercontent.com/28581494/239457383-abf7b783-5aea-41a7-a2d6-0063d069528e.png">
 
 
 
