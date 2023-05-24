@@ -25,6 +25,7 @@
   챗봇 기능을 추가하여 사용자가 원하는 정보를 자연어 쿼리를 통해 더욱 간편하게 검색할 수 있도록 한다.   
   현재 주가 및 등락률, 키워드 관련 뉴스, 테마 및 업종 포함 종목등 빠르게 유용한 주식 정보를 얻는데 도움을 줄 수 있다. 
 <br><br>
+
 ### 2. Abstract
 
 Modern people's interest in stocks is rising day by day. However, it is not easy for busy modern people to acquire real-time stock-related information and take time to find information in their busy daily lives. For those who are interested in stocks but are lazy to find information, we would like to create an application called HTSS that reduces stock information retrieval time and increases convenience. The functions that are provided in HTSS are as follows.
@@ -48,7 +49,7 @@ Modern people's interest in stocks is rising day by day. However, it is not easy
 <br><br>
 ### 3. 소개영상
 
-추가 예정
+[시연 동영상](https://youtu.be/nJ013d6E0_4)
 <br><br>
 ### 4. 팀 소개
 
